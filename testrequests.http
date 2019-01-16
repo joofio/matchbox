@@ -1,0 +1,139 @@
+@host = http://localhost:8080/fhir
+
+### Parse a map and convert it to a StructureMap
+POST {{host}}/StructureMap/$parse HTTP/1.1
+Content-Type: application/json
+
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "name": "map",
+      "valueString": "map \"http://ahdis.ch/fhir/mappingtutorial/qr2pat1\" = \"mapping tutorial questionnairetopat\"\nuses \"http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse\" alias QuestionnaireResponse as source\nuses \"http://hl7.org/fhir/StructureDefinition/Patient\" alias Patient as target\ngroup QuestionnaireResponse(source src : QuestionnaireResponse, target tgt : Patient)\n{\n src -> tgt.gender = 'male' \"Simple Assignment\";\n}"
+    }
+ ]
+}
+
+
+### Create a StructureMap
+POST {{host}}/StructureMap HTTP/1.1
+Content-Type: application/json
+
+{
+  "resourceType": "StructureMap",
+  "url": "http://ahdis.ch/fhir/mappingtutorial/qr2pat1",
+  "name": "mapping tutorial questionnairetopat",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+      "mode": "source",
+      "alias": "QuestionnaireResponse"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+      "mode": "target",
+      "alias": "Patient"
+    }
+  ],
+  "group": [
+    {
+      "name": "QuestionnaireResponse",
+      "typeMode": "none",
+      "input": [
+        {
+          "name": "src",
+          "type": "QuestionnaireResponse",
+          "mode": "source"
+        },
+        {
+          "name": "tgt",
+          "type": "Patient",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "SimpleAssignment",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "contextType": "variable",
+              "element": "gender",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "male"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+### Call the transform operation (you need to post first the StructureMap to the server)
+POST {{host}}/StructureMap/$transform HTTP/1.1
+Content-Type: application/json
+
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "name": "source",
+      "valueUri": "http://ahdis.ch/fhir/mappingtutorial/qr2pat1"
+    },
+    {
+      "name": "content",
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "status": "in-progress",
+        "item": [
+            {
+              "linkId": "patient",
+              "text": "Patient",
+              "item": [
+                {
+                  "linkId": "patient.lastname",
+                  "text": "Name",
+                  "answer": [
+                    {
+                      "valueString": "Egger"
+                    }
+                  ]
+                },
+                {
+                  "linkId": "patient.firstname",
+                  "text": "Vorname",
+                  "answer": [
+                    {
+                      "valueString": "Oliver"
+                    }
+                  ]
+                },
+                {
+                  "linkId": "patient.sex",
+                  "text": "Geschlecht",
+                  "answer": [
+                    {
+                      "valueString": "female"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+      }
+    }
+  ]
+}
+
+### Get stored StructureMaps
+GET {{host}}/StructureMap/?_format=xml
