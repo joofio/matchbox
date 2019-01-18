@@ -10,6 +10,9 @@ Content-Type: application/json
     {
       "name": "map",
       "valueString": "map \"http://ahdis.ch/fhir/mappingtutorial/qr2pat1\" = \"mapping tutorial questionnairetopat\"\nuses \"http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse\" alias QuestionnaireResponse as source\nuses \"http://hl7.org/fhir/StructureDefinition/Patient\" alias Patient as target\ngroup QuestionnaireResponse(source src : QuestionnaireResponse, target tgt : Patient)\n{\n src -> tgt.gender = 'male' \"Simple Assignment\";\n}"
+    }, {
+      "name": "updateOrCreate",
+      "valueBoolean": true
     }
  ]
 }
