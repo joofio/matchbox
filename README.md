@@ -5,7 +5,11 @@ playground with the hapi fhir spring boot server
 
 FHIR Mapping Language support based on the FHIR Java reference implementation:
 * prototype support for the [$transform operation for StructureMap](http://www.hl7.org/fhir/structuremap-operation-transform.html)
-* convenice operation to $parse a StructureMap from a text respresentation to a StructureMap
+* convenience operation to $parse a StructureMap from a text respresentation to a StructureMap
+* using the org.fhir.core validation infrastructure
+
+* http://localhost:8080/actuator/health
+* http://localhost:8080/fhir/metadata (readyness)
 
 ## build with maven
 ```
@@ -25,7 +29,7 @@ docker build . --build-arg JAR_FILE=./target/matchbox-0.0.1-SNAPSHOT.jar -t matc
 
 ## docker run
 ```
-docker run -d --name matchbox -p 8080:8080 matchbox
+docker run -d --name matchbox -p 8080:8080 matchbox --memory="600m" --cpus="1"
 docker logs matchbox
 ```
 
@@ -50,9 +54,16 @@ docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v1 .
 docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v1
 docker push eu.gcr.io/${PROJECT_ID}/matchbox:v1
 
+gcloud container clusters get-credentials cluster-europe-west3a-fhir-ch
+
+kubectl create -f matchbox.yaml
+kubectl get pods
+
 
 [see tutorial](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app?hl=de)
 [container registry](https://console.cloud.google.com/gcr/images/fhir-ch?project=fhir-ch&authuser=1&folder&hl=de&organizationId=22040958741)
+
+
 
 tbd:
 [routing](https://medium.com/google-cloud/kubernetes-routing-internal-services-through-fqdn-d98db92b79d3)

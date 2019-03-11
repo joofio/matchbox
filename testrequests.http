@@ -1,4 +1,4 @@
-@host = http://localhost:8080/fhir
+@host = http://localhost:8080/r4
 
 ### Parse a map and convert it to a StructureMap
 POST {{host}}/StructureMap/$parse HTTP/1.1
@@ -134,9 +134,75 @@ Content-Type: application/json
             }
           ]
       }
+    }, 
+    {
+      "name" : "map",
+      "resource": {
+        "resourceType": "StructureMap",
+        "url": "http://ahdis.ch/fhir/mappingtutorial/qr2pat1",
+        "name": "mapping tutorial questionnairetopat",
+        "status": "draft",
+        "structure": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+            "mode": "source",
+            "alias": "QuestionnaireResponse"
+          },
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+            "mode": "target",
+            "alias": "Patient"
+          }
+        ],
+        "group": [
+          {
+            "name": "QuestionnaireResponse",
+            "typeMode": "none",
+            "input": [
+              {
+                "name": "src",
+                "type": "QuestionnaireResponse",
+                "mode": "source"
+              },
+              {
+                "name": "tgt",
+                "type": "Patient",
+                "mode": "target"
+              }
+            ],
+            "rule": [
+              {
+                "name": "SimpleAssignment",
+                "source": [
+                  {
+                    "context": "src"
+                  }
+                ],
+                "target": [
+                  {
+                    "context": "tgt",
+                    "contextType": "variable",
+                    "element": "gender",
+                    "transform": "copy",
+                    "parameter": [
+                      {
+                        "valueString": "male"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
 
 ### Get stored StructureMaps
 GET {{host}}/StructureMap/?_format=xml
+
+
+### Get stored StructureMaps
+GET {{host}}/StructureMap/1/$validate

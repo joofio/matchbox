@@ -69,48 +69,65 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
 		return structureMap;
 	}
 
-	@Operation(name = "$parse", idempotent = false, returnParameters = {
-			@OperationParam(name = "return", type = StructureMap.class, min = 1, max = 1) })
-	public IBaseResource parse(@OperationParam(name = "map", min = 1, max = 1) final StringType mapType,
-			@OperationParam(name = "updateOrCreate", min = 0, max = 1) final BooleanType updateOrCreate) {
-		init();
-		String map = mapType.asStringValue();
-		log.debug(map);
-		try {
-			StructureMap structureMap = utils.parse(map, "map");
-			if (updateOrCreate != null && updateOrCreate.booleanValue()) {
-				try {
-					StructureMap oldMap = getMapByUrl(structureMap.getUrl());
-					if (oldMap != null) {
-						getDao().update(oldMap);
-					} else {
-						getDao().create(structureMap);
-					}
-				} catch (FHIRException e) {
-					OperationOutcome error = new OperationOutcome();
-					error.addIssue().setSeverity(IssueSeverity.ERROR).setCode(IssueType.PROCESSING).setDiagnostics(
-							"Error creating or updating map: " + structureMap.getUrl() + " " + e.getMessage());
-					this.setContext(null);
-					return error;
-				}
-			}
-			return renderMap(structureMap);
-		} catch (FHIRException e) {
-			OperationOutcome error = new OperationOutcome();
-			error.addIssue().setSeverity(IssueSeverity.ERROR).setCode(IssueType.PROCESSING)
-					.setDiagnostics("Error parsing map: " + e.getMessage());
-			this.setContext(null);
-			return error;
-		}
-	}
+//	@Operation(name = "$parse", idempotent = false, returnParameters = {
+//			@OperationParam(name = "return", type = StructureMap.class, min = 1, max = 1) })
+//	public IBaseResource parse(@OperationParam(name = "map", min = 1, max = 1) final StringType mapType,
+//			@OperationParam(name = "updateOrCreate", min = 0, max = 1) final BooleanType updateOrCreate) {
+//		init();
+//		String map = mapType.asStringValue();
+//		log.debug(map);
+//		try {
+//			StructureMap structureMap = utils.parse(map, "map");
+//			if (updateOrCreate != null && updateOrCreate.booleanValue()) {
+//				try {
+//					StructureMap oldMap = getMapByUrl(structureMap.getUrl());
+//					if (oldMap != null) {
+//						getDao().update(structureMap);
+//					} else {
+//						getDao().create(structureMap);
+//					}
+//				} catch (FHIRException e) {
+//					OperationOutcome error = new OperationOutcome();
+//					error.addIssue().setSeverity(IssueSeverity.ERROR).setCode(IssueType.PROCESSING).setDiagnostics(
+//							"Error creating or updating map: " + structureMap.getUrl() + " " + e.getMessage());
+//					this.setContext(null);
+//					return error;
+//				}
+//			}
+//			return renderMap(structureMap);
+//		} catch (FHIRException e) {
+//			OperationOutcome error = new OperationOutcome();
+//			error.addIssue().setSeverity(IssueSeverity.ERROR).setCode(IssueType.PROCESSING)
+//					.setDiagnostics("Error parsing map: " + e.getMessage());
+//			this.setContext(null);
+//			return error;
+//		}
+//	}
 
 	@Operation(name = "$transform", idempotent = true, returnParameters = {
 			@OperationParam(name = "return", type = IBase.class, min = 1, max = 1) })
 	public IBaseResource transform(@OperationParam(name = "source", min = 0, max = 1) final UriType source,
-			@OperationParam(name = "content", min = 0, max = 1) final IBaseResource content) {
+			@OperationParam(name = "content", min = 0, max = 1) final IBaseResource content,
+			@OperationParam(name = "map", min = 0, max = 1) final StringType mapType) {
 		init();
-
-		StructureMap map = getMapByUrl(source.asStringValue());
+		
+		StructureMap map = null;
+		if (mapType!=null) {
+			String mapAsString = mapType.asStringValue();
+			log.debug(mapAsString);
+			try {
+				StructureMap structureMap = utils.parse(mapAsString, "map");
+				map =  renderMap(structureMap);
+			} catch (FHIRException e) {
+				OperationOutcome error = new OperationOutcome();
+				error.addIssue().setSeverity(IssueSeverity.ERROR).setCode(IssueType.PROCESSING)
+						.setDiagnostics("Error parsing map: " + e.getMessage());
+				this.setContext(null);
+				return error;
+			}
+		} else {
+			map = getMapByUrl(source.asStringValue());
+		}
 		if (map == null) {
 			OperationOutcome error = new OperationOutcome();
 			error.addIssue().setSeverity(IssueSeverity.ERROR).setCode(IssueType.PROCESSING)
@@ -118,10 +135,12 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
 			this.setContext(null);
 			return error;
 		}
-		String typeName = utils.getTargetType(map).getType();
-		Resource target = ResourceFactory.createResource(typeName);
+		Parameters retVal = new Parameters();
 		try {
+			String typeName = utils.getTargetType(map).getType();
+			Resource target = ResourceFactory.createResource(typeName);
 			utils.transform(null, (Resource) content, map, target);
+			retVal.addParameter().setName("return").setResource(target);
 		} catch (FHIRException e) {
 			OperationOutcome error = new OperationOutcome();
 			error.addIssue().setSeverity(IssueSeverity.ERROR).setCode(IssueType.PROCESSING)
@@ -129,14 +148,13 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
 			this.setContext(null);
 			return error;
 		}
-		Parameters retVal = new Parameters();
-		retVal.addParameter().setName("return").setResource(target);
 
 		return retVal;
 	}
 
 	public StructureMap getMapByUrl(String url) {
-		SearchParameterMap map = new SearchParameterMap();
+		
+/*		SearchParameterMap map = new SearchParameterMap();
 		map.add(StructureMap.SP_URL, new UriParam(url));
 
 		ca.uhn.fhir.rest.api.server.IBundleProvider result = getDao().search(map);
@@ -149,6 +167,8 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
 		}
 		log.error("StructureMap " + url + " not found");
 		return null;
+		*/
+		return workerContext.fetchResource(StructureMap.class, url);
 	}
 
 }

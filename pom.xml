@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<hapi.version>3.7.0-SNAPSHOT</hapi.version>
+		<hapi.version>3.8.0-SNAPSHOT</hapi.version>
 		<docker.image.prefix>matchbox</docker.image.prefix>
 	</properties>
 
@@ -65,8 +65,23 @@
 			<version>${hapi.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>hapi-fhir-validation</artifactId>
+			<version>${hapi.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>org.hl7.fhir.r4</artifactId>
+			<version>3.7.13-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>org.hl7.fhir.r5</artifactId>
+			<version>3.7.13-SNAPSHOT</version>
 		</dependency>
 		<!-- Optional -->
 		<dependency>

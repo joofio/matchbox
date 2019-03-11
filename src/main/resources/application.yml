@@ -20,7 +20,7 @@ hapi:
   fhir:
     version: R4
     server:
-      path: /fhir/*
+      path: /r4/*
     rest:
       server-name: matchbox ahdis
       server-version: 1.0.0
@@ -33,4 +33,4 @@ hapi:
       request-only: true
     jpa:
       scheduling-disabled: true
-      subscription-enabled: false
+      subscription-enabled: false      
