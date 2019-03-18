@@ -1,4 +1,4 @@
-@host = http://localhost:8080/r4
+@host = http://test.fhir.ch/r4
 
 ### Parse a map and convert it to a StructureMap
 POST {{host}}/StructureMap/$parse HTTP/1.1

@@ -9,7 +9,7 @@ FHIR Mapping Language support based on the FHIR Java reference implementation:
 * using the org.fhir.core validation infrastructure
 
 * http://localhost:8080/actuator/health
-* http://localhost:8080/fhir/metadata (readyness)
+* http://localhost:8080/r4/metadata (readyness)
 
 ## build with maven
 ```
@@ -19,7 +19,7 @@ FHIR Mapping Language support based on the FHIR Java reference implementation:
 
 ## execute
 ```
-java -jar target/matchbox-0.0.1-SNAPSHOT.jar
+java -jar target/matchbox-0.1.0-SNAPSHOT.jar
 ```
 
 ## docker build (for Dockerfile.simple)
@@ -29,7 +29,7 @@ docker build . --build-arg JAR_FILE=./target/matchbox-0.0.1-SNAPSHOT.jar -t matc
 
 ## docker run
 ```
-docker run -d --name matchbox -p 8080:8080 matchbox --memory="600m" --cpus="1"
+docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
 docker logs matchbox
 ```
 
