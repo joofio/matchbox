@@ -1,7 +1,6 @@
 @host = http://test.fhir.ch/r4
 
-###
-@host = http://localhost:8080/r4
+
 
 ### Parse a map and convert it to a StructureMap
 POST {{host}}/StructureMap/$parse HTTP/1.1
@@ -214,8 +213,8 @@ GET {{host}}/Patient/1
 ### Convert operaton
 
 POST {{host}}/$convert HTTP/1.1
-Accept: application/fhir+xml
-Content-Type: application/fhir+xml;fhirVersion=3.0
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml+fhir;fhirVersion=3.0
 
 <?xml version="1.0" encoding="UTF-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
@@ -458,3 +457,21 @@ curl --request POST \
   --http1.1 \
   --data '@/Users/oliveregger/Documents/github/chmed16af/resources/structuredefinition/chmed16af-dosequantityto.xml' \
   -o '/Users/oliveregger/Documents/github/chmed16af/resources/structuredefinition/chmed16af-dosequantityto.xml'
+
+
+###
+
+POST {{host}}/$convert HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: text/plain
+
+map "http://ahdis.ch/fhir/mappingtutorial/patient/gender" = "mapping tutorial patient gender"
+
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
+
+group Patient(source src : Patient, target tgt : Patient) {
+   src.gender as v -> tgt.gender = v "code-value";
+   src.birthDate as v -> tgt.birthDate = v "code-value";
+}
+

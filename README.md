@@ -33,6 +33,8 @@ Health Checks provided by spring-boot
 java -jar target/matchbox-0.1.0-SNAPSHOT.jar
 ```
 
+http://localhost:8080/r4/metadata
+
 ## docker build (for Dockerfile.simple)
 ```
 docker build . --build-arg JAR_FILE=./target/matchbox-0.0.1-SNAPSHOT.jar -t matchbox

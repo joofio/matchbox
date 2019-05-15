@@ -67,7 +67,7 @@ import ca.uhn.fhir.rest.server.interceptor.InterceptorAdapter;
  * need to raise a gforge for that: see https://www.hl7.org/fhir/http.html#version-parameter
  * 
  * TODO: conversion is done using the VersionConvertor_xx_xx, difference to using directly the RXTOX Maps based on
- * StructureMap should be evaluated and considered for further conversions (looks like VersionConvertor_xx_xx were orginally 
+ * StructureMap should be evaluated and considered for further conversions (looks like VersionConvertor_xx_xx were originally 
  * created out of StructureMaps?)
  * 
  * inspired and credits to hapi-fhir @see ca.uhn.hapi.converters.server.VersionedApiConverterInterceptor
