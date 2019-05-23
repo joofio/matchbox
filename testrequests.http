@@ -458,6 +458,15 @@ curl --request POST \
   --data '@/Users/oliveregger/Documents/github/chmed16af/resources/structuredefinition/chmed16af-dosequantityto.xml' \
   -o '/Users/oliveregger/Documents/github/chmed16af/resources/structuredefinition/chmed16af-dosequantityto.xml'
 
+###
+
+curl --request POST \
+  --url 'http://localhost:8080/r4/$convert' \
+  --header 'Content-Type: application/fhir+xml; fhirVersion=3.0' \
+  --header 'Accept: application/fhir+xml' \
+  --http1.1 \
+  --data '@/Users/oliveregger/Documents/github/chmed16af/resources/patient/chmed16af-m.xml' \
+  -o '/Users/oliveregger/Documents/github/chmed16af/resources/structuredefinition/chmed16af-dosequantityto.xml'
 
 ###
 

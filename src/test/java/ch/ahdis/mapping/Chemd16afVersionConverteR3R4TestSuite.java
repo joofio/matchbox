@@ -39,14 +39,15 @@ import org.junit.runners.Parameterized.Parameters;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
+import ch.ahdis.mapping.chmed16af.Chmed16afVersionConverterR3R4;
 
 @RunWith(Parameterized.class)
-public class VersionConverter_30_40TestSuite {
+public class Chemd16afVersionConverteR3R4TestSuite {
 
   private FhirContext contextStu3;
   private FhirContext contextR4;
   private String resource;
-  private VersionConvertor_30_40 versionConvertor_30_40 = new VersionConvertor_30_40();
+  private VersionConvertor_30_40 versionConvertor_30_40 = null;
 
 
   private static List<String> getResourceFiles(String path) throws IOException {
@@ -77,7 +78,7 @@ public class VersionConverter_30_40TestSuite {
   @Parameters(name = "{index}: file {0}")
   public static Iterable<Object[]> data() throws ParserConfigurationException, IOException, FHIRFormatError {
 
-    List<String> filesR3 = getResourceFiles("/mapping/stu3");
+    List<String> filesR3 = getResourceFiles("/mapping/chmed16af/stu3");
     List<Object[]> objects = new ArrayList<Object[]>(filesR3.size());
 
     for (String fn : filesR3) {
@@ -86,11 +87,13 @@ public class VersionConverter_30_40TestSuite {
     return objects;
   }
 
-  public VersionConverter_30_40TestSuite(String resource) {
+  public Chemd16afVersionConverteR3R4TestSuite(String resource) {
     super();
     this.resource = resource;
     this.contextStu3 = FhirVersionEnum.DSTU3.newContext();
     this.contextR4 = FhirVersionEnum.R4.newContext();
+    this.versionConvertor_30_40 = new VersionConvertor_30_40();
+    this.versionConvertor_30_40.addImplemenationGuideVersionConverter(new Chmed16afVersionConverterR3R4());
   }
 
   public org.hl7.fhir.dstu3.model.Resource convertResource(org.hl7.fhir.r4.model.Resource src) throws FHIRException {
@@ -103,8 +106,8 @@ public class VersionConverter_30_40TestSuite {
   
   @Test
   public void test() throws FHIRException {
-    String resourceStu3 = "/mapping/stu3/"+this.resource;
-    String resourceR4 = "/mapping/r4/"+this.resource;
+    String resourceStu3 = "/mapping/chmed16af/stu3/"+this.resource;
+    String resourceR4 = "/mapping/chmed16af/r4/"+this.resource;
     
     org.hl7.fhir.dstu3.model.Resource stu3 = (org.hl7.fhir.dstu3.model.Resource) contextStu3.newXmlParser()
         .parseResource(getClass().getResourceAsStream(resourceStu3));

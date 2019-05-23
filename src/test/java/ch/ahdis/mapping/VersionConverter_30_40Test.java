@@ -1,4 +1,4 @@
-package ch.ahdis.mapping.R3R4;
+package ch.ahdis.mapping;
 
 /*
  * #%L
@@ -21,7 +21,6 @@ package ch.ahdis.mapping.R3R4;
  */
 import static org.junit.Assert.assertEquals;
 
-import org.hl7.fhir.convertors.VersionConvertor_30_40;
 import org.hl7.fhir.dstu3.model.DateTimeType;
 import org.hl7.fhir.dstu3.model.Observation;
 import org.hl7.fhir.dstu3.model.Period;
@@ -29,8 +28,12 @@ import org.hl7.fhir.dstu3.model.StructureDefinition;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.junit.Test;
 
+import ch.ahdis.mapping.VersionConvertor_30_40;
+
 public class VersionConverter_30_40Test {
   
+  private VersionConvertor_30_40 VersionConvertor_30_40 = new VersionConvertor_30_40();
+
   public VersionConverter_30_40Test() {
     super();
   }

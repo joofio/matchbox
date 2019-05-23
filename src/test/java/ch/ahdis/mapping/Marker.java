@@ -1,4 +1,4 @@
-package ch.ahdis.mapping.R3R4;
+package ch.ahdis.mapping;
 /*
  * #%L
  * Matchbox Server

@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hl7.fhir.convertors.NullVersionConverterAdvisor30;
 import org.hl7.fhir.convertors.VersionConvertor_10_30;
-import org.hl7.fhir.convertors.VersionConvertor_30_40;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 
@@ -51,6 +50,7 @@ import ca.uhn.fhir.rest.api.server.ResponseDetails;
 import ca.uhn.fhir.rest.server.RestfulServerUtils;
 import ca.uhn.fhir.rest.server.exceptions.AuthenticationException;
 import ca.uhn.fhir.rest.server.interceptor.InterceptorAdapter;
+import ch.ahdis.mapping.VersionConvertor_30_40;
 
 /**
  * VersionInterceptor converts the FHIR resources in request/response to the current hapi-fhir server version 
@@ -77,6 +77,8 @@ public class VersionInterceptor extends InterceptorAdapter {
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VersionInterceptor.class);
 	private VersionConvertor_10_30 versionConvertor_10_30;
+  private VersionConvertor_30_40 versionConvertor_30_40;
+  
 	private FhirVersionEnum serverVersion;
 	private static Map<FhirVersionEnum, FhirContext> myFhirContextMap = Collections.synchronizedMap(new HashMap<FhirVersionEnum, FhirContext>());
 	
@@ -159,7 +161,10 @@ public class VersionInterceptor extends InterceptorAdapter {
 				}
 				if (version==FhirVersionEnum.DSTU3 && serverVersion==FhirVersionEnum.R4) {
 					try {
-						reqeustResourceConverted = VersionConvertor_30_40.convertResource(toDstu3(requestResource), true);
+						if (versionConvertor_30_40 == null) {
+							versionConvertor_30_40 = new VersionConvertor_30_40();
+						}
+						reqeustResourceConverted = versionConvertor_30_40.convertResource(toDstu3(requestResource), true);
 					} catch (FHIRException e) {
 						log.error("error converting request resource from 3to4, ignoring convertion: "+theRequestDetails, e);
 						return true;
@@ -207,7 +212,10 @@ public class VersionInterceptor extends InterceptorAdapter {
 				IBaseResource converted = null;
 				try {
 					if ((version==FhirVersionEnum.DSTU2 || version==FhirVersionEnum.DSTU3) && serverVersion==FhirVersionEnum.R4) {
-						converted = VersionConvertor_30_40.convertResource(toR4(responseResource), true);
+						if (versionConvertor_30_40 == null) {
+							versionConvertor_30_40 = new VersionConvertor_30_40();
+						}
+						converted = versionConvertor_30_40.convertResource(toR4(responseResource), true);
 						responseResource = converted;						
 					}
 					if (version==FhirVersionEnum.DSTU2) {
