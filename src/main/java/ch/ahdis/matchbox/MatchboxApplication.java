@@ -21,11 +21,14 @@ package ch.ahdis.matchbox;
  */
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 
+import ca.uhn.fhir.jpa.provider.r4.JpaSystemProviderR4;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
 import ca.uhn.fhir.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 import ch.ahdis.matchbox.interceptor.VersionInterceptor;
@@ -34,9 +37,19 @@ import ch.ahdis.matchbox.operation.Convert;
 @SpringBootApplication
 public class MatchboxApplication {
 
+	@Autowired
+	private ApplicationContext appContext;
+
 	@Bean
 	public FhirRestfulServerCustomizer fhirServerCustomizer() {
 		return (server) -> {
+
+			String[] beans = appContext.getBeanDefinitionNames();
+			Arrays.sort(beans);
+			for (String bean : beans) {
+				System.out.println(bean);
+			}
+
 			CorsConfiguration config = new CorsConfiguration();
 			config.addAllowedHeader("x-fhir-starter");
 			config.addAllowedHeader("Origin");
@@ -53,9 +66,11 @@ public class MatchboxApplication {
 			// Create the interceptor and register it
 			CorsInterceptor interceptor = new CorsInterceptor(config);
 			server.registerInterceptor(interceptor);
-			
+
 			server.registerInterceptor(new VersionInterceptor());
+
 			server.registerProvider(new Convert());
+			server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
 		};
 	}
 

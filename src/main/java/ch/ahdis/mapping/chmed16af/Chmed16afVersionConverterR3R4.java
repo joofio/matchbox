@@ -3,8 +3,8 @@ package ch.ahdis.mapping.chmed16af;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Extension;
-import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.StringType;
 
@@ -14,10 +14,10 @@ public class Chmed16afVersionConverterR3R4 implements IgVersionConverterR4 {
 
 	@Override
 	public Resource upgrade(Resource resource) {
-		if (resource instanceof Patient) {
-			Patient rsc = (Patient) resource;
+		if (resource instanceof DomainResource) {
+			DomainResource rsc = (DomainResource) resource;
 			if (rsc.hasExtension()) {
-				upgradePatientWithExtensions(rsc);
+				upgradeResourceWithExtensions(rsc);
 			}
 		}
 		return resource;
@@ -41,40 +41,40 @@ public class Chmed16afVersionConverterR3R4 implements IgVersionConverterR4 {
 	 *   </extension> 
 	 * </extension>
 	 * 
-	 * @param patient
+	 * @param resource
 	 */
-	private void upgradePatientWithExtensions(Patient patient) {
-		if (patient.hasExtension()) {
-			List<Extension> extensions = new ArrayList<Extension>();
-			extensions.addAll(patient.getExtension());
-			for (Extension ext : extensions) {
+	private void upgradeResourceWithExtensions(DomainResource resource) {
+		if (resource.hasExtension()) {
+			List<Extension> extensions = resource.getExtension();
+			for (int i=0; i<extensions.size(); ++i) {
+				Extension ext= extensions.get(i);
 				String privateFieldNameExt = "http://chmed16af.emediplan.ch/fhir/StructureDefinition/";
-				if (ext.getUrl().startsWith(privateFieldNameExt)) {
+				if (ext.getUrl().startsWith(privateFieldNameExt) && !(ext.getUrl().equals("http://chmed16af.emediplan.ch/fhir/StructureDefinition/chmed16af-receiver"))) {
 					Extension r4 = new Extension();
 					r4.setUrl("http://chmed16af.emediplan.ch/fhir/StructureDefinition/chmed16af-privatefield");
 					r4.addExtension("name", new StringType(ext.getUrl().substring(privateFieldNameExt.length())));
 					r4.addExtension("value", ext.getValue());
-					patient.addExtension(r4);
-					patient.getExtension().remove(ext);
+					resource.getExtension().set(i, r4);
 				}
 			}
 		}
 	}
 
-	private void downgradePatientWithExtensions(Patient patient) {
-		if (patient.hasExtension()) {
+	private void downgradeResourceWithExtensions(DomainResource resource) {
+		if (resource.hasExtension()) {
 			List<Extension> extensions = new ArrayList<Extension>();
-			extensions = patient
-					.getExtensionsByUrl("http://chmed16af.emediplan.ch/fhir/StructureDefinition/chmed16af-privatefield");
-			for (Extension ext : extensions) {
-				Extension r3 = new Extension();
-				Extension name = ext.getExtensionByUrl("name");
-				Extension value = ext.getExtensionByUrl("value");
-				if (name != null && value != null) {
-					r3.setUrl("http://chmed16af.emediplan.ch/fhir/StructureDefinition/" + name.getValue());
-					r3.setValue(value.getValue());
-					patient.addExtension(r3);
-					patient.getExtension().remove(ext);
+			extensions.addAll(resource.getExtension());
+			for (int i=0; i<extensions.size(); ++i) {
+				Extension ext= extensions.get(i);
+				if (ext.getUrl().equals("http://chmed16af.emediplan.ch/fhir/StructureDefinition/chmed16af-privatefield")) {
+					Extension r3 = new Extension();
+					Extension name = ext.getExtensionByUrl("name");
+					Extension value = ext.getExtensionByUrl("value");
+					if (name != null && value != null) {
+						r3.setUrl("http://chmed16af.emediplan.ch/fhir/StructureDefinition/" + name.getValue());
+						r3.setValue(value.getValue());
+						resource.getExtension().set(i, r3);
+					}
 				}
 			}
 		}
@@ -82,10 +82,10 @@ public class Chmed16afVersionConverterR3R4 implements IgVersionConverterR4 {
 
 	@Override
 	public Resource downgrade(Resource resource) {
-		if (resource instanceof Patient) {
-			Patient rsc = (Patient) resource;
+		if (resource instanceof DomainResource ) {
+			DomainResource rsc = (DomainResource) resource;
 			if (rsc.hasExtension()) {
-				downgradePatientWithExtensions(rsc);
+				downgradeResourceWithExtensions(rsc);
 			}
 		}
 		return resource;

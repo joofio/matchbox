@@ -33,4 +33,5 @@ hapi:
       request-only: true
     jpa:
       scheduling-disabled: true
-      subscription-enabled: false      
+      subscription-enabled: false
+      allow-external-references: true 

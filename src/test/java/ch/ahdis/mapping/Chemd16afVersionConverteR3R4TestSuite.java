@@ -93,7 +93,6 @@ public class Chemd16afVersionConverteR3R4TestSuite {
     this.contextStu3 = FhirVersionEnum.DSTU3.newContext();
     this.contextR4 = FhirVersionEnum.R4.newContext();
     this.versionConvertor_30_40 = new VersionConvertor_30_40();
-    this.versionConvertor_30_40.addImplemenationGuideVersionConverter(new Chmed16afVersionConverterR3R4());
   }
 
   public org.hl7.fhir.dstu3.model.Resource convertResource(org.hl7.fhir.r4.model.Resource src) throws FHIRException {
