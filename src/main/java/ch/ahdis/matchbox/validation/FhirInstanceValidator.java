@@ -90,7 +90,7 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IValid
 				ourLog.info("Setting up validation engine");
 				validationEngine = new ValidationEngine("hl7.fhir.core#4.0.0", null, null, FhirPublication.R4);
 				ourLog.info("Loading ch-core");
-				validationEngine.loadIg("http://build.fhir.org/ig/hl7ch/ch-core/");
+				validationEngine.loadIg("ch.fhir.ig.core#dev");
 				ourLog.info("Loading ch-core done");
 			} catch (Exception e1) {
 				e1.printStackTrace();

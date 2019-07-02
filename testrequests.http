@@ -1,4 +1,4 @@
-@host = http://test.fhir.ch/r4
+@host = http://localhost:8080/r4
 
 
 
@@ -485,7 +485,7 @@ group Patient(source src : Patient, target tgt : Patient) {
 }
 
 
-@host = http://localhost:8080/r4
+### @host = http://localhost:8080/r4
 
 
 ### Transaction
@@ -550,3 +550,68 @@ curl --request GET \
   --header 'Accept: application/fhir+xml' \
   --http1.1 \
   -o '/Users/oliveregger/Documents/github/chmed16af/resources/bundle/chmed16af-mp-bundle-s01.xml'
+
+### Parse a map and convert it to a StructureMap
+POST {{host}}/$convert HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml+fhir;fhirVersion=3.0
+
+<Parameters xmlns="http://hl7.org/fhir">
+  <parameter>
+    <name value="input"/>
+    <resource>
+       <Patient xmlns="http://hl7.org/fhir">
+	<id value="chmed16af-mp-patient-ext" />
+	<meta>
+		<profile value="http://chmed16af.emediplan.ch/fhir/StructureDefinition/chmed16af-mp-patient" />
+	</meta>
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">Maxima, Matter, geb 1981-01-12						
+		</div>
+	</text>
+	<extension url="http://chmed16af.emediplan.ch/fhir/StructureDefinition/PrivateFieldNameSample">
+		<valueString value="PrivateFieldValueSample" />
+	</extension>
+	<identifier>
+		<system value="urn:oid:2.16.756.5.30.1.123.100.1.1.1"/>
+		<value value="vekano" />
+	</identifier>
+	<name>
+		<family value="Matter" />
+		<given value="Maxima" />
+	</name>
+	<telecom>
+		<system value="phone" />
+		<value value="+41588512600" />
+		<use value="home" />
+	</telecom>
+	<gender value="female" />
+	<birthDate value="1981-01-12" />
+	<address>
+		<line value="Untermattweg 8" />
+		<city value="Bern" />
+		<postalCode value="3027" />
+	</address>
+	<communication>
+		<language>
+			<coding>
+				<system value="urn:ietf:bcp:47" />
+				<code value="de-CH" />
+				<display value="German (Region=Switzerland)" />
+			</coding>
+		</language>
+		<preferred value="true" />
+	</communication>
+</Patient>
+    </resource>
+  </parameter>
+  <parameter>
+    <name value="from"/>
+    <valueUri value="0.1.0"/>
+  </parameter>
+  <parameter>
+    <name value="to"/>
+    <valueCode value="0.2.0"/>
+  </parameter>
+</Parameters>

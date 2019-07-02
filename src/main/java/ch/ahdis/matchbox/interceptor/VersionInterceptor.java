@@ -24,7 +24,6 @@ import static org.apache.commons.lang3.StringUtils.defaultString;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-import java.io.ByteArrayInputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,14 +32,16 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hl7.fhir.convertors.NullVersionConverterAdvisor30;
 import org.hl7.fhir.convertors.VersionConvertor_10_30;
+import org.hl7.fhir.dstu3.elementmodel.JsonParser;
+import org.hl7.fhir.dstu3.elementmodel.ObjectConverter;
+import org.hl7.fhir.dstu3.formats.IParser.OutputStyle;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.instance.model.api.IBaseResource;
+import org.hl7.fhir.r4.elementmodel.Element;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
-import ca.uhn.fhir.model.api.IResource;
 import ca.uhn.fhir.parser.DataFormatException;
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.api.Constants;
@@ -50,7 +51,7 @@ import ca.uhn.fhir.rest.api.server.ResponseDetails;
 import ca.uhn.fhir.rest.server.RestfulServerUtils;
 import ca.uhn.fhir.rest.server.exceptions.AuthenticationException;
 import ca.uhn.fhir.rest.server.interceptor.InterceptorAdapter;
-import ch.ahdis.mapping.VersionConvertor_30_40;
+import ch.ahdis.mapping.fml.MappingLanguageTransfomer_30_40;
 
 /**
  * VersionInterceptor converts the FHIR resources in request/response to the current hapi-fhir server version 
@@ -66,24 +67,22 @@ import ch.ahdis.mapping.VersionConvertor_30_40;
  * TODO: different versions for Accept-Header and Content-Type are not allowed according to the FHIR specification, 
  * need to raise a gforge for that: see https://www.hl7.org/fhir/http.html#version-parameter
  * 
- * TODO: conversion is done using the VersionConvertor_xx_xx, difference to using directly the RXTOX Maps based on
- * StructureMap should be evaluated and considered for further conversions (looks like VersionConvertor_xx_xx were originally 
- * created out of StructureMaps?)
- * 
  * inspired and credits to hapi-fhir @see ca.uhn.hapi.converters.server.VersionedApiConverterInterceptor
  *
  */
 public class VersionInterceptor extends InterceptorAdapter {
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VersionInterceptor.class);
-	private VersionConvertor_10_30 versionConvertor_10_30;
-  private VersionConvertor_30_40 versionConvertor_30_40;
+  private MappingLanguageTransfomer_30_40 versionConvertor_30_40;
   
 	private FhirVersionEnum serverVersion;
 	private static Map<FhirVersionEnum, FhirContext> myFhirContextMap = Collections.synchronizedMap(new HashMap<FhirVersionEnum, FhirContext>());
 	
 	public VersionInterceptor() {
 		super();
+		if (versionConvertor_30_40 == null) {
+			versionConvertor_30_40 = new MappingLanguageTransfomer_30_40();
+		}
 	}
 	
 	private FhirVersionEnum extractFhirVersion(String header) {
@@ -125,6 +124,9 @@ public class VersionInterceptor extends InterceptorAdapter {
 	@Override
 	public boolean incomingRequestPostProcessed(RequestDetails theRequestDetails, HttpServletRequest theRequest,
 			HttpServletResponse theResponse) throws AuthenticationException {
+
+		log.debug("incoming input");
+		log.debug(new String(theRequestDetails.loadRequestContents()));
 		
 		String contentType = defaultString(theRequest.getHeader(Constants.HEADER_CONTENT_TYPE));
 		FhirVersionEnum version = extractFhirVersion(contentType);
@@ -136,35 +138,14 @@ public class VersionInterceptor extends InterceptorAdapter {
 			if (version!=serverVersion) {
 
 				EncodingEnum encoding = RestfulServerUtils.determineRequestEncoding(theRequestDetails);
-				IParser parser = encoding.newParser(getContextForVersion(theRequestDetails, version));
-				
-				IBaseResource requestResource = parser.parseResource( new ByteArrayInputStream(theRequestDetails.loadRequestContents()));			
 				IBaseResource reqeustResourceConverted = null;
 				
-				if (version==FhirVersionEnum.DSTU2) {
-					try {
-						if (versionConvertor_10_30 == null) {
-							versionConvertor_10_30 = new VersionConvertor_10_30(new NullVersionConverterAdvisor30());
-						}
-						if (requestResource instanceof IResource) {
-							// code copied need to a testcase maybe
-							FhirContext contextDstu2 = getContextForVersion(theRequestDetails, FhirVersionEnum.DSTU2);
-							FhirContext contextDstu2Hl7Org = getContextForVersion(theRequestDetails, FhirVersionEnum.DSTU2_HL7ORG);
-							requestResource = contextDstu2Hl7Org.newJsonParser().parseResource(contextDstu2.newJsonParser().encodeResourceToString(requestResource));
-						}
-						reqeustResourceConverted = versionConvertor_10_30.convertResource(toDstu2(requestResource));
-					} catch (FHIRException e) {
-						log.error("error converting request resource from 2To3, ignoring convertion: "+theRequestDetails, e);
-						return true;
-					}
-					version=FhirVersionEnum.DSTU3;
-				}
 				if (version==FhirVersionEnum.DSTU3 && serverVersion==FhirVersionEnum.R4) {
 					try {
-						if (versionConvertor_30_40 == null) {
-							versionConvertor_30_40 = new VersionConvertor_30_40();
+						reqeustResourceConverted = versionConvertor_30_40.convertResource3To4(new String(theRequestDetails.loadRequestContents()));
+						if (reqeustResourceConverted==null) {
+							log.error("error converting ressource, converted resource is null");
 						}
-						reqeustResourceConverted = versionConvertor_30_40.convertResource(toDstu3(requestResource), true);
 					} catch (FHIRException e) {
 						log.error("error converting request resource from 3to4, ignoring convertion: "+theRequestDetails, e);
 						return true;
@@ -176,15 +157,21 @@ public class VersionInterceptor extends InterceptorAdapter {
 					return true;
 				}
 				
-				try {
-					IParser parserConverted = encoding.newParser(getContextForVersion(theRequestDetails, serverVersion));
-					theRequestDetails.setRequestContents(parserConverted.encodeResourceToString(reqeustResourceConverted).getBytes());
-				} catch (DataFormatException e) {
-					log.error("error encoding Resource to R4, ignoring convertion: "+theRequestDetails, e);
-					return true;
+				if (reqeustResourceConverted != null) {
+					try {
+						IParser parserConverted = encoding.newParser(getContextForVersion(theRequestDetails, serverVersion));
+						theRequestDetails.setRequestContents(parserConverted.encodeResourceToString(reqeustResourceConverted).getBytes());
+					} catch (DataFormatException e) {
+						log.error("error encoding Resource to R4, ignoring convertion: "+theRequestDetails, e);
+						return true;
+					}
 				}
 			}
 		}
+		
+		log.debug("incoming input processed");
+		log.debug(new String(theRequestDetails.loadRequestContents()));
+
 		return true;
 	}
 	
@@ -209,20 +196,13 @@ public class VersionInterceptor extends InterceptorAdapter {
 				
 				IBaseResource responseResource = theResponseDetails.getResponseResource();
 				
-				IBaseResource converted = null;
+				String converted = null;
 				try {
-					if ((version==FhirVersionEnum.DSTU2 || version==FhirVersionEnum.DSTU3) && serverVersion==FhirVersionEnum.R4) {
+					if (version==FhirVersionEnum.DSTU3 && serverVersion==FhirVersionEnum.R4) {
 						if (versionConvertor_30_40 == null) {
-							versionConvertor_30_40 = new VersionConvertor_30_40();
+							versionConvertor_30_40 = new MappingLanguageTransfomer_30_40();
 						}
-						converted = versionConvertor_30_40.convertResource(toR4(responseResource), true);
-						responseResource = converted;						
-					}
-					if (version==FhirVersionEnum.DSTU2) {
-						if (versionConvertor_10_30 == null) {
-							versionConvertor_10_30 = new VersionConvertor_10_30(new NullVersionConverterAdvisor30());
-						}
-						converted = versionConvertor_10_30.convertResource(toDstu3(responseResource));						
+						converted =  versionConvertor_30_40.convertResource4To3AsJson(toR4(responseResource));
 					}
 					if (converted==null) {
 						log.error("error converting version from "+serverVersion+" to "+version+" for "+theRequestDetails);
@@ -234,24 +214,17 @@ public class VersionInterceptor extends InterceptorAdapter {
 					return true;
 				}
 				if (converted != null) {
-					// this works because serialization is done on version of resource
-					theResponseDetails.setResponseResource(converted);
+					FhirContext context = getContextForVersion(theRequestDetails,  FhirVersionEnum.DSTU3);
+					IParser parserConverted =  context.newJsonParser();
+					theResponseDetails.setResponseResource(parserConverted.parseResource(converted));
 				} 
 			}
 		}
 		return true;
 	}
 
-	private org.hl7.fhir.dstu3.model.Resource toDstu3(IBaseResource theResponseResource) {
-		return (org.hl7.fhir.dstu3.model.Resource) theResponseResource;
-	}
-	
 	private org.hl7.fhir.r4.model.Resource toR4(IBaseResource theResponseResource) {
 		return (org.hl7.fhir.r4.model.Resource) theResponseResource;
-	}
-	
-	private org.hl7.fhir.instance.model.Resource toDstu2(IBaseResource theResponseResource) {
-		return (org.hl7.fhir.instance.model.Resource) theResponseResource;
 	}
 
 }

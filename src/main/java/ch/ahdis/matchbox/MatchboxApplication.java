@@ -37,6 +37,8 @@ import ch.ahdis.matchbox.operation.Convert;
 @SpringBootApplication
 public class MatchboxApplication {
 
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
+
 	@Autowired
 	private ApplicationContext appContext;
 
@@ -44,11 +46,7 @@ public class MatchboxApplication {
 	public FhirRestfulServerCustomizer fhirServerCustomizer() {
 		return (server) -> {
 
-			String[] beans = appContext.getBeanDefinitionNames();
-			Arrays.sort(beans);
-			for (String bean : beans) {
-				System.out.println(bean);
-			}
+			log.debug("fhirServerCustomizer");
 
 			CorsConfiguration config = new CorsConfiguration();
 			config.addAllowedHeader("x-fhir-starter");
@@ -64,13 +62,19 @@ public class MatchboxApplication {
 			config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
 
 			// Create the interceptor and register it
+			log.debug("registering CorsInterceptor");
 			CorsInterceptor interceptor = new CorsInterceptor(config);
 			server.registerInterceptor(interceptor);
 
+			log.debug("registering VersionInterceptor");
 			server.registerInterceptor(new VersionInterceptor());
 
 			server.registerProvider(new Convert());
+
+			log.debug("registering JpaSystemProviderR4");
 			server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
+
+			log.debug("fhirServerCustomizer finished");
 		};
 	}
 

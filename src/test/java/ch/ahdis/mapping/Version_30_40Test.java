@@ -20,62 +20,37 @@ package ch.ahdis.mapping;
  * #L%
  */
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import org.hl7.fhir.dstu3.model.DateTimeType;
 import org.hl7.fhir.dstu3.model.Observation;
-import org.hl7.fhir.dstu3.model.Period;
 import org.hl7.fhir.dstu3.model.StructureDefinition;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.junit.Test;
 
-import ch.ahdis.mapping.VersionConvertor_30_40;
-
-public class VersionConverter_30_40Test {
+abstract public class Version_30_40Test {
   
-  private VersionConvertor_30_40 VersionConvertor_30_40 = new VersionConvertor_30_40();
-
-  public VersionConverter_30_40Test() {
+  public Version_30_40Test() {
     super();
   }
 
-  public org.hl7.fhir.dstu3.model.Resource convertResource(org.hl7.fhir.r4.model.Resource src) throws FHIRException {
-    return VersionConvertor_30_40.convertResource(src, true);
-  }
+  abstract public org.hl7.fhir.dstu3.model.Resource convertResource(org.hl7.fhir.r4.model.Resource src) throws FHIRException;
 
-  public org.hl7.fhir.r4.model.Resource convertResource(org.hl7.fhir.dstu3.model.Resource src) throws FHIRException {
-    return VersionConvertor_30_40.convertResource(src, true);
-  }
+  abstract public org.hl7.fhir.r4.model.Resource convertResource(org.hl7.fhir.dstu3.model.Resource src) throws FHIRException;
 
-  @Test
-  public void testConvertDateTime() throws FHIRException {
-    String date = "2019-01-01";
-    DateTimeType stu3 = new DateTimeType(date);
-    org.hl7.fhir.r4.model.DateTimeType r4 = VersionConvertor_30_40.convertDateTime(stu3);
-    assertEquals(date, r4.getValueAsString());
-    stu3 = VersionConvertor_30_40.convertDateTime(r4);
-    assertEquals(date, stu3.getValueAsString());    
-  }
-  
-  @Test
-  public void testConvertPeriod() throws FHIRException {
-    String date = "2019-01-01";
-    DateTimeType dateTimeStu3 = new DateTimeType(date);
-    Period periodStu3 = new Period(); 
-    periodStu3.setStartElement(dateTimeStu3);
-    org.hl7.fhir.r4.model.Period periodR4 = VersionConvertor_30_40.convertPeriod(periodStu3);
-    assertEquals(date, periodR4.getStartElement().getValueAsString());
-    periodStu3 = VersionConvertor_30_40.convertPeriod(periodR4);
-    assertEquals(date, periodStu3.getStartElement().getValueAsString());
-  }
-  
   
   @Test
   public void testStructureDefintionVersions() throws FHIRException {
     StructureDefinition stu3 = new org.hl7.fhir.dstu3.model.StructureDefinition();
     stu3.setFhirVersion("3.0.1");
+    stu3.setTitle("test");
+    stu3.setDescription("description");
     org.hl7.fhir.r4.model.StructureDefinition r4 = (org.hl7.fhir.r4.model.StructureDefinition) convertResource(stu3);
+    assertNotNull(r4);
+    assertNotNull(r4.getFhirVersion());
     assertEquals("4.0.0", r4.getFhirVersion().toCode());
     stu3 = (StructureDefinition) convertResource(r4);
+    assertNotNull(stu3);
+    assertNotNull(stu3.getFhirVersion());
     assertEquals("3.0.1", stu3.getFhirVersion());
   }
   

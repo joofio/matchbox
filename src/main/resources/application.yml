@@ -35,3 +35,10 @@ hapi:
       scheduling-disabled: true
       subscription-enabled: false
       allow-external-references: true 
+logging:
+  level:
+    ca.uhn.fhir.jaxrs: debug
+    ch.ahdis: debug
+server:
+  tomcat:
+    max-threads: 5

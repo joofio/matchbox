@@ -35,6 +35,7 @@ java -jar target/matchbox-0.1.0-SNAPSHOT.jar
 
 http://localhost:8080/r4/metadata
 
+
 ## docker build (for Dockerfile.simple)
 ```
 docker build . --build-arg JAR_FILE=./target/matchbox-0.0.1-SNAPSHOT.jar -t matchbox
@@ -42,36 +43,30 @@ docker build . --build-arg JAR_FILE=./target/matchbox-0.0.1-SNAPSHOT.jar -t matc
 
 ## docker run
 ```
+cp /Users/oliveregger/Documents/github/chmed16af/output/package.tgz ./packages/ch.mediplan.chmed16af.tgz
+cp /Users/oliveregger/Documents/github/fhir.versions.r3r4/output/package.tgz ./packages/fhir.versions.r3r4.tgz
+cp /Users/oliveregger/Documents/github/ch-core/output/package.tgz ./packages/ch.fhir.ig.core.tgz
+
+mvn clean install
+docker build . --build-arg JAR_FILE=target/matchbox-0.3.0-SNAPSHOT.jar -t matchbox
 docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
 docker logs matchbox
 ```
-
-## build through mvn
-```
-export DOCKER_HOST=tcp://localhost:2375
-./mvnw install dockerfile:build
-```
-
-currently an error:
-[ERROR] Failed to execute goal com.spotify:dockerfile-maven-plugin:1.4.9:build (default-cli) on project matchbox: Could not build image: java.util.concurrent.ExecutionException: com.spotify.docker.client.shaded.javax.ws.rs.ProcessingException: com.spotify.docker.client.shaded.org.apache.http.conn.HttpHostConnectException: Connect to localhost:2375 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused (Connection refused) -> [Help 1]
-
-finish the dockerbuild after the error
-docker build . -t matchbox
-[background info on spring.io](https://spring.io/guides/gs/spring-boot-docker/)
 
 
 ## build docker for gcloud/kubernetes
 
 export PROJECT_ID="$(gcloud config get-value project -q)"
-docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v2 .
-docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v2
-docker push eu.gcr.io/${PROJECT_ID}/matchbox:v2
+docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v5 .
+docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v5
+docker push eu.gcr.io/${PROJECT_ID}/matchbox:v5
 
 gcloud container clusters get-credentials cluster-europe-west3a-fhir-ch
 
 kubectl create -f matchbox.yaml
 kubectl get pods
 
+kubectl apply -f matchbox.yaml 
 
 [see tutorial](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app?hl=de)
 [container registry](https://console.cloud.google.com/gcr/images/fhir-ch?project=fhir-ch&authuser=1&folder&hl=de&organizationId=22040958741)
@@ -80,3 +75,16 @@ kubectl get pods
 
 tbd:
 [routing](https://medium.com/google-cloud/kubernetes-routing-internal-services-through-fqdn-d98db92b79d3)
+
+
+
+Matchbox memory behaviour:
+
+Default configuration goes up to around 2.7 GiB after $convert operation
+changed to FROM adoptopenjdk/openjdk11-openj9:alpine-slim -> reduced around to 2.16 GIB
+
+Startup 810 MiB
+Loading all IG's 2.021GiB 
+--> need to investigate how we can make this less memory intensive
+
+

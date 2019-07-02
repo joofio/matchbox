@@ -24,6 +24,7 @@
 /nbdist/
 /.nb-gradle/
 
+/packages
 ca.uhn.fhir.jpa.entity.TermConcept
 ca.uhn.fhir.jpa.model.entity.ResourceIndexedSearchParamString
 ca.uhn.fhir.jpa.model.entity.ResourceTable

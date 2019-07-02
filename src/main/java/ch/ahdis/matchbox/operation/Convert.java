@@ -21,11 +21,14 @@ package ch.ahdis.matchbox.operation;
  */
 import javax.servlet.http.HttpServletRequest;
 
+import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.instance.model.api.IBase;
 import org.hl7.fhir.instance.model.api.IBaseResource;
+import org.hl7.fhir.r4.model.Resource;
 
 import ca.uhn.fhir.rest.annotation.Operation;
 import ca.uhn.fhir.rest.annotation.OperationParam;
+import ch.ahdis.mapping.fml.MappingLanguageTransfomerByIg;
 
 /**
  * Operation $convert on Resource @link https://www.hl7.org/fhir/resource-operation-convert.html
@@ -35,13 +38,36 @@ import ca.uhn.fhir.rest.annotation.OperationParam;
  */
 public class Convert {
 	
+	static private MappingLanguageTransfomerByIg chmed16af = null; 
+
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Convert.class);
+
 	public Convert() {
+		if (chmed16af==null) {
+			chmed16af = new MappingLanguageTransfomerByIg("ch.mediplan.chmed16af#dev");
+		}
 	}
 
 	@Operation(name = "$convert", idempotent = true, returnParameters = {
 			@OperationParam(name = "output", type = IBase.class, min = 1, max = 1) })
-	public IBaseResource convert(@OperationParam(name = "input", min = 1, max = 1) final IBaseResource content, 
-	        HttpServletRequest theRequest) {
+	public IBaseResource convert(@OperationParam(name = "input", min = 1, max = 1) final IBaseResource content,
+			@OperationParam(name = "ig", min = 0, max = 1) final String ig,
+			@OperationParam(name = "from", min = 0, max = 1) final String from,
+			@OperationParam(name = "to", min = 0, max = 1) final String to,
+			HttpServletRequest theRequest) {
+		
+		log.debug("$convert");
+		
+		try {
+			if (to !=null && from != null) {
+				log.debug("convert chmed16af from "+ from +" to " + to );
+				IBaseResource output = chmed16af.convertResource((Resource) content, from, to);
+				log.debug("converted chmed16af from "+ from +" to " + to );				
+				return output;
+			}
+		} catch (FHIRException e) {
+			log.error("convert operation failed", e);
+		}
 		return content;
 	}
 

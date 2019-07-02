@@ -24,7 +24,15 @@
 			</code>
 		</Medication>
 	</contained>
-	<status value="active" />
+	<extension
+		url="http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.status">
+		<valueCode value="active" />
+	</extension>
+	<extension
+		url="http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.taken">
+		<valueCode value="unk" />
+	</extension>
+	<status value="unknown" />
 	<medicationReference>
 		<reference value="#cont1" />
 	</medicationReference>
