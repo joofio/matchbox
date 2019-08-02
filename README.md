@@ -57,9 +57,9 @@ docker logs matchbox
 ## build docker for gcloud/kubernetes
 
 export PROJECT_ID="$(gcloud config get-value project -q)"
-docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v5 .
-docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v5
-docker push eu.gcr.io/${PROJECT_ID}/matchbox:v5
+docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v7 .
+docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v7
+docker push eu.gcr.io/${PROJECT_ID}/matchbox:v7
 
 gcloud container clusters get-credentials cluster-europe-west3a-fhir-ch
 
@@ -87,4 +87,4 @@ Startup 810 MiB
 Loading all IG's 2.021GiB 
 --> need to investigate how we can make this less memory intensive
 
-
+ : Started MatchboxApplication in 92.94 seconds (JVM running for 94.398)

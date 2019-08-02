@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<hapi.version>4.0.0-SNAPSHOT</hapi.version>
-		<fhir.core.version>3.8.9-SNAPSHOT</fhir.core.version>
+		<fhir.core.version>3.8.19-SNAPSHOT</fhir.core.version>
 		<docker.image.prefix>matchbox</docker.image.prefix>
 	</properties>
 

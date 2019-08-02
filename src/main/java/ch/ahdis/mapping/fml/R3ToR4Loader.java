@@ -60,7 +60,7 @@ public class R3ToR4Loader implements IContextResourceLoader, VersionConvertorAdv
       r3 = new JsonParser().parse(stream);
     else
       r3 = new XmlParser().parse(stream);
-    org.hl7.fhir.r4.model.Resource r4 = new VersionConvertor_30_40().convertResource(r3, false);
+    org.hl7.fhir.r4.model.Resource r4 = VersionConvertor_30_40.convertResource(r3, false);
     
     Bundle b;
     if (r4 instanceof Bundle)
@@ -156,10 +156,17 @@ public class R3ToR4Loader implements IContextResourceLoader, VersionConvertorAdv
     return this;
   }
 
-	@Override
-	public org.hl7.fhir.instance.model.Resource convertR2(org.hl7.fhir.r4.model.Resource resource) throws FHIRException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  @Override
+  public org.hl7.fhir.dstu2.model.Resource convertR2(org.hl7.fhir.r4.model.Resource resource) throws FHIRException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public org.hl7.fhir.dstu2016may.model.Resource convertR2016May(org.hl7.fhir.r4.model.Resource resource)
+      throws FHIRException {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
 }
