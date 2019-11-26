@@ -38,6 +38,7 @@ import org.hl7.fhir.r4.hapi.ctx.IValidationSupport;
 import org.hl7.fhir.r5.model.FhirPublication;
 import org.hl7.fhir.r5.model.StructureDefinition;
 import org.hl7.fhir.r5.model.TypeDetails;
+import org.hl7.fhir.r5.model.ValueSet;
 import org.hl7.fhir.r5.utils.FHIRPathEngine.IEvaluationContext;
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
 import org.hl7.fhir.r5.utils.IResourceValidator.IdStatus;
@@ -456,6 +457,11 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IValid
 		public boolean conformsToProfile(Object appContext, org.hl7.fhir.r5.model.Base item, String url)
 				throws FHIRException {
 			return false;
+		}
+
+		@Override
+		public ValueSet resolveValueSet(Object appContext, String url) {
+			return null;
 		}
 
 	}

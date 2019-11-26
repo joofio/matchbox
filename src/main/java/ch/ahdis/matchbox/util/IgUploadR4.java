@@ -32,7 +32,7 @@ public class IgUploadR4 extends ValidationEngine {
 	public boolean initPassed = false;
 
 	public IgUploadR4() throws Exception {
-		super("hl7.fhir.core#4.0.0");
+		super("hl7.fhir.core#4.0.1");
 	}
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IgUploadR4.class);

@@ -1,0 +1,68 @@
+<Material xmlns:pharm="urn:ihe:pharm" xmlns="urn:hl7-org:v3"
+	xmlns:voc="urn:hl7-org:v3/voc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd" classCode="MMAT"
+	determinerCode="KIND">
+	<templateId root="1.3.6.1.4.1.19376.1.9.1.3.1" />
+	<!-- National medicinal product code (brand-level) -->
+	<code code="1" displayName="2" codeSystem="3" codeSystemName="4" /> <!-- Brand name -->
+	<name>5</name>
+	<!-- Pharmaceutical dose form -->
+	<pharm:formCode code="6" displayName="7" codeSystem="8"
+		codeSystemName="9" />
+	<lotNumberText>10</lotNumberText>
+	<pharm:expirationTime value="20210101" /> <!-- Container information -->
+	<pharm:asContent classCode="CONT">
+		<pharm:containerPackagedMedicine
+			classCode="CONT" determinerCode="INSTANCE"> <!-- Medicinal product code (package-level) -->
+			<pharm:code code="12" displayName="13" codeSystem="14"
+				codeSystemName="15" /> <!-- Brand name (package) -->
+			<pharm:name>16</pharm:name>
+			<pharm:formCode code="17" displayName="18"
+				codeSystem="19" codeSystemName="20" />
+			<pharm:capacityQuantity value="21" unit="22" />
+			<pharm:asSuperContent>
+				<pharm:containerPackagedMedicine
+					classCode='CONT' determinerCode='INSTANCE'>
+					<pharm:capacityQuantity value="41" unit='42' />
+				</pharm:containerPackagedMedicine>
+			</pharm:asSuperContent>
+		</pharm:containerPackagedMedicine>
+	</pharm:asContent>
+	<!-- These are optional generic equivalents -->
+	<pharm:asSpecializedKind classCode="GRIC">
+		<pharm:generalizedMedicineClass
+			classCode="MMAT">
+			<pharm:code code="23" displayName="Generic Equivalent"
+				codeSystem="24" codeSystemName="25" />
+			<pharm:name>26</pharm:name>
+		</pharm:generalizedMedicineClass>
+	</pharm:asSpecializedKind>
+	<!-- This is the list of active ingredients -->
+	<pharm:ingredient classCode="ACTI">
+		<!-- strength of ingredient -->
+		<pharm:quantity>
+			<numerator xsi:type="PQ" value="27" unit="28" />
+			<denominator xsi:type="PQ" value="29" unit="30" />
+		</pharm:quantity>
+		<pharm:ingredient classCode="MMAT"
+			determinerCode="KIND">
+			<pharm:code code="31" displayName="Active Ingredient 1"
+				codeSystem="32" codeSystemName="33" />
+			<pharm:name>Active Ingredient 1</pharm:name>
+		</pharm:ingredient>
+	</pharm:ingredient>
+	<pharm:ingredient classCode="ACTI">
+		<!-- strength of ingredient -->
+		<pharm:quantity>
+			<numerator xsi:type="PQ" value="34" unit="35" />
+			<denominator xsi:type="PQ" value="36" unit="37" />
+		</pharm:quantity>
+		<pharm:ingredient classCode="MMAT"
+			determinerCode="KIND">
+			<pharm:code code="38" displayName="Active Ingredient 2"
+				codeSystem="39" codeSystemName="40" />
+			<pharm:name>Active Ingredient 2</pharm:name>
+		</pharm:ingredient>
+	</pharm:ingredient>
+</Material>

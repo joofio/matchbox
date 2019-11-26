@@ -1,0 +1,32 @@
+@host = https://test.fhir.ch/r4
+
+
+### Convert between XML STU3 to XML R4
+POST {{host}}/$convert HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/fhir+xml;fhirVersion=3.0
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <fhirVersion value="3.0.1"/>
+</StructureDefinition>
+
+
+### Convert between JSON R4 to XML R4
+
+POST {{host}}/$convert HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+{
+    "resourceType": "Composition",
+    "status": "final",
+    "type": {
+        "coding": [
+            {
+                "system": "http://loinc.org",
+                "code": "11536-0",
+                "display": "Nurse note"
+            }
+        ]
+    }
+}

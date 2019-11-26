@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.time.DateUtils;
 import org.fhir.ucum.UcumService;
+import org.hl7.fhir.exceptions.DefinitionException;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.exceptions.TerminologyServiceException;
 import org.hl7.fhir.r4.context.IWorkerContext;
@@ -57,6 +58,7 @@ import org.hl7.fhir.r4.model.ValueSet;
 import org.hl7.fhir.r4.model.ValueSet.ConceptReferenceComponent;
 import org.hl7.fhir.r4.model.ValueSet.ConceptSetComponent;
 import org.hl7.fhir.r4.model.ValueSet.ValueSetExpansionContainsComponent;
+import org.hl7.fhir.r4.terminologies.TerminologyServiceOptions;
 import org.hl7.fhir.r4.terminologies.ValueSetExpander;
 import org.hl7.fhir.r4.terminologies.ValueSetExpanderFactory;
 import org.hl7.fhir.r4.terminologies.ValueSetExpanderSimple;
@@ -194,9 +196,9 @@ public final class TransformWorkerContext implements IWorkerContext, ValueSetExp
   }
 
   @Override
-  public ValidationResult validateCode(CodeableConcept theCode, ValueSet theVs) {
+  public ValidationResult validateCode(TerminologyServiceOptions options, CodeableConcept theCode, ValueSet theVs) {
     for (Coding next : theCode.getCoding()) {
-      ValidationResult retVal = validateCode(next, theVs);
+      ValidationResult retVal = validateCode(options, next, theVs);
       if (retVal != null && retVal.isOk()) {
         return retVal;
       }
@@ -206,15 +208,15 @@ public final class TransformWorkerContext implements IWorkerContext, ValueSetExp
   }
 
   @Override
-  public ValidationResult validateCode(Coding theCode, ValueSet theVs) {
+  public ValidationResult validateCode(TerminologyServiceOptions options, Coding theCode, ValueSet theVs) {
     String system = theCode.getSystem();
     String code = theCode.getCode();
     String display = theCode.getDisplay();
-    return validateCode(system, code, display, theVs);
+    return validateCode(options, system, code, display, theVs);
   }
 
   @Override
-  public ValidationResult validateCode(String theSystem, String theCode, String theDisplay) {
+  public ValidationResult validateCode(TerminologyServiceOptions options, String theSystem, String theCode, String theDisplay) {
     CodeValidationResult result = myValidationSupport.validateCode(myCtx, theSystem, theCode, theDisplay);
     if (result == null) {
       return null;
@@ -223,12 +225,12 @@ public final class TransformWorkerContext implements IWorkerContext, ValueSetExp
   }
 
   @Override
-  public ValidationResult validateCode(String theSystem, String theCode, String theDisplay, ConceptSetComponent theVsi) {
+  public ValidationResult validateCode(TerminologyServiceOptions options, String theSystem, String theCode, String theDisplay, ConceptSetComponent theVsi) {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public ValidationResult validateCode(String theSystem, String theCode, String theDisplay, ValueSet theVs) {
+  public ValidationResult validateCode(TerminologyServiceOptions options, String theSystem, String theCode, String theDisplay, ValueSet theVs) {
 
     if (theVs != null && isNotBlank(theCode)) {
       for (ConceptSetComponent next : theVs.getCompose().getInclude()) {
@@ -309,8 +311,8 @@ public final class TransformWorkerContext implements IWorkerContext, ValueSetExp
   }
 
   @Override
-  public ValidationResult validateCode(String code, ValueSet vs) {
-    return validateCode(null, code, null, vs);
+  public ValidationResult validateCode(TerminologyServiceOptions options, String code, ValueSet vs) {
+    return validateCode(options, null, code, null, vs);
   }
 
   @Override
@@ -474,4 +476,16 @@ public final class TransformWorkerContext implements IWorkerContext, ValueSetExp
   public ValueSetExpansionOutcome expandVS(ElementDefinitionBindingComponent theBinding, boolean theCacheOk, boolean theHeiarchical) throws FHIRException {
     throw new UnsupportedOperationException();
   }
+
+	@Override
+	public List<StructureDefinition> getStructures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void generateSnapshot(StructureDefinition p) throws DefinitionException, FHIRException {
+		// TODO Auto-generated method stub
+		
+	}
 }
