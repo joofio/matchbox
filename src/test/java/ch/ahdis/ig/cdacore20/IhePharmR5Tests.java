@@ -44,8 +44,8 @@ public class IhePharmR5Tests {
 			throws FHIRFormatError, DefinitionException, FileNotFoundException, IOException, FHIRException {
 		try {
 
-			String fileSource = TestingUtilities.resourceNameToFile("cda", "ihe-pharm-manufacturedmaterial.xml");
-			String roundTrip = TestingUtilities.resourceNameToFile("cda", "ihe-pharm-manufacturedmaterial.out.xml");
+			String fileSource = TestingUtilities.loadTestResource("cda", "ihe-pharm-manufacturedmaterial.xml");
+			String roundTrip = TestingUtilities.loadTestResource("cda", "ihe-pharm-manufacturedmaterial.out.xml");
 
 			Element e = Manager.parse(context, new FileInputStream(fileSource), FhirFormat.XML);
 

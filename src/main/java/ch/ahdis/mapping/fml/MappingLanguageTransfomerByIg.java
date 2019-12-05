@@ -66,8 +66,9 @@ public class MappingLanguageTransfomerByIg extends MappingLanguageTransfomer imp
 		try {
 			log.debug("loading R4");
 			contextR4 = new SimpleWorkerContext();
-			contextR4 = SimpleWorkerContext.fromPackage(pcm.loadPackage("hl7.fhir.core", "4.0.0"));
+			contextR4 = SimpleWorkerContext.fromPackage(pcm.loadPackage("hl7.fhir.r4.core", "4.0.1"));
 			contextR4.setCanRunWithoutTerminology(true);
+//			contextR4.setAllowLoadingDuplicates(true);
 		} catch (FileNotFoundException e) {
 			throw new FHIRException(e);
 		} catch (IOException e) {
@@ -99,15 +100,13 @@ public class MappingLanguageTransfomerByIg extends MappingLanguageTransfomer imp
 			} catch (Exception e) {
 				throw new FHIRException("Error parsing " + fn + ": " + e.getMessage(), e);
 			}
-			if (res != null) {
+      if (res != null && res instanceof MetadataResource && !contextR4.hasResource(res.getClass(), ((MetadataResource) res).getUrl())) {
 				contextR4.cacheResource(res);
-				if (res instanceof MetadataResource) {
-					for (Resource r : ((MetadataResource) res).getContained()) {
-						if (r instanceof MetadataResource) {
-							MetadataResource mr = (MetadataResource) r.copy();
-							mr.setUrl(((MetadataResource) res).getUrl() + "#" + r.getId());
-							contextR4.cacheResource(mr);
-						}
+				for (Resource r : ((MetadataResource) res).getContained()) {
+					if (r instanceof MetadataResource) {
+						MetadataResource mr = (MetadataResource) r.copy();
+						mr.setUrl(((MetadataResource) res).getUrl() + "#" + r.getId());
+						contextR4.cacheResource(mr);
 					}
 				}
 				if (res instanceof ImplementationGuide) {

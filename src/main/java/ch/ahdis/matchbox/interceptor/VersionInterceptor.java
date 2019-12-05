@@ -32,13 +32,10 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hl7.fhir.convertors.VersionConvertor_10_30;
-import org.hl7.fhir.dstu3.elementmodel.JsonParser;
-import org.hl7.fhir.dstu3.elementmodel.ObjectConverter;
-import org.hl7.fhir.dstu3.formats.IParser.OutputStyle;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.elementmodel.Element;
+import org.hl7.fhir.r4.model.StructureMap;
+import org.hl7.fhir.r5.utils.StructureMapUtilities;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
@@ -52,6 +49,7 @@ import ca.uhn.fhir.rest.server.RestfulServerUtils;
 import ca.uhn.fhir.rest.server.exceptions.AuthenticationException;
 import ca.uhn.fhir.rest.server.interceptor.InterceptorAdapter;
 import ch.ahdis.mapping.fml.MappingLanguageTransfomer_30_40;
+import ch.ahdis.matchbox.spring.boot.autoconfigure.MutableHttpServletRequest;
 
 /**
  * VersionInterceptor converts the FHIR resources in request/response to the current hapi-fhir server version 
@@ -71,8 +69,11 @@ import ch.ahdis.mapping.fml.MappingLanguageTransfomer_30_40;
  *
  */
 public class VersionInterceptor extends InterceptorAdapter {
+  
+  
 
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VersionInterceptor.class);
+
+  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VersionInterceptor.class);
   private MappingLanguageTransfomer_30_40 versionConvertor_30_40;
   
 	private FhirVersionEnum serverVersion;
@@ -120,17 +121,23 @@ public class VersionInterceptor extends InterceptorAdapter {
 		return getContextForVersion(theRequestDetails.getServer().getFhirContext(), theForVersion);
 	}
 
-
 	@Override
 	public boolean incomingRequestPostProcessed(RequestDetails theRequestDetails, HttpServletRequest theRequest,
 			HttpServletResponse theResponse) throws AuthenticationException {
 
-		log.debug("incoming input");
+		log.debug("incomingRequestPostProcessed");
 		log.debug(new String(theRequestDetails.loadRequestContents()));
 		
-		String contentType = defaultString(theRequest.getHeader(Constants.HEADER_CONTENT_TYPE));
+    String contentType = defaultString(theRequest.getHeader(Constants.HEADER_CONTENT_TYPE));
 		FhirVersionEnum version = extractFhirVersion(contentType);
-
+		
+		if (contentType.startsWith("text/fhir-mapping")) {
+      ((MutableHttpServletRequest) theRequest).putHeader(Constants.HEADER_CONTENT_TYPE, "application/fhir+json");
+      IParser parserConverted = EncodingEnum.JSON.newParser(getContextForVersion(theRequestDetails, FhirVersionEnum.R4));
+      theRequestDetails.setRequestContents(parserConverted.encodeResourceToString(versionConvertor_30_40.parseMap(new String(theRequestDetails.loadRequestContents()))).getBytes());
+		  return true;
+    }		
+		
 		if (version!=null) {
 			if (serverVersion == null) {
 				serverVersion = theRequestDetails.getServer().getFhirContext().getVersion().getVersion();

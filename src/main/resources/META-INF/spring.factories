@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration

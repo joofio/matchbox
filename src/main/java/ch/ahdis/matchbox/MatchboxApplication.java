@@ -30,9 +30,9 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import ca.uhn.fhir.jpa.provider.r4.JpaSystemProviderR4;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
-import ca.uhn.fhir.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
+import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
 import ch.ahdis.matchbox.interceptor.VersionInterceptor;
-import ch.ahdis.matchbox.operation.Convert;
+import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 
 @SpringBootApplication
 public class MatchboxApplication {
@@ -68,6 +68,9 @@ public class MatchboxApplication {
 
 			log.debug("registering VersionInterceptor");
 			server.registerInterceptor(new VersionInterceptor());
+
+			
+			server.registerInterceptor(new MappingLanguageInterceptor());
 
 			server.registerProvider(new Convert());
 

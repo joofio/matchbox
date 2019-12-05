@@ -61,10 +61,10 @@ import ca.uhn.fhir.context.ConfigurationException;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.EncodingEnum;
 import ca.uhn.fhir.rest.server.exceptions.InternalErrorException;
+import ca.uhn.fhir.validation.IInstanceValidatorModule;
 import ca.uhn.fhir.validation.IValidationContext;
-import ca.uhn.fhir.validation.IValidatorModule;
 
-public class FhirInstanceValidator extends BaseValidatorBridge implements IValidatorModule {
+public class FhirInstanceValidator extends BaseValidatorBridge implements IInstanceValidatorModule {
 
 	private static final org.slf4j.Logger ourLog = org.slf4j.LoggerFactory.getLogger(FhirInstanceValidator.class);
 
@@ -89,10 +89,10 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IValid
 		if (validationEngine == null) {
 			try {
 				ourLog.info("Setting up validation engine");
-				validationEngine = new ValidationEngine("hl7.fhir.core#4.0.0", null, null, FhirPublication.R4);
+				validationEngine = new ValidationEngine("hl7.fhir.r4.core", null, null, FhirPublication.R4);
 				ourLog.info("Loading ch-core");
-				validationEngine.loadIg("ch.fhir.ig.core#dev");
-				ourLog.info("Loading ch-core done");
+				validationEngine.loadIg("ch.fhir.ig.ch-core#dev", true);
+				ourLog.info("Loading ch.fhir.ig.ch-core done");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
