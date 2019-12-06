@@ -84,8 +84,10 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 	 * Uses {@link DefaultProfileValidationSupport} for {@link IValidationSupport
 	 * validation support}
 	 */
-	public FhirInstanceValidator() {
-		this(new DefaultProfileValidationSupport());
+	public FhirInstanceValidator(IValidationSupport theValidationSupport) {
+    myDocBuilderFactory = DocumentBuilderFactory.newInstance();
+    myDocBuilderFactory.setNamespaceAware(true);
+    myValidationSupport = theValidationSupport;
 		if (validationEngine == null) {
 			try {
 				ourLog.info("Setting up validation engine");
@@ -100,16 +102,6 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 		}
 	}
 
-	/**
-	 * Constructor which uses the given validation support
-	 *
-	 * @param theValidationSupport The validation support
-	 */
-	public FhirInstanceValidator(IValidationSupport theValidationSupport) {
-		myDocBuilderFactory = DocumentBuilderFactory.newInstance();
-		myDocBuilderFactory.setNamespaceAware(true);
-		myValidationSupport = theValidationSupport;
-	}
 
 	/**
 	 * Every element in a resource or data type includes an optional

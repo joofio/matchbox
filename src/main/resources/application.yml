@@ -31,7 +31,7 @@ hapi:
       e-tag-support: enabled
       default-pretty-print: true
     validation:
-      enabled: false
+      enabled: true
       request-only: true
     jpa:
       scheduling-disabled: true

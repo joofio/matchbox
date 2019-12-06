@@ -19,7 +19,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ResourceCondition;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
@@ -27,7 +26,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.util.CollectionUtils;
@@ -76,6 +74,7 @@ import ca.uhn.fhir.rest.server.interceptor.IServerInterceptor;
 import ca.uhn.fhir.rest.server.interceptor.RequestValidatingInterceptor;
 import ca.uhn.fhir.rest.server.interceptor.ResponseValidatingInterceptor;
 import ca.uhn.fhir.rest.server.servlet.ServletRequestDetails;
+import ch.ahdis.matchbox.validation.FhirInstanceValidator;
 import okhttp3.OkHttpClient;
 
 /**
@@ -240,36 +239,6 @@ public class FhirAutoConfiguration {
 		}
 	}
 
-	@Configuration
-	@Conditional(FhirValidationConfiguration.SchemaAvailableCondition.class)
-	@ConditionalOnProperty(name = "hapi.fhir.validation.enabled", matchIfMissing = true)
-	static class FhirValidationConfiguration {
-
-		@Bean
-		@ConditionalOnMissingBean
-		public RequestValidatingInterceptor requestValidatingInterceptor() {
-			return new RequestValidatingInterceptor();
-		}
-
-		@Bean
-		@ConditionalOnMissingBean
-		@ConditionalOnProperty(name = "hapi.fhir.validation.request-only", havingValue = "false")
-		public ResponseValidatingInterceptor responseValidatingInterceptor() {
-			return new ResponseValidatingInterceptor();
-		}
-
-		static class SchemaAvailableCondition extends ResourceCondition {
-
-			SchemaAvailableCondition() {
-				super("ValidationSchema",
-					"hapi.fhir.validation",
-					"schema-location",
-					"classpath:/org/hl7/fhir/instance/model/schema",
-					"classpath:/org/hl7/fhir/dstu2016may/model/schema",
-					"classpath:/org/hl7/fhir/dstu3/model/schema");
-			}
-		}
-	}
 
 	@Configuration
 	@ConditionalOnProperty("hapi.fhir.server.url")

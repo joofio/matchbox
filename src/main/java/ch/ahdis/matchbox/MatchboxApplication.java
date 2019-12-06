@@ -20,6 +20,7 @@ package ch.ahdis.matchbox;
  * #L%
  */
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -30,8 +31,12 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import ca.uhn.fhir.jpa.provider.r4.JpaSystemProviderR4;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
+import ca.uhn.fhir.rest.server.interceptor.RequestValidatingInterceptor;
+import ca.uhn.fhir.validation.IValidatorModule;
+import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
 import ch.ahdis.matchbox.interceptor.VersionInterceptor;
+import ch.ahdis.matchbox.operation.Convert;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 
 @SpringBootApplication
@@ -76,6 +81,15 @@ public class MatchboxApplication {
 
 			log.debug("registering JpaSystemProviderR4");
 			server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
+			
+			
+    IValidatorModule validatorModule = appContext.getBean("myInstanceValidatorR4", IValidatorModule.class);
+    if (validatorModule != null) {
+        RequestValidatingInterceptor validatorInterceptor = new RequestValidatingInterceptor();
+        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
+        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
+        server.registerInterceptor(validatorInterceptor);
+    }
 
 			log.debug("fhirServerCustomizer finished");
 		};
@@ -84,12 +98,5 @@ public class MatchboxApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MatchboxApplication.class, args);
 	}
-//	
-//	@Bean
-//	public DaoConfig daoConfig() {
-//	    DaoConfig retVal = new DaoConfig();
-//	    retVal.setReuseCachedSearchResultsForMillis((long) 0);
-//	    return retVal;
-//	}
 
 }
