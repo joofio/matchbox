@@ -28,13 +28,11 @@ public class PackageCacheInitializer {
 	
 	public static void main(String[] args) {
 		
-		
 		if (hasParam(args, "-id") & hasParam(args, "-v")) {
 			String id = getParam(args, "-id");
 			String version = getParam(args, "-v");
 			String tgz = getParam(args, "-tgz");
       String desc = getParam(args, "-desc");
-			
 			PackageCacheInitializer pci = new PackageCacheInitializer();
 			try {
 				pci.pkg(id, version, tgz, desc);
@@ -45,9 +43,8 @@ public class PackageCacheInitializer {
 				e.printStackTrace();
 				System.exit(-1);
 			}
-			
 		} else {
-			System.out.println("-id pagckage id");
+			System.out.println("-id package id");
 			System.out.println("-v version");
 			System.out.println("-tgz path to package if verison is dev");
 			System.exit(-1);

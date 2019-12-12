@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hl7.fhir.convertors.VersionConvertor_40_50;
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.instance.model.api.IIdType;
+import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.StructureMap;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
@@ -45,17 +45,32 @@ import org.hl7.fhir.r5.model.StructureMap.StructureMapStructureComponent;
 import org.hl7.fhir.r5.terminologies.ConceptMapEngine;
 import org.hl7.fhir.r5.utils.StructureMapUtilities;
 import org.hl7.fhir.r5.utils.StructureMapUtilities.ITransformerServices;
+import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.cache.PackageCacheManager;
 import org.hl7.fhir.utilities.cache.ToolsVersion;
 
+import ca.uhn.fhir.rest.annotation.Create;
+import ca.uhn.fhir.rest.annotation.Delete;
+import ca.uhn.fhir.rest.annotation.IdParam;
 import ca.uhn.fhir.rest.annotation.Operation;
+import ca.uhn.fhir.rest.annotation.Read;
+import ca.uhn.fhir.rest.annotation.ResourceParam;
+import ca.uhn.fhir.rest.annotation.Update;
 import ca.uhn.fhir.rest.api.Constants;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.api.server.RequestDetails;
+import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.RestfulServerUtils;
+import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 
-public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.StructureMapResourceProvider {
+//public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.StructureMapResourceProvider {
+
+public class StructureMapTransformProvider implements IResourceProvider {
   
+  @Override
+  public Class<? extends IBaseResource> getResourceType() {
+    return StructureMap.class;
+  }
+
   public class TransformSupportServices implements ITransformerServices {
 
     private List<Base> outputs;
@@ -100,17 +115,17 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
     }
 
   }
-
-  @Override
-  public MethodOutcome create(HttpServletRequest theRequest, StructureMap theResource, String theConditional,
-      RequestDetails theRequestDetails) {
-    MethodOutcome outcome = super.create(theRequest, theResource, theConditional, theRequestDetails);
-    if (outcome.getCreated()) {
-      log.debug("created structuredmap, caching");
-      init();
-      updateWorkerContext(theResource);
-    }
-    return outcome;
+  
+  @Create
+  public MethodOutcome createStructureMap(@ResourceParam StructureMap theResource) {
+    log.debug("created structuredmap, caching");
+    theResource.setId(Utilities.makeUuidLC());
+    init();
+    updateWorkerContext(theResource);
+    MethodOutcome retVal = new MethodOutcome();
+    retVal.setCreated(true);
+    retVal.setResource(theResource);
+    return retVal;
   }
 
   public void updateWorkerContext(StructureMap theResource) {
@@ -120,23 +135,30 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
     }    
     workerContext.cacheResource(VersionConvertor_40_50.convertResource(theResource));
   }
-
-  @Override
-  public MethodOutcome delete(HttpServletRequest theRequest, IdType theResource, String theConditional,
-      RequestDetails theRequestDetails) {
-    MethodOutcome outcome = super.delete(theRequest, theResource, theConditional, theRequestDetails);
-    init();
-    workerContext.dropResource(theResource.getResourceType(), theResource.getId());
-    return outcome;
+  
+  @Delete()
+  public void deleteStructureMap(@IdParam IdType theId) {
+      org.hl7.fhir.r5.model.StructureMap cached = workerContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, theId.getId());
+      if (cached == null) {
+          throw new ResourceNotFoundException("Unknown version");
+      }
+      init();
+      workerContext.dropResource(cached);
+      return; //
+  }
+  
+  @Update
+  public MethodOutcome update(@IdParam IdType theId, @ResourceParam StructureMap theResource) {
+     init();
+     updateWorkerContext(theResource);
+     return new MethodOutcome();
+  }
+  
+  @Read()
+  public org.hl7.fhir.r4.model.Resource getResourceById(@IdParam IdType theId) {
+    return VersionConvertor_40_50.convertResource(getMapByUrl(theId.getId()));
   }
 
-  @Override
-  public MethodOutcome update(HttpServletRequest theRequest, StructureMap theResource, IdType theId,
-      String theConditional, RequestDetails theRequestDetails) {
-    init();
-    updateWorkerContext(theResource);
-    return super.update(theRequest, theResource, theId, theConditional, theRequestDetails);
-  }
 
   static private SimpleWorkerContext workerContext = null;
   private StructureMapUtilities utils = null;
@@ -158,12 +180,6 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
       List<Base> outputs = new ArrayList<Base>();
       utils = new StructureMapUtilities(workerContext, new TransformSupportServices(outputs));
     }
-  }
-
-  @Override
-  public StructureMap read(HttpServletRequest theRequest, IIdType theId, RequestDetails theRequestDetails) {
-    StructureMap structureMap = super.read(theRequest, theId, theRequestDetails);
-    return structureMap;
   }
 
   @Operation(name = "$transform", manualResponse = true, manualRequest = true)
@@ -233,5 +249,6 @@ public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.Structu
   public org.hl7.fhir.r5.model.StructureMap getMapByUrl(String url) {
     return workerContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, url);
   }
+
 
 }

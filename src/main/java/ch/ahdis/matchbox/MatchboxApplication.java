@@ -1,5 +1,6 @@
 package ch.ahdis.matchbox;
 
+import java.util.ArrayList;
 /*
  * #%L
  * Matchbox Server
@@ -20,32 +21,23 @@ package ch.ahdis.matchbox;
  * #L%
  */
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 
-import ca.uhn.fhir.jpa.provider.r4.JpaSystemProviderR4;
+import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
-import ca.uhn.fhir.rest.server.interceptor.RequestValidatingInterceptor;
-import ca.uhn.fhir.validation.IValidatorModule;
-import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
-import ch.ahdis.matchbox.interceptor.VersionInterceptor;
-import ch.ahdis.matchbox.operation.Convert;
+import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 
 @SpringBootApplication
 public class MatchboxApplication {
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
-
-	@Autowired
-	private ApplicationContext appContext;
 
 	@Bean
 	public FhirRestfulServerCustomizer fhirServerCustomizer() {
@@ -71,25 +63,30 @@ public class MatchboxApplication {
 			CorsInterceptor interceptor = new CorsInterceptor(config);
 			server.registerInterceptor(interceptor);
 
-			log.debug("registering VersionInterceptor");
-			server.registerInterceptor(new VersionInterceptor());
+//			log.debug("registering VersionInterceptor");
+//			server.registerInterceptor(new VersionInterceptor());
 
 			
 			server.registerInterceptor(new MappingLanguageInterceptor());
 
-			server.registerProvider(new Convert());
+//			server.registerProvider(new Convert());
 
-			log.debug("registering JpaSystemProviderR4");
-			server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
+//			log.debug("registering JpaSystemProviderR4");
+//			server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
 			
 			
-    IValidatorModule validatorModule = appContext.getBean("myInstanceValidatorR4", IValidatorModule.class);
-    if (validatorModule != null) {
-        RequestValidatingInterceptor validatorInterceptor = new RequestValidatingInterceptor();
-        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
-        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
-        server.registerInterceptor(validatorInterceptor);
-    }
+//    IValidatorModule validatorModule = appContext.getBean("myInstanceValidatorR4", IValidatorModule.class);
+//    if (validatorModule != null) {
+//        RequestValidatingInterceptor validatorInterceptor = new RequestValidatingInterceptor();
+//        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
+//        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
+//        server.registerInterceptor(validatorInterceptor);
+//    }
+			
+
+			List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
+      resourceProviders.add(new StructureMapTransformProvider());
+      server.setResourceProviders(resourceProviders);
 
 			log.debug("fhirServerCustomizer finished");
 		};

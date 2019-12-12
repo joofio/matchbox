@@ -1,8 +1,6 @@
 # matchbox - playground with the hapi fhir spring boot server
 
 plain spring-boot-server based as provided by [hapi-fhir spring boot examles](https://github.com/jamesagnew/hapi-fhir/tree/master/hapi-fhir-spring-boot)
-* prequisites to build are [pullrequest for org.hl7.fhir.core](https://github.com/hapifhir/org.hl7.fhir.core/pull/11) to be based on version 3.8.0-snaphsot and [branch of forked hpi-fhir](https://github.com/ahdis/hapi-fhir/tree/oliveregger_fhircore
-* currently there is a kind of circular dependency on hapi-fhir-base which is included in hapi-fhir but needed by org.hl7.fhir.core [see also comment on pull request](https://github.com/hapifhir/org.hl7.fhir.core/pull/11)
 
 **Feature experimental**
 
@@ -12,7 +10,6 @@ plain spring-boot-server based as provided by [hapi-fhir spring boot examles](ht
 
 FHIR Mapping Language support based on the FHIR Java reference implementation:
 * prototype support for the [$transform operation for StructureMap](http://www.hl7.org/fhir/structuremap-operation-transform.html)
-* convenience operation to $parse a StructureMap from a text respresentation to a StructureMap
 
 FHIR RI Validation Support for the $validate operation
 * using the org.fhir.core validation RI infrastructure
