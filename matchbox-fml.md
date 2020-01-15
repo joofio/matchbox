@@ -79,6 +79,9 @@ wget https://github.com/ahdis/cda-core-2.0/releases/download/v0.0.2-dev/package.
 java -cp matchbox-0.4.0-SNAPSHOT.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.cda -v dev -tgz /Users/oliveregger/Desktop/matchbox/package.tgz -desc hl7.fhir.cda
 ```
 
+windows:
+java -cp matchbox-0.4.0-SNAPSHOT.jar -D"loader.main=ch.ahdis.matchbox.util.PackageCacheInitializer" org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.cda -v dev -tgz /Users/oliveregger/Desktop/matchbox/package.tgz -desc hl7.fhir.cda
+
 clone the project https://github.com/ahdis/cda-core-2.0/
 
 open with VSCode, RESTClient extension needs to be installed and start the matchbox 

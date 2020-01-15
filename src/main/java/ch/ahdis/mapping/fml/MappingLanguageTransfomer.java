@@ -30,7 +30,6 @@ import org.hl7.fhir.convertors.VersionConvertorAdvisor40;
 import org.hl7.fhir.convertors.VersionConvertor_10_40;
 import org.hl7.fhir.convertors.VersionConvertor_14_40;
 import org.hl7.fhir.convertors.VersionConvertor_30_40;
-import org.hl7.fhir.exceptions.DefinitionException;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.r4.conformance.ProfileUtilities;
 import org.hl7.fhir.r4.context.SimpleWorkerContext;
@@ -42,13 +41,11 @@ import org.hl7.fhir.r4.formats.JsonParser;
 import org.hl7.fhir.r4.formats.RdfParser;
 import org.hl7.fhir.r4.formats.XmlParser;
 import org.hl7.fhir.r4.model.Base;
-import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Constants;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.FhirPublication;
 import org.hl7.fhir.r4.model.ImplementationGuide;
-import org.hl7.fhir.r4.model.OperationOutcome;
 import org.hl7.fhir.r4.model.Parameters;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.ResourceFactory;
@@ -58,29 +55,15 @@ import org.hl7.fhir.r4.model.OperationOutcome.OperationOutcomeIssueComponent;
 import org.hl7.fhir.r4.model.StructureDefinition.StructureDefinitionKind;
 import org.hl7.fhir.r4.terminologies.ConceptMapEngine;
 import org.hl7.fhir.r4.utils.NarrativeGenerator;
-import org.hl7.fhir.r4.utils.OperationOutcomeUtilities;
 import org.hl7.fhir.r4.utils.StructureMapUtilities;
 import org.hl7.fhir.r4.utils.ToolingExtensions;
-import org.hl7.fhir.r4.utils.ValidationProfileSet;
-import org.hl7.fhir.r4.utils.IResourceValidator.BestPracticeWarningLevel;
-import org.hl7.fhir.r4.utils.IResourceValidator.CheckDisplayOption;
-import org.hl7.fhir.r4.utils.IResourceValidator.IdStatus;
 import org.hl7.fhir.r4.utils.StructureMapUtilities.ITransformerServices;
-import org.hl7.fhir.r4.validation.InstanceValidator;
-import org.hl7.fhir.r4.validation.ValidationEngine;
-import org.hl7.fhir.r4.validation.XmlValidator;
-import org.hl7.fhir.r4.validation.ValidationEngine.TransformSupportServices;
 import org.hl7.fhir.utilities.IniFile;
 import org.hl7.fhir.utilities.TextFile;
 import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.cache.NpmPackage;
 import org.hl7.fhir.utilities.cache.PackageCacheManager;
 import org.hl7.fhir.utilities.cache.ToolsVersion;
-import org.hl7.fhir.utilities.validation.ValidationMessage;
-import org.hl7.fhir.utilities.validation.ValidationMessage.IssueSeverity;
-import org.hl7.fhir.utilities.validation.ValidationMessage.IssueType;
-import org.hl7.fhir.utilities.validation.ValidationMessage.Source;
-import org.xml.sax.SAXException;
 
 public class MappingLanguageTransfomer {
 
@@ -162,7 +145,6 @@ public class MappingLanguageTransfomer {
 	  private SimpleWorkerContext context;
 //	  private FHIRPathEngine fpe;
 	  private Map<String, byte[]> binaries = new HashMap<String, byte[]>();
-	  private boolean doNative;
 	  private boolean noInvariantChecks;
 	  private boolean hintAboutNonMustSupport;
 	  private boolean anyExtensionsAllowed = false;
@@ -666,10 +648,6 @@ public class MappingLanguageTransfomer {
 	  public void setQuestionnaires(List<String> questionnaires) {
 	  }
 
-	  public void setNative(boolean doNative) {
-	    this.doNative = doNative;
-	  }
-
 	  private class Content {
 	    byte[] focus = null;
 	    FhirFormat cntType = null;
@@ -695,50 +673,7 @@ public class MappingLanguageTransfomer {
 	    }
 	    return res;
 	  }
-
-	  public OperationOutcome validate(String source, List<String> profiles) throws Exception {
-	    List<String> l = new ArrayList<String>();
-	    l.add(source);
-	    return (OperationOutcome)validate(l, profiles);
-	  }
 	    
-	  public Resource validate(List<String> sources, List<String> profiles) throws Exception {
-	    List<String> refs = new ArrayList<String>();
-	    boolean asBundle = handleSources(sources, refs);
-	    Bundle results = new Bundle();
-	    results.setType(Bundle.BundleType.COLLECTION);
-	    for (String ref : refs) {
-	      Content cnt = loadContent(ref, "validate");
-	      if (refs.size() > 1)
-	        System.out.println("Validate "+ref);
-	      try {
-	        OperationOutcome outcome = validate(ref, cnt.focus, cnt.cntType, profiles);
-	        ToolingExtensions.addStringExtension(outcome, ToolingExtensions.EXT_OO_FILE, ref);
-	        if (refs.size() > 1)
-	          produceValidationSummary(outcome);
-	        results.addEntry().setResource(outcome);
-	      } catch (Throwable e) {
-	        System.out.println("Validation Infrastructure fail validating "+ref+": "+e.getMessage());
-	      }
-	    }
-	    if (asBundle)
-	      return results;
-	    else
-	      return results.getEntryFirstRep().getResource();
-	  }
-	  
-	  private void produceValidationSummary(OperationOutcome oo) {
-	    for (OperationOutcomeIssueComponent iss : oo.getIssue()) {
-	      if (iss.getSeverity() == org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity.ERROR || iss.getSeverity() == org.hl7.fhir.r4.model.OperationOutcome.IssueSeverity.FATAL) {
-	        System.out.println("  "+iss.getSeverity().toCode()+": "+iss.getDetails().getText());
-	      }
-	    } 
-	  }
-
-	  public OperationOutcome validateString(String location, String source, FhirFormat format, List<String> profiles) throws Exception {
-	    return validate(location, source.getBytes(), format, profiles);
-	  }
-
 	  // Public to allow reporting of results in alternate ways
 	  public boolean handleSources(List<String> sources, List<String> refs) throws IOException {
 	    boolean asBundle = sources.size() > 1;
@@ -786,92 +721,6 @@ public class MappingLanguageTransfomer {
 	    return isBundle;
 	  }
 
-	  public OperationOutcome validate(String location, byte[] source, FhirFormat cntType, List<String> profiles) throws Exception {
-	    List<ValidationMessage> messages = new ArrayList<ValidationMessage>();
-	    if (doNative) {
-	      if (cntType == FhirFormat.JSON)
-	        validateJsonSchema(location, messages);
-	      if (cntType == FhirFormat.XML)
-	        validateXmlSchema(location, messages);
-	      if (cntType == FhirFormat.TURTLE)
-	        validateSHEX(location, messages);
-	    }
-	    InstanceValidator validator = getValidator();
-	    validator.validate(null, messages, new ByteArrayInputStream(source), cntType, new ValidationProfileSet(profiles, true));
-	    return messagesToOutcome(messages);
-	  }
-
-	  public OperationOutcome validate(String location, byte[] source, FhirFormat cntType, List<String> profiles, IdStatus resourceIdRule, boolean anyExtensionsAllowed, BestPracticeWarningLevel bpWarnings, CheckDisplayOption displayOption) throws Exception {
-	    List<ValidationMessage> messages = new ArrayList<ValidationMessage>();
-	    if (doNative) {
-	      if (cntType == FhirFormat.JSON)
-	        validateJsonSchema(location, messages);
-	      if (cntType == FhirFormat.XML)
-	        validateXmlSchema(location, messages);
-	      if (cntType == FhirFormat.TURTLE)
-	        validateSHEX(location, messages);
-	    }
-	    InstanceValidator validator = getValidator();
-	    validator.setResourceIdRule(resourceIdRule);
-	    validator.setBestPracticeWarningLevel(bpWarnings);
-	    validator.setCheckDisplay(displayOption);   
-	    validator.validate(null, messages, new ByteArrayInputStream(source), cntType, new ValidationProfileSet(profiles, true));
-	    return messagesToOutcome(messages);
-	  }
-	  
-	  
-	  private void validateSHEX(String location, List<ValidationMessage> messages) {
-	    messages.add(new ValidationMessage(Source.InstanceValidator, IssueType.INFORMATIONAL, location, "SHEX Validation is not done yet", IssueSeverity.INFORMATION));
-	  }
-
-	  private void validateXmlSchema(String location, List<ValidationMessage> messages) throws FileNotFoundException, IOException, SAXException {
-	    XmlValidator xml = new XmlValidator(messages, loadSchemas(), loadTransforms());
-	    messages.add(new ValidationMessage(Source.InstanceValidator, IssueType.INFORMATIONAL, location, "XML Schema Validation is not done yet", IssueSeverity.INFORMATION));
-	  }
-
-	  private Map<String, byte[]> loadSchemas() throws IOException {
-	    Map<String, byte[]> res = new HashMap<String, byte[]>();
-	    for (Entry<String, byte[]> e : readZip(new ByteArrayInputStream(binaries.get("http://hl7.org/fhir#fhir-all-xsd.zip"))).entrySet()) {
-	      if (e.getKey().equals("fhir-single.xsd"))
-	        res.put(e.getKey(), e.getValue());
-	      if (e.getKey().equals("fhir-invariants.sch"))
-	        res.put(e.getKey(), e.getValue());
-	    }
-	    return res;
-	  }
-	  
-	  private Map<String, byte[]> loadTransforms() throws IOException {
-	    Map<String, byte[]> res = new HashMap<String, byte[]>();
-	    for (Entry<String, byte[]> e : readZip(new ByteArrayInputStream(binaries.get("http://hl7.org/fhir#fhir-all-xsd.zip"))).entrySet()) {
-	      if (e.getKey().endsWith(".xsl"))
-	        res.put(e.getKey(), e.getValue());
-	    }
-	    return res;
-	  }
-
-	  private void validateJsonSchema(String location, List<ValidationMessage> messages) {
-	    messages.add(new ValidationMessage(Source.InstanceValidator, IssueType.INFORMATIONAL, location, "JSON Schema Validation is not done yet", IssueSeverity.INFORMATION));   
-	  }
-
-	  private List<ValidationMessage> filterMessages(List<ValidationMessage> messages) {
-	    List<ValidationMessage> filteredValidation = new ArrayList<ValidationMessage>();
-	    for (ValidationMessage e : messages) {
-	      if (!filteredValidation.contains(e))
-	        filteredValidation.add(e);
-	    }
-	    filteredValidation.sort(null);
-	    return filteredValidation;
-	  }
-	  
-	  private OperationOutcome messagesToOutcome(List<ValidationMessage> messages) throws DefinitionException {
-	    OperationOutcome op = new OperationOutcome();
-	    for (ValidationMessage vm : filterMessages(messages)) {
-	      op.getIssue().add(OperationOutcomeUtilities.convertToIssue(vm, op));
-	    }
-	    new NarrativeGenerator("", "", context).generate(null, op);
-	    return op;
-	  }
-	  
 	  public static String issueSummary (OperationOutcomeIssueComponent issue) {
 	    String source = ToolingExtensions.readStringExtension(issue, ToolingExtensions.EXT_ISSUE_SOURCE);
 	    return issue.getSeverity().toString()+" @ "+issue.getLocation() + " " +issue.getDetails().getText() +(source != null ? " (src = "+source+")" : "");    
@@ -953,14 +802,6 @@ public class MappingLanguageTransfomer {
 
 	  public void setVersion(String version) {
 	    this.version = version;
-	  }
-
-	  public InstanceValidator getValidator() {
-	    InstanceValidator validator = new InstanceValidator(context, null);
-	    validator.setHintAboutNonMustSupport(hintAboutNonMustSupport);
-	    validator.setAnyExtensionsAllowed(anyExtensionsAllowed);
-	    validator.setNoInvariantChecks(isNoInvariantChecks());
-	    return validator;
 	  }
 
 	  public void setMapLog(String mapLog) throws FileNotFoundException {

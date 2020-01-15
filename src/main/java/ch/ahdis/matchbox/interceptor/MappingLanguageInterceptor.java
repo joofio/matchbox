@@ -36,6 +36,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.r4.context.SimpleWorkerContext;
+import org.hl7.fhir.r4.elementmodel.Manager.FhirFormat;
+import org.hl7.fhir.r4.formats.IParser;
+import org.hl7.fhir.r4.formats.ParserFactory;
 import org.hl7.fhir.r4.model.Base;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.StructureMap;
@@ -44,9 +47,7 @@ import org.hl7.fhir.r4.utils.StructureMapUtilities.ITransformerServices;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
-import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.api.Constants;
-import ca.uhn.fhir.rest.api.EncodingEnum;
 import ca.uhn.fhir.rest.api.server.RequestDetails;
 import ca.uhn.fhir.rest.server.exceptions.AuthenticationException;
 import ca.uhn.fhir.rest.server.interceptor.InterceptorAdapter;
@@ -139,12 +140,19 @@ public class MappingLanguageInterceptor extends InterceptorAdapter implements IT
 	    log.debug("processing text/fhir mapping - converting to json");	    
 	    FhirVersionEnum version = extractFhirVersion(contentType);
       ((MutableHttpServletRequest) theRequest).putHeader(Constants.HEADER_CONTENT_TYPE, "application/fhir+json");
-      IParser parserConverted = EncodingEnum.JSON.newParser(getContextForVersion(theRequestDetails, FhirVersionEnum.R4));
+      
 
       StructureMap structureMap = parseMap(new String(theRequestDetails.loadRequestContents()));     
       
-      theRequestDetails.setRequestContents(
-          parserConverted.encodeResourceToString(structureMap).getBytes());
+      IParser parserConverted = ParserFactory.parser(FhirFormat.JSON);    
+      try {
+        log.debug(parserConverted.composeString(structureMap));
+        theRequestDetails.setRequestContents(
+            parserConverted.composeString(structureMap).getBytes());
+      } catch (IOException e) {
+        e.printStackTrace();
+        return false;
+      }
 		  return true;
     }		
 		return true;

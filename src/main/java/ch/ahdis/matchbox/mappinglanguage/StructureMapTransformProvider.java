@@ -45,6 +45,7 @@ import org.hl7.fhir.r5.model.StructureMap.StructureMapStructureComponent;
 import org.hl7.fhir.r5.terminologies.ConceptMapEngine;
 import org.hl7.fhir.r5.utils.StructureMapUtilities;
 import org.hl7.fhir.r5.utils.StructureMapUtilities.ITransformerServices;
+import org.hl7.fhir.r5.validation.InstanceValidatorFactory;
 import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.cache.PackageCacheManager;
 import org.hl7.fhir.utilities.cache.ToolsVersion;
@@ -119,6 +120,13 @@ public class StructureMapTransformProvider implements IResourceProvider {
   @Create
   public MethodOutcome createStructureMap(@ResourceParam StructureMap theResource) {
     log.debug("created structuredmap, caching");
+
+    // FIXME: don't know why a # is prefixed to the contained it
+    for (org.hl7.fhir.r4.model.Resource r : theResource.getContained()) {
+      if (r instanceof org.hl7.fhir.r4.model.ConceptMap && ((org.hl7.fhir.r4.model.ConceptMap) r).getId().startsWith("#")) {
+        r.setId(((org.hl7.fhir.r4.model.ConceptMap) r).getId().substring(1));
+      }
+    }
     theResource.setId(Utilities.makeUuidLC());
     init();
     updateWorkerContext(theResource);
@@ -170,12 +178,22 @@ public class StructureMapTransformProvider implements IResourceProvider {
       try {
         PackageCacheManager pcm = new PackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
         log.debug("loading hl7.fhir.r4.core");
+
         workerContext = SimpleWorkerContext.fromPackage(pcm.loadPackage("hl7.fhir.r4.core", "4.0.1"));
+        workerContext.setValidatorFactory(new InstanceValidatorFactory());
         log.debug("loading hl7.fhir.cda");
         workerContext.loadFromPackage(pcm.loadPackage("hl7.fhir.cda", "dev"), null);
+        log.debug("loading ch.fhir.ig.ch-epr-term");
+        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-epr-term", "dev"), null);
+        log.debug("loading ch.fhir.ig.ch-core");
+        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-core", "dev"), null);
+        log.debug("loading ch.fhir.ig.ch-emed");
+        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-emed", "dev"), null);
+        
         workerContext.setCanRunWithoutTerminology(true);
         log.debug("loading done");
       } catch (FHIRException | IOException e) {
+        log.error("ERROR loading implementation guides", e);
       }
       List<Base> outputs = new ArrayList<Base>();
       utils = new StructureMapUtilities(workerContext, new TransformSupportServices(outputs));
