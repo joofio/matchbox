@@ -2,8 +2,12 @@ package ch.ahdis.matchbox.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.hl7.fhir.exceptions.FHIRException;
+import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.cache.PackageCacheManager;
 import org.hl7.fhir.utilities.cache.ToolsVersion;
 
@@ -15,10 +19,27 @@ public class PackageCacheInitializer {
 		
 	}
 	
+  private InputStream fetchFromUrlSpecific(String source) throws FHIRException {
+    try {
+      URL url = new URL(source);
+      URLConnection c = url.openConnection();
+      return c.getInputStream();
+    } catch (Exception e) {
+        throw new FHIRException(e.getMessage(), e);
+    }
+  }
+
+	
 	public void pkg(String id, String version, String tgz, String desc) throws IOException, FHIRException {
 		pcm = new PackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
 		if (tgz != null) {
-			pcm.addPackageToCache(id, version, new FileInputStream(tgz), desc);
+		    InputStream inputStream=null;
+		  if (Utilities.isURL(tgz)) {
+		    inputStream = fetchFromUrlSpecific(tgz);
+		  } else {
+        inputStream = new FileInputStream(tgz);		    
+		  }
+			pcm.addPackageToCache(id, version, inputStream, desc);
 			System.out.println("added package "+id+" version "+version);
 		} else {
 				pcm.loadPackage(id, version);
