@@ -21,8 +21,7 @@ Health Checks provided by spring-boot
 
 ## build with maven
 ```
-.
-/mvnw package
+mvn package
 ```
 
 ## execute

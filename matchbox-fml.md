@@ -70,19 +70,20 @@ The above two operations allows transforms between FHIR Release 4.
 ## CDA to FHIR transformations
 
 A [FHIR Logical model for CDA](https://github.com/HL7/cda-core-2.0) is in development which can be used
-to convert between FHIR and cda.
+to convert between FHIR and cda. There are some open pull requests, if you want to work with these
 
 You need to download and install the package to you're package cache the first time.
 
 ```
-wget https://github.com/ahdis/cda-core-2.0/releases/download/v0.0.2-dev/package.tgz
-java -cp matchbox-0.4.0-SNAPSHOT.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.cda -v dev -tgz /Users/oliveregger/Desktop/matchbox/package.tgz -desc hl7.fhir.cda
+java -cp matchbox-0.4.0-SNAPSHOT.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.cda -v dev -tgz http://build.fhir.org/ig/ahdis/cda-core-2.0/branches/pullrequests/package.tgz -desc hl7.fhir.cda
 ```
 
 windows:
-java -cp matchbox-0.4.0-SNAPSHOT.jar -D"loader.main=ch.ahdis.matchbox.util.PackageCacheInitializer" org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.cda -v dev -tgz /Users/oliveregger/Desktop/matchbox/package.tgz -desc hl7.fhir.cda
+```
+java -cp matchbox-0.4.0-SNAPSHOT.jar -D"loader.main=ch.ahdis.matchbox.util.PackageCacheInitializer" org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.cda -v dev -tgz http://build.fhir.org/ig/ahdis/cda-core-2.0/branches/pullrequests/package.tgz -desc hl7.fhir.cda
+```
 
-clone the project https://github.com/ahdis/cda-core-2.0/
+clone the project https://github.com/ahdis/cda-fhir-maps/
 
 open with VSCode, RESTClient extension needs to be installed and start the matchbox 
 
@@ -90,15 +91,8 @@ open with VSCode, RESTClient extension needs to be installed and start the match
 java -cp matchbox-0.4.0-SNAPSHOT.jar  
 ```
 
-with putmaps.http you can now add the maps and transform the examples e.g.
+in the main diretory you can with  cdatofhir.http and fhirtocda.http you can add the maps and transform the examples
 
-```
-POST {{host}}/r4/StructureMap/$transform?source=http://hl7.org/fhir/cda/mapping/ClinicalDocumentToFHIR
-Accept: application/fhir+xml;fhirVersion=4.0
-Content-Type: application/fhir+xml;fhirVersion=4.0
-
-< ./resources/examples/cda-ch.xml
-```
 
 
 
