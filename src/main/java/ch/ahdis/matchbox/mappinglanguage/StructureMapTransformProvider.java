@@ -184,11 +184,11 @@ public class StructureMapTransformProvider implements IResourceProvider {
         log.debug("loading hl7.fhir.cda");
         workerContext.loadFromPackage(pcm.loadPackage("hl7.fhir.cda", "dev"), null);
         log.debug("loading ch.fhir.ig.ch-epr-term");
-        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-epr-term", "dev"), null);
+        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-epr-term", "current"), null);
         log.debug("loading ch.fhir.ig.ch-core");
-        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-core", "dev"), null);
+        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-core", "current"), null);
         log.debug("loading ch.fhir.ig.ch-emed");
-        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-emed", "dev"), null);
+        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-emed", "current"), null);
         
         workerContext.setCanRunWithoutTerminology(true);
         log.debug("loading done");
