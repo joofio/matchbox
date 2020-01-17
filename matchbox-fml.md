@@ -72,7 +72,7 @@ The above two operations allows transforms between FHIR Release 4.
 A [FHIR Logical model for CDA](https://github.com/HL7/cda-core-2.0) is in development which can be used
 to convert between FHIR and cda. There are some open pull requests, if you want to work with these
 
-
+See the following steps to develop with the [cda/fhir maps](https://github.com/ahdis/matchbox/blob/master/matchbox-fml.md)
 
 
 
