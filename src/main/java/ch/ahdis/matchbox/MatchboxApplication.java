@@ -21,8 +21,10 @@ import java.util.ArrayList;
  * #L%
  */
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -30,15 +32,22 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
+import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
+import ch.ahdis.matchbox.interceptor.TransactionProvider;
+import ch.ahdis.matchbox.interceptor.ValidateOperationInterceptor;
+import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
+import ch.ahdis.matchbox.operation.Validate;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
+import ch.ahdis.matchbox.validation.FhirInstanceValidator;
 
 @SpringBootApplication
 public class MatchboxApplication {
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
 
+	 
 	@Bean
 	public FhirRestfulServerCustomizer fhirServerCustomizer() {
 		return (server) -> {
@@ -59,33 +68,40 @@ public class MatchboxApplication {
 			config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
 
 			// Create the interceptor and register it
-			log.debug("registering CorsInterceptor");
-			CorsInterceptor interceptor = new CorsInterceptor(config);
-			server.registerInterceptor(interceptor);
+      log.debug("registering CorsInterceptor");
+      CorsInterceptor interceptor = new CorsInterceptor(config);
+      server.registerInterceptor(interceptor);
 
 //			log.debug("registering VersionInterceptor");
 //			server.registerInterceptor(new VersionInterceptor());
 
-			
-			server.registerInterceptor(new MappingLanguageInterceptor());
+      server.registerInterceptor(new MappingLanguageInterceptor());
 
 //			server.registerProvider(new Convert());
+//      server.registerProvider(new Convert());
 
-//			log.debug("registering JpaSystemProviderR4");
-//			server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
-			
-			
-//    IValidatorModule validatorModule = appContext.getBean("myInstanceValidatorR4", IValidatorModule.class);
-//    if (validatorModule != null) {
-//        RequestValidatingInterceptor validatorInterceptor = new RequestValidatingInterceptor();
-//        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
-//        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
-//        server.registerInterceptor(validatorInterceptor);
-//    }
-			
+      server.registerProvider(new Validate());      
+      server.registerProvider(new TransactionProvider(server));
+      
+      List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
 
-			List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
-      resourceProviders.add(new StructureMapTransformProvider());
+
+      FhirInstanceValidator validatorModule = new FhirInstanceValidator(null);
+      validatorModule.setBestPracticeWarningLevel(BestPracticeWarningLevel.Warning);
+      ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
+      validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
+      validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
+      server.registerInterceptor(validatorInterceptor);
+
+      
+      ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(server.getFhirContext());
+      implementationGuideProvider.addPropertyChangeListener(validatorModule);
+      resourceProviders.add(implementationGuideProvider);
+
+      resourceProviders.add(new StructureMapTransformProvider(validatorModule));
+      
+      
+      
       server.setResourceProviders(resourceProviders);
 
 			log.debug("fhirServerCustomizer finished");

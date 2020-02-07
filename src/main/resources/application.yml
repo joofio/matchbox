@@ -17,6 +17,3 @@ logging:
   level:
     ca.uhn.fhir.jaxrs: debug
     ch.ahdis: debug
-server:
-  tomcat:
-    max-threads: 5

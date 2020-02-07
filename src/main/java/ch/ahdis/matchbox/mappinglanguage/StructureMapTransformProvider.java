@@ -45,10 +45,7 @@ import org.hl7.fhir.r5.model.StructureMap.StructureMapStructureComponent;
 import org.hl7.fhir.r5.terminologies.ConceptMapEngine;
 import org.hl7.fhir.r5.utils.StructureMapUtilities;
 import org.hl7.fhir.r5.utils.StructureMapUtilities.ITransformerServices;
-import org.hl7.fhir.r5.validation.InstanceValidatorFactory;
 import org.hl7.fhir.utilities.Utilities;
-import org.hl7.fhir.utilities.cache.PackageCacheManager;
-import org.hl7.fhir.utilities.cache.ToolsVersion;
 
 import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.Delete;
@@ -62,10 +59,24 @@ import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.RestfulServerUtils;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
+import ca.uhn.fhir.rest.server.exceptions.UnprocessableEntityException;
+import ch.ahdis.matchbox.validation.FhirInstanceValidator;
 
 //public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.StructureMapResourceProvider {
 
 public class StructureMapTransformProvider implements IResourceProvider {
+  
+  
+  private SimpleWorkerContext workerContext = null;
+  private StructureMapUtilities utils = null;
+
+  public StructureMapTransformProvider(FhirInstanceValidator fhirInstanceValidator) {
+    super();
+    workerContext = fhirInstanceValidator.getContext();
+    utils = new StructureMapUtilities(fhirInstanceValidator.getContext(), new TransformSupportServices(new ArrayList<Base>()));
+  }
+
+
   
   @Override
   public Class<? extends IBaseResource> getResourceType() {
@@ -128,7 +139,6 @@ public class StructureMapTransformProvider implements IResourceProvider {
       }
     }
     theResource.setId(Utilities.makeUuidLC());
-    init();
     updateWorkerContext(theResource);
     MethodOutcome retVal = new MethodOutcome();
     retVal.setCreated(true);
@@ -150,14 +160,12 @@ public class StructureMapTransformProvider implements IResourceProvider {
       if (cached == null) {
           throw new ResourceNotFoundException("Unknown version");
       }
-      init();
       workerContext.dropResource(cached);
       return; //
   }
   
   @Update
   public MethodOutcome update(@IdParam IdType theId, @ResourceParam StructureMap theResource) {
-     init();
      updateWorkerContext(theResource);
      return new MethodOutcome();
   }
@@ -168,37 +176,9 @@ public class StructureMapTransformProvider implements IResourceProvider {
   }
 
 
-  static private SimpleWorkerContext workerContext = null;
-  private StructureMapUtilities utils = null;
 
   protected static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StructureMapTransformProvider.class);
 
-  private void init() {
-    if (workerContext == null) {
-      try {
-        PackageCacheManager pcm = new PackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
-        log.debug("loading hl7.fhir.r4.core");
-
-        workerContext = SimpleWorkerContext.fromPackage(pcm.loadPackage("hl7.fhir.r4.core", "4.0.1"));
-        workerContext.setValidatorFactory(new InstanceValidatorFactory());
-        log.debug("loading hl7.fhir.cda");
-        workerContext.loadFromPackage(pcm.loadPackage("hl7.fhir.cda", "dev"), null);
-        log.debug("loading ch.fhir.ig.ch-epr-term");
-        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-epr-term", "current"), null);
-        log.debug("loading ch.fhir.ig.ch-core");
-        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-core", "current"), null);
-        log.debug("loading ch.fhir.ig.ch-emed");
-        workerContext.loadFromPackage(pcm.loadPackage("ch.fhir.ig.ch-emed", "current"), null);
-        
-        workerContext.setCanRunWithoutTerminology(true);
-        log.debug("loading done");
-      } catch (FHIRException | IOException e) {
-        log.error("ERROR loading implementation guides", e);
-      }
-      List<Base> outputs = new ArrayList<Base>();
-      utils = new StructureMapUtilities(workerContext, new TransformSupportServices(outputs));
-    }
-  }
 
   @Operation(name = "$transform", manualResponse = true, manualRequest = true)
   public void manualInputAndOutput(HttpServletRequest theServletRequest, HttpServletResponse theServletResponse)
@@ -223,8 +203,11 @@ public class StructureMapTransformProvider implements IResourceProvider {
       org.hl7.fhir.r5.model.StructureMap map = workerContext.getTransform(source[0]);
 
       org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
+      if (r == null) {
+        throw new UnprocessableEntityException("Target Structure can not be resolved from map, is the corresponding implmentation guide provided?");
+      }
+      
       utils.transform(null, src, map, r);
-
       ServletOutputStream output = theServletResponse.getOutputStream();
 
       theServletResponse.setContentType(contentType);
@@ -267,6 +250,5 @@ public class StructureMapTransformProvider implements IResourceProvider {
   public org.hl7.fhir.r5.model.StructureMap getMapByUrl(String url) {
     return workerContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, url);
   }
-
-
+  
 }

@@ -588,8 +588,7 @@ public class MappingLanguageTransfomer {
 	              res = new org.hl7.fhir.dstu2.formats.JsonParser().parse(new ByteArrayInputStream(t.getValue()));
 	            else
 	              throw new Exception("Unsupported format for "+fn);
-	            VersionConvertorAdvisor40 advisor = new org.hl7.fhir.convertors.IGR2ConvertorAdvisor();
-	            r = new VersionConvertor_10_40(advisor ).convertResource(res);
+	            r = VersionConvertor_10_40.convertResource(res);
 	          } else if (version.equals(Constants.VERSION)) {
 	            if (fn.endsWith(".xml") && !fn.endsWith("template.xml"))
 	              r = new XmlParser().parse(new ByteArrayInputStream(t.getValue()));
