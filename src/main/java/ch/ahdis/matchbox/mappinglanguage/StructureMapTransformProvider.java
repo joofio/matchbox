@@ -60,27 +60,28 @@ import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.RestfulServerUtils;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import ca.uhn.fhir.rest.server.exceptions.UnprocessableEntityException;
-import ch.ahdis.matchbox.validation.FhirInstanceValidator;
+import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
 
 //public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.StructureMapResourceProvider {
 
-public class StructureMapTransformProvider implements IResourceProvider {
+
+// public class StructureMapTransformProvider implements IResourceProvider {
+
+  public class StructureMapTransformProvider extends SimpleWorkerContextProvider<StructureMap> implements IResourceProvider {
+// public class StructureMapTransformProvider extends SimpleWorkerContextProvider<StructureMap> {
+//  private SimpleWorkerContext fhirContext;
   
-  
-  private SimpleWorkerContext workerContext = null;
   private StructureMapUtilities utils = null;
-
-  public StructureMapTransformProvider(FhirInstanceValidator fhirInstanceValidator) {
-    super();
-    workerContext = fhirInstanceValidator.getContext();
-    utils = new StructureMapUtilities(fhirInstanceValidator.getContext(), new TransformSupportServices(new ArrayList<Base>()));
-  }
-
-
   
-  @Override
-  public Class<? extends IBaseResource> getResourceType() {
-    return StructureMap.class;
+//  @Override
+//  public Class<? extends IBaseResource> getResourceType() {
+//    return StructureMap.class;
+//  }
+
+  public StructureMapTransformProvider(SimpleWorkerContext fhirContext) {
+    super(fhirContext, StructureMap.class);
+//    this.fhirContext = fhirContext;
+    utils = new StructureMapUtilities(fhirContext, new TransformSupportServices(new ArrayList<Base>()));
   }
 
   public class TransformSupportServices implements ITransformerServices {
@@ -93,8 +94,8 @@ public class StructureMapTransformProvider implements IResourceProvider {
 
     @Override
     public Base createType(Object appInfo, String name) throws FHIRException {
-      StructureDefinition sd = workerContext.fetchResource(StructureDefinition.class, name);
-      return Manager.build(workerContext, sd); 
+      StructureDefinition sd = fhirContext.fetchResource(StructureDefinition.class, name);
+      return Manager.build(fhirContext, sd); 
     }
 
     @Override
@@ -106,7 +107,7 @@ public class StructureMapTransformProvider implements IResourceProvider {
 
     @Override
     public Coding translate(Object appInfo, Coding source, String conceptMapUrl) throws FHIRException {
-      ConceptMapEngine cme = new ConceptMapEngine(workerContext);
+      ConceptMapEngine cme = new ConceptMapEngine(fhirContext);
       return cme.translate(source, conceptMapUrl);
     }
 
@@ -147,20 +148,20 @@ public class StructureMapTransformProvider implements IResourceProvider {
   }
 
   public void updateWorkerContext(StructureMap theResource) {
-    org.hl7.fhir.r5.model.StructureMap cached = workerContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, theResource.getUrl());
+    org.hl7.fhir.r5.model.StructureMap cached = fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, theResource.getUrl());
     if (cached != null) {
-      workerContext.dropResource(cached);
+      fhirContext.dropResource(cached);
     }    
-    workerContext.cacheResource(VersionConvertor_40_50.convertResource(theResource));
+    fhirContext.cacheResource(VersionConvertor_40_50.convertResource(theResource));
   }
   
   @Delete()
   public void deleteStructureMap(@IdParam IdType theId) {
-      org.hl7.fhir.r5.model.StructureMap cached = workerContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, theId.getId());
+      org.hl7.fhir.r5.model.StructureMap cached = fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, theId.getId());
       if (cached == null) {
           throw new ResourceNotFoundException("Unknown version");
       }
-      workerContext.dropResource(cached);
+      fhirContext.dropResource(cached);
       return; //
   }
   
@@ -196,11 +197,11 @@ public class StructureMapTransformProvider implements IResourceProvider {
     Map<String, String[]> requestParams = theServletRequest.getParameterMap();
     String[] source = requestParams.get("source");
     if (source != null && source.length > 0) {
-      org.hl7.fhir.r5.elementmodel.Element src = Manager.parse(workerContext, theServletRequest.getInputStream(),
+      org.hl7.fhir.r5.elementmodel.Element src = Manager.parse(fhirContext, theServletRequest.getInputStream(),
           contentType.contains("xml") ? FhirFormat.XML : FhirFormat.JSON);
       
       
-      org.hl7.fhir.r5.model.StructureMap map = workerContext.getTransform(source[0]);
+      org.hl7.fhir.r5.model.StructureMap map = fhirContext.getTransform(source[0]);
 
       org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
       if (r == null) {
@@ -213,9 +214,9 @@ public class StructureMapTransformProvider implements IResourceProvider {
       theServletResponse.setContentType(contentType);
       if (output != null) {
         if (output != null && responseContentType.equals(Constants.CT_FHIR_JSON_NEW))
-          new org.hl7.fhir.r5.elementmodel.JsonParser(workerContext).compose(r, output, OutputStyle.PRETTY, null);
+          new org.hl7.fhir.r5.elementmodel.JsonParser(fhirContext).compose(r, output, OutputStyle.PRETTY, null);
         else
-          new org.hl7.fhir.r5.elementmodel.XmlParser(workerContext).compose(r, output, OutputStyle.PRETTY, null);
+          new org.hl7.fhir.r5.elementmodel.XmlParser(fhirContext).compose(r, output, OutputStyle.PRETTY, null);
       }
       theServletResponse.getOutputStream().close();
     }
@@ -235,7 +236,7 @@ public class StructureMapTransformProvider implements IResourceProvider {
       throw new FHIRException("Unable to determine resource URL for target type");
 
     StructureDefinition structureDefinition = null;
-    for (StructureDefinition sd : workerContext.getStructures()) {
+    for (StructureDefinition sd : fhirContext.getStructures()) {
       if (sd.getUrl().equalsIgnoreCase(targetTypeUrl)) {
         structureDefinition = sd;
         break;
@@ -244,11 +245,13 @@ public class StructureMapTransformProvider implements IResourceProvider {
     if (structureDefinition == null)
       throw new FHIRException("Unable to determine StructureDefinition for target type");
 
-    return Manager.build(workerContext, structureDefinition);
+    return Manager.build(fhirContext, structureDefinition);
   }
 
   public org.hl7.fhir.r5.model.StructureMap getMapByUrl(String url) {
-    return workerContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, url);
+    return fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, url);
   }
+
+
   
 }

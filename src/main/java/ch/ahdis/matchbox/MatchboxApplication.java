@@ -94,11 +94,12 @@ public class MatchboxApplication {
       server.registerInterceptor(validatorInterceptor);
 
       
-      ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(server.getFhirContext());
+      ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(validatorModule.getContext());
+      
       implementationGuideProvider.addPropertyChangeListener(validatorModule);
       resourceProviders.add(implementationGuideProvider);
 
-      resourceProviders.add(new StructureMapTransformProvider(validatorModule));
+      resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
       
       
       

@@ -4,15 +4,18 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import org.hl7.fhir.r4.model.ImplementationGuide;
+import org.hl7.fhir.r5.context.SimpleWorkerContext;
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.rest.annotation.Create;
+import ca.uhn.fhir.rest.annotation.ResourceParam;
 import ca.uhn.fhir.rest.api.MethodOutcome;
-import ca.uhn.fhir.rest.server.provider.HashMapResourceProvider;
+import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
 
-public class ImplementationGuideProvider extends HashMapResourceProvider<ImplementationGuide> {
+public class ImplementationGuideProvider extends SimpleWorkerContextProvider<ImplementationGuide> {
   
   public final static String IG_LOAD = "IG_LOAD";
-
+  
   private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
   public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -23,23 +26,26 @@ public class ImplementationGuideProvider extends HashMapResourceProvider<Impleme
       this.pcs.removePropertyChangeListener(listener);
   }
   
-  public ImplementationGuideProvider(FhirContext theFhirContext) {
-    super(theFhirContext, ImplementationGuide.class);
+  public ImplementationGuideProvider(SimpleWorkerContext simpleWorkerContext) {
+    super(simpleWorkerContext, ImplementationGuide.class);
   }
 
   protected static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImplementationGuideProvider.class);
-
-  @Override
-  public MethodOutcome create(ImplementationGuide theResource) {
-    MethodOutcome outcome = super.create(theResource);
-    if (outcome.getCreated() && theResource.getPackageId()!=null) {
+  
+  @Create
+  public MethodOutcome create(@ResourceParam ImplementationGuide theResource) {
+    if (theResource.getPackageId()!=null) {
       String ig = theResource.getPackageId();
       if (theResource.getVersion()!=null) {
         ig += "#" + theResource.getVersion();
       }
       this.pcs.firePropertyChange(IG_LOAD, null, ig);
+      return new MethodOutcome()
+          .setCreated(true);
+//          .setResource(theResource)
+//          .setId(theResource.getIdElement());
     }
-    return outcome;
+    return null;
   }
-  
+    
 }

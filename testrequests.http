@@ -69,6 +69,10 @@ Accept: application/fhir+json
   ]
 }
 
+### Get all implementation guides
+GET {{host}}/ImplementationGuide HTTP/1.1
+Accept: application/fhir+json
+
 ### Implementation Guide ch.fhir.ig.ch-core
 POST {{host}}/ImplementationGuide HTTP/1.1
 Content-Type: application/fhir+json
@@ -78,6 +82,17 @@ Accept: application/fhir+json
   "resourceType" : "ImplementationGuide",
   "version" : "dev",
   "packageId": "ch.fhir.ig.ch-core"
+}
+
+### Implementation Guide ch.fhir.ig.ch-core
+POST {{host}}/ImplementationGuide HTTP/1.1
+Content-Type: application/fhir+json
+Accept: application/fhir+json
+
+{
+  "resourceType" : "ImplementationGuide",
+  "version" : "dev",
+  "packageId": "ch.fhir.ig.ch-epr-term"
 }
 
 ### Implementation Guide hl7.fhir.cda
@@ -258,121 +273,48 @@ Content-Type: application/json
 }
 
 ### Call the transform operation (you need to post first the StructureMap to the server)
-POST {{host}}/StructureMap/$transform HTTP/1.1
-Content-Type: application/json
+POST {{host}}/StructureMap/$transform?source=http://ahdis.ch/fhir/mappingtutorial/qr2pat1 HTTP/1.1
+Content-Type: application/fhir+json
+Accept: application/fhir+json
 
 {
-  "resourceType": "Parameters",
-  "parameter": [
-    {
-      "name": "source",
-      "valueUri": "http://ahdis.ch/fhir/mappingtutorial/qr2pat1"
-    },
-    {
-      "name": "content",
-      "resource": {
-        "resourceType": "QuestionnaireResponse",
-        "status": "in-progress",
+  "resourceType": "QuestionnaireResponse",
+  "status": "in-progress",
+  "item": [
+      {
+        "linkId": "patient",
+        "text": "Patient",
         "item": [
-            {
-              "linkId": "patient",
-              "text": "Patient",
-              "item": [
-                {
-                  "linkId": "patient.lastname",
-                  "text": "Name",
-                  "answer": [
-                    {
-                      "valueString": "Egger"
-                    }
-                  ]
-                },
-                {
-                  "linkId": "patient.firstname",
-                  "text": "Vorname",
-                  "answer": [
-                    {
-                      "valueString": "Oliver"
-                    }
-                  ]
-                },
-                {
-                  "linkId": "patient.sex",
-                  "text": "Geschlecht",
-                  "answer": [
-                    {
-                      "valueString": "female"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-      }
-    }, 
-    {
-      "name" : "map",
-      "resource": {
-        "resourceType": "StructureMap",
-        "url": "http://ahdis.ch/fhir/mappingtutorial/qr2pat1",
-        "name": "mapping tutorial questionnairetopat",
-        "status": "draft",
-        "structure": [
           {
-            "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
-            "mode": "source",
-            "alias": "QuestionnaireResponse"
+            "linkId": "patient.lastname",
+            "text": "Name",
+            "answer": [
+              {
+                "valueString": "Egger"
+              }
+            ]
           },
           {
-            "url": "http://hl7.org/fhir/StructureDefinition/Patient",
-            "mode": "target",
-            "alias": "Patient"
-          }
-        ],
-        "group": [
-          {
-            "name": "QuestionnaireResponse",
-            "typeMode": "none",
-            "input": [
+            "linkId": "patient.firstname",
+            "text": "Vorname",
+            "answer": [
               {
-                "name": "src",
-                "type": "QuestionnaireResponse",
-                "mode": "source"
-              },
-              {
-                "name": "tgt",
-                "type": "Patient",
-                "mode": "target"
+                "valueString": "Oliver"
               }
-            ],
-            "rule": [
+            ]
+          },
+          {
+            "linkId": "patient.sex",
+            "text": "Geschlecht",
+            "answer": [
               {
-                "name": "SimpleAssignment",
-                "source": [
-                  {
-                    "context": "src"
-                  }
-                ],
-                "target": [
-                  {
-                    "context": "tgt",
-                    "contextType": "variable",
-                    "element": "gender",
-                    "transform": "copy",
-                    "parameter": [
-                      {
-                        "valueString": "male"
-                      }
-                    ]
-                  }
-                ]
+                "valueString": "female"
               }
             ]
           }
         ]
       }
-    }
-  ]
+    ]
 }
 
 ### Get stored StructureMaps
