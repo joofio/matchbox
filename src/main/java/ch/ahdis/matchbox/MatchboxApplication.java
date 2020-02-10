@@ -45,72 +45,71 @@ import ch.ahdis.matchbox.validation.FhirInstanceValidator;
 @SpringBootApplication
 public class MatchboxApplication {
 
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
+  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
 
-	 
-	@Bean
-	public FhirRestfulServerCustomizer fhirServerCustomizer() {
-		return (server) -> {
+  private final boolean JPA = false;
 
-			log.debug("fhirServerCustomizer");
+  @Bean
+  public FhirRestfulServerCustomizer fhirServerCustomizer() {
+    return (server) -> {
 
-			CorsConfiguration config = new CorsConfiguration();
-			config.addAllowedHeader("x-fhir-starter");
-			config.addAllowedHeader("Origin");
-			config.addAllowedHeader("Accept");
-			config.addAllowedHeader("X-Requested-With");
-			config.addAllowedHeader("Content-Type");
+      log.debug("fhirServerCustomizer");
 
-			config.addAllowedOrigin("*");
+      CorsConfiguration config = new CorsConfiguration();
+      config.addAllowedHeader("x-fhir-starter");
+      config.addAllowedHeader("Origin");
+      config.addAllowedHeader("Accept");
+      config.addAllowedHeader("X-Requested-With");
+      config.addAllowedHeader("Content-Type");
 
-			config.addExposedHeader("Location");
-			config.addExposedHeader("Content-Location");
-			config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+      config.addAllowedOrigin("*");
 
-			// Create the interceptor and register it
+      config.addExposedHeader("Location");
+      config.addExposedHeader("Content-Location");
+      config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+
+      // Create the interceptor and register it
       log.debug("registering CorsInterceptor");
       CorsInterceptor interceptor = new CorsInterceptor(config);
       server.registerInterceptor(interceptor);
 
-//			log.debug("registering VersionInterceptor");
-//			server.registerInterceptor(new VersionInterceptor());
+      if (!JPA) {
 
-      server.registerInterceptor(new MappingLanguageInterceptor());
+//        log.debug("registering VersionInterceptor");
+//      server.registerInterceptor(new VersionInterceptor());
+//        server.registerProvider(new Convert());
 
-//			server.registerProvider(new Convert());
-//      server.registerProvider(new Convert());
+        server.registerInterceptor(new MappingLanguageInterceptor());
 
-      server.registerProvider(new Validate());      
-      server.registerProvider(new TransactionProvider(server));
-      
-      List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
+        server.registerProvider(new Validate());
+        server.registerProvider(new TransactionProvider(server));
 
+        List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
 
-      FhirInstanceValidator validatorModule = new FhirInstanceValidator(null);
-      validatorModule.setBestPracticeWarningLevel(BestPracticeWarningLevel.Warning);
-      ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
-      validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
-      validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
-      server.registerInterceptor(validatorInterceptor);
+        FhirInstanceValidator validatorModule = new FhirInstanceValidator(null);
+        validatorModule.setBestPracticeWarningLevel(BestPracticeWarningLevel.Warning);
+        ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
+        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
+        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
+        server.registerInterceptor(validatorInterceptor);
 
-      
-      ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(validatorModule.getContext());
-      
-      implementationGuideProvider.addPropertyChangeListener(validatorModule);
-      resourceProviders.add(implementationGuideProvider);
+        ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(
+            validatorModule.getContext());
 
-      resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
-      
-      
-      
-      server.setResourceProviders(resourceProviders);
+        implementationGuideProvider.addPropertyChangeListener(validatorModule);
+        resourceProviders.add(implementationGuideProvider);
 
-			log.debug("fhirServerCustomizer finished");
-		};
-	}
+        resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
 
-	public static void main(String[] args) {
-		SpringApplication.run(MatchboxApplication.class, args);
-	}
+        server.setResourceProviders(resourceProviders);
+      }
+
+      log.debug("fhirServerCustomizer finished");
+    };
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(MatchboxApplication.class, args);
+  }
 
 }
