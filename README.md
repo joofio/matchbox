@@ -26,7 +26,7 @@ mvn package
 
 ## execute
 ```
-java -jar target/matchbox-0.1.0-SNAPSHOT.jar
+java -jar target/matchbox-0.5.0-SNAPSHOT.jar
 ```
 
 http://localhost:8080/r4/metadata
@@ -34,17 +34,11 @@ http://localhost:8080/r4/metadata
 
 ## docker build (for Dockerfile.simple)
 ```
-docker build . --build-arg JAR_FILE=./target/matchbox-0.0.1-SNAPSHOT.jar -t matchbox
+docker build . --build-arg JAR_FILE=./target/matchbox-0.5.0-SNAPSHOT.jar -t matchbox
 ```
 
 ## docker run
 ```
-cp /Users/oliveregger/Documents/github/chmed16af/output/package.tgz ./packages/ch.mediplan.chmed16af.tgz
-cp /Users/oliveregger/Documents/github/fhir.versions.r3r4/output/package.tgz ./packages/fhir.versions.r3r4.tgz
-cp /Users/oliveregger/Documents/github/ch-core/output/package.tgz ./packages/ch.fhir.ig.core.tgz
-
-mvn clean install
-docker build . --build-arg JAR_FILE=target/matchbox-0.3.0-SNAPSHOT.jar -t matchbox
 docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
 docker logs matchbox
 ```
@@ -53,9 +47,9 @@ docker logs matchbox
 ## build docker for gcloud/kubernetes
 
 export PROJECT_ID="$(gcloud config get-value project -q)"
-docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v7 .
-docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v7
-docker push eu.gcr.io/${PROJECT_ID}/matchbox:v7
+docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v050 .
+docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v050
+docker push eu.gcr.io/${PROJECT_ID}/matchbox:v050
 
 gcloud container clusters get-credentials cluster-europe-west3a-fhir-ch
 

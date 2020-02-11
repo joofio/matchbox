@@ -2,17 +2,22 @@ package ch.ahdis.matchbox.spring.boot.autoconfigure;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -45,6 +50,14 @@ import org.springframework.util.CollectionUtils;
 
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.jaxrs.server.AbstractJaxRsProvider;
+import ca.uhn.fhir.jpa.config.BaseJavaConfigDstu2;
+import ca.uhn.fhir.jpa.config.BaseJavaConfigDstu3;
+import ca.uhn.fhir.jpa.config.BaseJavaConfigR4;
+import ca.uhn.fhir.jpa.dao.DaoConfig;
+import ca.uhn.fhir.jpa.model.entity.ModelConfig;
+import ca.uhn.fhir.jpa.provider.BaseJpaProvider;
+import ca.uhn.fhir.jpa.provider.BaseJpaSystemProvider;
 import ca.uhn.fhir.rest.api.RequestTypeEnum;
 import ca.uhn.fhir.rest.client.api.IClientInterceptor;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
@@ -81,6 +94,7 @@ public class FhirAutoConfiguration {
 
 
 	@Configuration
+	@ConditionalOnClass(AbstractJaxRsProvider.class)
 	@EnableConfigurationProperties(FhirProperties.class)
 	@ConfigurationProperties("hapi.fhir.rest")
 	@SuppressWarnings("serial")
@@ -144,7 +158,7 @@ public class FhirAutoConfiguration {
 			super.initialize();
 
 			setFhirContext(this.fhirContext);
-//			setResourceProviders(this.resourceProviders);
+			setResourceProviders(this.resourceProviders);
 //			setPagingProvider(this.pagingProvider);
 
 			setServerAddressStrategy(new HardcodedServerAddressStrategy(this.properties.getServer().getPath()));
@@ -153,69 +167,69 @@ public class FhirAutoConfiguration {
 		}
 	}
 
-//	@Configuration
-//	@ConditionalOnClass(BaseJpaProvider.class)
-//	@ConditionalOnBean(DataSource.class)
-//	@EnableConfigurationProperties(FhirProperties.class)
-//	static class FhirJpaServerConfiguration {
-//		@Autowired
-//		private ScheduledExecutorService myScheduledExecutorService;
-//
-//		@Configuration
-//		@EntityScan(basePackages = {"ca.uhn.fhir.jpa.entity", "ca.uhn.fhir.jpa.model.entity"})
-//		static class FhirJpaDaoConfiguration {
-//
-//			@Bean
-//			@ConditionalOnMissingBean
-//			@ConfigurationProperties("hapi.fhir.jpa")
-//			public DaoConfig fhirDaoConfig() {
-//				DaoConfig fhirDaoConfig = new DaoConfig();
-//				return fhirDaoConfig;
-//			}
-//
-//			@Bean
-//			@ConditionalOnMissingBean
-//			@ConfigurationProperties("hapi.fhir.jpa")
-//			public ModelConfig fhirModelConfig() {
-//				return fhirDaoConfig().getModelConfig();
-//			}
-//		}
-//
-//		@Configuration
-//		@ConditionalOnBean({DaoConfig.class, RestfulServer.class})
-//		@SuppressWarnings("rawtypes")
-//		static class RestfulServerCustomizer implements FhirRestfulServerCustomizer {
-//
-//			private final BaseJpaSystemProvider systemProviders;
-//
-//			public RestfulServerCustomizer(ObjectProvider<BaseJpaSystemProvider> systemProviders) {
-//				this.systemProviders = systemProviders.getIfAvailable();
-//			}
-//
-//			@Override
-//			public void customize(RestfulServer server) {
-//				server.setPlainProviders(systemProviders);
-//			}
-//		}
-//
-//		@Configuration
-//		@ConditionalOnMissingBean(type = "ca.uhn.fhir.jpa.config.BaseConfig")
-//		@ConditionalOnProperty(name = "hapi.fhir.version", havingValue = "DSTU3")
-//		static class Dstu3 extends BaseJavaConfigDstu3 {
-//		}
-//
-//		@Configuration
-//		@ConditionalOnMissingBean(type = "ca.uhn.fhir.jpa.config.BaseConfig")
-//		@ConditionalOnProperty(name = "hapi.fhir.version", havingValue = "DSTU2")
-//		static class Dstu2 extends BaseJavaConfigDstu2 {
-//		}
-//
-//		@Configuration
-//		@ConditionalOnMissingBean(type = "ca.uhn.fhir.jpa.config.BaseConfig")
-//		@ConditionalOnProperty(name = "hapi.fhir.version", havingValue = "R4")
-//		static class R4 extends BaseJavaConfigR4 {
-//		}
-//	}
+	@Configuration
+	@ConditionalOnClass(BaseJpaProvider.class)
+	@ConditionalOnBean(DataSource.class)
+	@EnableConfigurationProperties(FhirProperties.class)
+	static class FhirJpaServerConfiguration {
+		@Autowired
+		private ScheduledExecutorService myScheduledExecutorService;
+
+		@Configuration
+		@EntityScan(basePackages = {"ca.uhn.fhir.jpa.entity", "ca.uhn.fhir.jpa.model.entity"})
+		static class FhirJpaDaoConfiguration {
+
+			@Bean
+			@ConditionalOnMissingBean
+			@ConfigurationProperties("hapi.fhir.jpa")
+			public DaoConfig fhirDaoConfig() {
+				DaoConfig fhirDaoConfig = new DaoConfig();
+				return fhirDaoConfig;
+			}
+
+			@Bean
+			@ConditionalOnMissingBean
+			@ConfigurationProperties("hapi.fhir.jpa")
+			public ModelConfig fhirModelConfig() {
+				return fhirDaoConfig().getModelConfig();
+			}
+		}
+
+		@Configuration
+		@ConditionalOnBean({DaoConfig.class, RestfulServer.class})
+		@SuppressWarnings("rawtypes")
+		static class RestfulServerCustomizer implements FhirRestfulServerCustomizer {
+
+			private final BaseJpaSystemProvider systemProviders;
+
+			public RestfulServerCustomizer(ObjectProvider<BaseJpaSystemProvider> systemProviders) {
+				this.systemProviders = systemProviders.getIfAvailable();
+			}
+
+			@Override
+			public void customize(RestfulServer server) {
+				server.setPlainProviders(systemProviders);
+			}
+		}
+
+		@Configuration
+		@ConditionalOnMissingBean(type = "ca.uhn.fhir.jpa.config.BaseConfig")
+		@ConditionalOnProperty(name = "hapi.fhir.version", havingValue = "DSTU3")
+		static class Dstu3 extends BaseJavaConfigDstu3 {
+		}
+
+		@Configuration
+		@ConditionalOnMissingBean(type = "ca.uhn.fhir.jpa.config.BaseConfig")
+		@ConditionalOnProperty(name = "hapi.fhir.version", havingValue = "DSTU2")
+		static class Dstu2 extends BaseJavaConfigDstu2 {
+		}
+
+		@Configuration
+		@ConditionalOnMissingBean(type = "ca.uhn.fhir.jpa.config.BaseConfig")
+		@ConditionalOnProperty(name = "hapi.fhir.version", havingValue = "R4")
+		static class R4 extends BaseJavaConfigR4 {
+		}
+	}
 
 
 	@Configuration

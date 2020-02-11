@@ -25,11 +25,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 
+import ca.uhn.fhir.jpa.provider.r4.JpaSystemProviderR4;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
 import ca.uhn.fhir.validation.ResultSeverityEnum;
@@ -47,7 +50,11 @@ public class MatchboxApplication {
 
   private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
 
-  private final boolean JPA = false;
+  private final boolean JPA = true;
+  
+  @Autowired
+  private ApplicationContext appContext;
+
 
   @Bean
   public FhirRestfulServerCustomizer fhirServerCustomizer() {
@@ -102,6 +109,9 @@ public class MatchboxApplication {
         resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
 
         server.setResourceProviders(resourceProviders);
+      } else {
+        log.debug("registering JpaSystemProviderR4");
+        server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
       }
 
       log.debug("fhirServerCustomizer finished");

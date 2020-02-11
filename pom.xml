@@ -9,9 +9,9 @@
   </parent>
   <groupId>ch.ahdis.matchbox</groupId>
   <artifactId>matchbox</artifactId>
-  <version>0.4.0-SNAPSHOT</version>
+  <version>0.5.0-SNAPSHOT</version>
   <name>matchbox</name>
-  <description>Utilites on top of Java HAPI Server </description>
+  <description>Utilites on top of Java HAPI Server (JPA version) </description>
 
   <properties>
     <java.version>11</java.version>
@@ -86,8 +86,25 @@
     </dependency>
     <dependency>
       <groupId>ca.uhn.hapi.fhir</groupId>
-      <artifactId>hapi-fhir-server</artifactId>
+      <artifactId>hapi-fhir-jpaserver-base</artifactId>
       <version>${hapi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ca.uhn.hapi.fhir</groupId>
+      <artifactId>hapi-fhir-jaxrsserver-base</artifactId>
+      <version>${hapi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jersey</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>

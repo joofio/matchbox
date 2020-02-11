@@ -1,0 +1,10 @@
+@host = http://test.fhir.ch/r4
+
+### Get capability statement
+GET {{host}}/metadata HTTP/1.1
+Accept: application/fhir+json
+
+### Get Patients
+GET {{host}}/Patient HTTP/1.1
+Accept: application/fhir+json
+
