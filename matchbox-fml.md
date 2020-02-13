@@ -9,7 +9,7 @@ The following operations available with matchbox:
 
 start up matchbox, which will run a lcoal server on port 8080
 ```
-java -cp matchbox-0.4.0-SNAPSHOT.jar  
+java -cp matchbox-0.6.0-SNAPSHOT.jar  
 ```
 
 1. parse and register a map with matchbox
@@ -73,18 +73,6 @@ A [FHIR Logical model for CDA](https://github.com/HL7/cda-core-2.0) is in develo
 to convert between FHIR and cda. There are some open pull requests, if you want to work with these
 
 See the following steps to develop with the [cda/fhir maps](https://github.com/ahdis/matchbox/blob/master/matchbox-fml.md)
-
-
-
-
-
-
-
- 
-
-
-
-
 
 
 

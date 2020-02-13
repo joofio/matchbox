@@ -1,0 +1,146 @@
+@host = http://test.ahdis.ch/r4
+
+### Get capability statement
+GET {{host}}/metadata HTTP/1.1
+Accept: application/fhir+json
+
+### Get ImplementationGuide
+GET {{host}}/ImplementationGuide HTTP/1.1
+Accept: application/fhir+json
+
+### Provide CDA and CH-core implementation guide
+POST {{host}} HTTP/1.1
+Content-Type: application/fhir+json
+Accept: application/fhir+json
+
+{
+  "resourceType": "Bundle",
+  "id": "bundle-transaction",
+  "meta": {
+    "lastUpdated": "2014-08-18T01:43:30Z"
+  },
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType" : "ImplementationGuide",
+        "version" : "dev",
+        "packageId": "hl7.fhir.cda"
+      },
+      "request": {
+        "method": "POST"
+      }
+    },
+    {
+      "resource": {
+        "resourceType" : "ImplementationGuide",
+        "version" : "0.1.0",
+        "packageId": "ch.fhir.ig.ch-core"
+      },
+      "request": {
+        "method": "POST"
+      }
+    }
+  ]
+}
+
+
+### validate a resource with no profile
+POST {{host}}/$validate HTTP/1.1
+Content-Type: application/fhir+xml
+Accept: application/fhir+xml
+
+<Patient xmlns="http://hl7.org/fhir">
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			Franz Muster, 10.2.197
+		</div>
+	</text>
+  <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+    <valueAddress>
+      <city value="Paris"/>
+      <country value="Frankreich"/>
+    </valueAddress>
+  </extension>
+	<name>
+		<family value="Muster" />
+		<given value="Franz" />
+	</name>
+	<gender value="male" />
+	<birthDate value="1967-10-02" />
+	<address>
+		<line value="Leidensweg 10" />
+		<city value="Specimendorf" />
+		<postalCode value="9876" />
+	</address>
+</Patient>
+
+### validate a resource with a profile
+POST {{host}}/$validate?profile=http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient HTTP/1.1
+Content-Type: application/fhir+xml
+Accept: application/fhir+xml
+
+<Patient xmlns="http://hl7.org/fhir">
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			Franz Muster, 10.2.197
+		</div>
+	</text>
+   <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+    <valueAddress>
+      <city value="Paris"/>
+      <country value="Frankreich"/>
+    </valueAddress>
+  </extension>
+	<name>
+		<family value="Muster" />
+		<given value="Franz" />
+	</name>
+	<gender value="male" />
+	<birthDate value="1967-10-02" />
+	<address>
+		<line value="Leidensweg 10" />
+		<city value="Specimendorf" />
+		<postalCode value="9876" />
+	</address>
+</Patient>
+
+
+### validate a resource with a profile, should give an error  Element 'Patient.extension[birthPlace]': max allowed = 1, but found 2
+POST {{host}}/$validate?profile=http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient HTTP/1.1
+Content-Type: application/fhir+xml
+Accept: application/fhir+xml
+
+<Patient xmlns="http://hl7.org/fhir">
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			Franz Muster, 10.2.197
+		</div>
+	</text>
+   <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+    <valueAddress>
+      <city value="Paris"/>
+      <country value="Frankreich"/>
+    </valueAddress>
+  </extension>
+   <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+    <valueAddress>
+      <city value="Paris"/>
+      <country value="Frankreich"/>
+    </valueAddress>
+  </extension>
+	<name>
+		<family value="Muster" />
+		<given value="Franz" />
+	</name>
+	<gender value="male" />
+	<birthDate value="1967-10-02" />
+	<address>
+		<line value="Leidensweg 10" />
+		<city value="Specimendorf" />
+		<postalCode value="9876" />
+	</address>
+</Patient>
