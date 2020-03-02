@@ -67,10 +67,9 @@ public class ValidateOperationInterceptor extends BaseValidatingInterceptor<Stri
 
 	private boolean myAddValidationResultsToResponseOperationOutcome = true;
 
-	@Override
-  protected
-	ValidationResult doValidate(FhirValidator theValidator, String theRequest, ValidationOptions options) {
-		return theValidator.validateWithResult(theRequest, options);
+  @Override
+	protected ValidationResult doValidate(FhirValidator theValidator, String theRequest, ValidationOptions options)  {
+	  return theValidator.validateWithResult(theRequest, options);
 	}
 
 	@Hook(Pointcut.SERVER_INCOMING_REQUEST_POST_PROCESSED)
@@ -136,9 +135,7 @@ public class ValidateOperationInterceptor extends BaseValidatingInterceptor<Stri
 		return true;
 	}
 
-	@Override
-  protected
-	String provideDefaultResponseHeaderName() {
+  protected String provideDefaultResponseHeaderName() {
 		return DEFAULT_RESPONSE_HEADER_NAME;
 	}
 

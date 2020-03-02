@@ -9,14 +9,14 @@
   </parent>
   <groupId>ch.ahdis.matchbox</groupId>
   <artifactId>matchbox</artifactId>
-  <version>0.6.0-SNAPSHOT</version>
+  <version>0.7.0-SNAPSHOT</version>
   <name>matchbox</name>
   <description>Utilites on top of Java HAPI Server </description>
 
   <properties>
     <java.version>11</java.version>
-    <hapi.version>4.2.0-SNAPSHOT</hapi.version>
-    <fhir.core.version>4.1.54-SNAPSHOT</fhir.core.version>
+    <hapi.version>4.3.0-SNAPSHOT</hapi.version>
+    <fhir.core.version>4.2.4-SNAPSHOT</fhir.core.version>
     <docker.image.prefix>matchbox</docker.image.prefix>
   </properties>
 

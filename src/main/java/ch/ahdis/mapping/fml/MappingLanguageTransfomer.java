@@ -457,11 +457,11 @@ public class MappingLanguageTransfomer {
 	  }
 
 	  private Map<String, byte[]> resolvePackage(String id, String v) throws Exception {
-	    try {
-	      pcm.checkBuildLoaded();
-	    } catch (IOException e) {
-	      log("Unable to connect to build.fhir.org to check on packages");
-	    }
+//	    try {
+// FIXME	      pcm.checkBuildLoaded();
+//	    } catch (IOException e) {
+//	      log("Unable to connect to build.fhir.org to check on packages");
+//	    }
 	    NpmPackage pi = pcm.loadPackage(id, v);
 	    if (pi != null && v == null)
 	      log("   ... Using version "+pi.version());
