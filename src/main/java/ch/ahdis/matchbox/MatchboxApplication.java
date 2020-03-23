@@ -36,8 +36,10 @@ import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
 import ch.ahdis.matchbox.interceptor.TransactionProvider;
 import ch.ahdis.matchbox.interceptor.ValidateOperationInterceptor;
+import ch.ahdis.matchbox.interceptor.VersionInterceptor;
 import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
+import ch.ahdis.matchbox.operation.Convert;
 import ch.ahdis.matchbox.operation.Validate;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 import ch.ahdis.matchbox.validation.FhirInstanceValidator;
@@ -75,9 +77,9 @@ public class MatchboxApplication {
 
       if (!JPA) {
 
-//        log.debug("registering VersionInterceptor");
-//      server.registerInterceptor(new VersionInterceptor());
-//        server.registerProvider(new Convert());
+        log.debug("registering VersionInterceptor");
+        server.registerInterceptor(new VersionInterceptor());
+        server.registerProvider(new Convert());
 
         server.registerInterceptor(new MappingLanguageInterceptor());
 

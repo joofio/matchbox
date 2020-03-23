@@ -43,9 +43,9 @@ public class Convert {
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Convert.class);
 
 	public Convert() {
-		if (chmed16af==null) {
-			chmed16af = new MappingLanguageTransfomerByIg("ch.mediplan.chmed16af#dev");
-		}
+//		if (chmed16af==null) {
+//			chmed16af = new MappingLanguageTransfomerByIg("ch.mediplan.chmed16af#dev");
+//		}
 	}
 
 	@Operation(name = "$convert", idempotent = true, returnParameters = {
@@ -57,17 +57,17 @@ public class Convert {
 			HttpServletRequest theRequest) {
 		
 		log.debug("$convert");
-		
-		try {
-			if (to !=null && from != null) {
-				log.debug("convert chmed16af from "+ from +" to " + to );
-				IBaseResource output = chmed16af.convertResource((Resource) content, from, to);
-				log.debug("converted chmed16af from "+ from +" to " + to );				
-				return output;
-			}
-		} catch (FHIRException e) {
-			log.error("convert operation failed", e);
-		}
+//		
+//		try {
+//			if (to !=null && from != null) {
+//				log.debug("convert chmed16af from "+ from +" to " + to );
+//				IBaseResource output = chmed16af.convertResource((Resource) content, from, to);
+//				log.debug("converted chmed16af from "+ from +" to " + to );				
+//				return output;
+//			}
+//		} catch (FHIRException e) {
+//			log.error("convert operation failed", e);
+//		}
 		return content;
 	}
 
