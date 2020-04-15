@@ -1,8 +1,13 @@
-@host = http://localhost:8080/r4
+@host = http://test.ahdis.ch/r4
 
 ### Get capability statement
 GET {{host}}/metadata HTTP/1.1
 Accept: application/fhir+json
+
+### Get DocumentReference
+GET {{host}}/DocumentReference?patient.identifier=1234|6789 HTTP/1.1
+Accept: application/fhir+json
+
 
 ### Get ImplementationGuide
 GET {{host}}/ImplementationGuide HTTP/1.1
@@ -34,7 +39,7 @@ Accept: application/fhir+json
     {
       "resource": {
         "resourceType" : "ImplementationGuide",
-        "version" : "0.1.0",
+        "version" : "1.0.0",
         "packageId": "ch.fhir.ig.ch-core"
       },
       "request": {

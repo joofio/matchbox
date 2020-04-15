@@ -118,45 +118,351 @@ group CompositionClinicalDocument(source bundle : Bundle, source source : Compos
 }
 
 
+###
+
+@host = https://test.ahdis.ch
 
 ###
-POST http://localhost:8080/r4/StructureMap HTTP/1.1
-Accept: application/fhir+xml;fhirVersion=4.0
+POST {{host}}/r4/StructureDefinition HTTP/1.1
+Accept: application/fhir+json
+Content-Type: application/fhir+json
+
+{
+  "resourceType" : "StructureDefinition",
+  "url" : "http://www.csvonfhir.com/codevscovid19/StructureDefinition/CovidDataFinal",
+  "name" : "Healthdata",
+  "status" : "unknown",
+  "kind" : "logical",
+  "abstract" : false,
+  "type" : "CovidDataFinal",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Element",
+  "derivation" : "specialization",
+  "differential" : {
+    "element" : [{
+      "id" : "CovidDataFinal",
+      "path" : "CovidDataFinal"
+    },
+    {
+      "id" : "CovidDataFinal.id",
+      "path" : "CovidDataFinal.id",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.user",
+      "path" : "CovidDataFinal.user",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.age",
+      "path" : "CovidDataFinal.age",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.gender",
+      "path" : "CovidDataFinal.gender",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.nationality",
+      "path" : "CovidDataFinal.nationality",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.country",
+      "path" : "CovidDataFinal.country",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.canton",
+      "path" : "CovidDataFinal.canton",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.location_zip",
+      "path" : "CovidDataFinal.location_zip",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.thinks_sick",
+      "path" : "CovidDataFinal.thinks_sick",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.close_infected",
+      "path" : "CovidDataFinal.close_infected",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.usually_home",
+      "path" : "CovidDataFinal.usually_home",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.contacted_hospital",
+      "path" : "CovidDataFinal.contacted_hospital",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.tested",
+      "path" : "CovidDataFinal.tested",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.positive_to_test",
+      "path" : "CovidDataFinal.positive_to_test",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.risk",
+      "path" : "CovidDataFinal.risk",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.works_in_health",
+      "path" : "CovidDataFinal.works_in_health",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.smoker",
+      "path" : "CovidDataFinal.smoker",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.pregnant",
+      "path" : "CovidDataFinal.pregnant",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.family",
+      "path" : "CovidDataFinal.family",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.day",
+      "path" : "CovidDataFinal.day",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.temperature",
+      "path" : "CovidDataFinal.temperature",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.coughing",
+      "path" : "CovidDataFinal.coughing",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.sneezing",
+      "path" : "CovidDataFinal.sneezing",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.throat_pain",
+      "path" : "CovidDataFinal.throat_pain",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.fatigue",
+      "path" : "CovidDataFinal.fatigue",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.breathing_impaired",
+      "path" : "CovidDataFinal.breathing_impaired",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.headache",
+      "path" : "CovidDataFinal.headache",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.diarrhea",
+      "path" : "CovidDataFinal.diarrhea",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.nausea",
+      "path" : "CovidDataFinal.nausea",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.loss_of_smell",
+      "path" : "CovidDataFinal.loss_of_smell",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    }]
+  }
+}
+
+###
+POST {{host}}/r4/StructureMap HTTP/1.1
+Accept: application/fhir+json;fhirVersion=4.0
 Content-Type: text/fhir-mapping
 
-map "http:/ahdis.ch/matchbox/fml/qr2patgender" = "qr2patgender"
-uses "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse" alias QuestionnaireResponse as source
+map "http://hl7.org/fhir/StructureMap/CovidDataFinalMap" = "CovidDataFinalMap"
+uses "http://www.csvonfhir.com/codevscovid19/StructureDefinition/CovidDataFinal" alias CovidDataFinal as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
-group QuestionnaireResponse(source src : QuestionnaireResponse, target tgt : Patient) {
-  src.item as item -> tgt as patient then item(item, patient);
-}
-group item(source src, target tgt: Patient) {
-  src.item as item where linkId.value in ('patient.sex') -> tgt.gender = (item.answer.valueString);
+group csv(source src : CovidDataFinal, target tgt : Patient) {
+    src.gender as gender where $this = 'F'  -> tgt.gender = 'female' "rule_a";
+    src.gender as gender where $this = 'M'  -> tgt.gender = 'male' "rule_b";
 }
 
 ###
-POST http://localhost:8080/r4/StructureMap/$transform?source=http:/ahdis.ch/matchbox/fml/qr2patgender
-Accept: application/fhir+xml;fhirVersion=4.0
+POST {{host}}/r4/StructureMap/$transform?source=http://hl7.org/fhir/StructureMap/CovidDataFinalMap
+Accept: application/fhir+json;fhirVersion=4.0
 Content-Type: application/fhir+json;fhirVersion=4.0
 
 {
-  "resourceType": "QuestionnaireResponse",
-  "status": "in-progress",
-  "item": [
-    {
-      "linkId": "patient",
-      "text": "Patient",
-      "item": [
-        {
-          "linkId": "patient.sex",
-          "text": "Geschlecht",
-          "answer": [
-            {
-              "valueString": "female"
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "resourceType": "CovidDataFinal",
+  "country": "Switzerland",
+  "gender": "F",
+  "tested": "FALSE",
+  "thinks_sick": "TRUE",
+  "works_in_health": "FALSE",
+  "loss_of_smell": "1",
+  "smoker": "FALSE",
+  "fatigue": "1",
+  "coughing": "0",
+  "sneezing": "1",
+  "temperature": "36.5",
+  "close_infected": "FALSE",
+  "id": "1",
+  "location_zip": "3008",
+  "day": "01.04.2020",
+  "pregnant": "FALSE",
+  "throat_pain": "0",
+  "positive_to_test": "FALSE",
+  "diarrhea": "0",
+  "contacted_hospital": "TRUE",
+  "nausea": "0",
+  "nationality": "Switzerland",
+  "canton": "BE",
+  "risk": "TRUE",
+  "headache": "0",
+  "family": "2",
+  "user": "user_1",
+  "age": "60",
+  "usually_home": "FALSE",
+  "breathing_impaired": "0"
 }
