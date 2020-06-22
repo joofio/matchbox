@@ -144,7 +144,7 @@ public class VersionInterceptor extends InterceptorAdapter {
 			}
 			if (version!=serverVersion) {
 
-				EncodingEnum encoding = RestfulServerUtils.determineRequestEncoding(theRequestDetails);
+				EncodingEnum encoding = RestfulServerUtils.determineRequestEncodingNoDefault(theRequestDetails);
 				IBaseResource reqeustResourceConverted = null;
 				
 				if (version==FhirVersionEnum.DSTU3 && serverVersion==FhirVersionEnum.R4) {

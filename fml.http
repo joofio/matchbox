@@ -1,0 +1,50 @@
+@host = https://test.ahdis.ch
+
+GET {{host}}/r4/metadata HTTP/1.1
+
+
+
+### FHIR Tutorial
+
+POST {{host}}/r4/StructureMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: text/fhir-mapping
+
+map "http://ahdis.ch/matchbox/fml/qr2patgender" = "qr2patgender"
+uses "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse" alias QuestionnaireResponse as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
+group QuestionnaireResponse(source src : QuestionnaireResponse, target tgt : Patient) {
+  src.item as item -> tgt as patient then item(item, patient);
+}
+group item(source src, target tgt: Patient) {
+  src.item as item where linkId.value in ('patient.sex') -> tgt.gender = (item.answer.valueString);
+}
+
+
+###
+
+POST {{host}}/r4/StructureMap/$transform?source=http://ahdis.ch/matchbox/fml/qr2patgender
+Accept: application/fhir+json;fhirVersion=4.0
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+{
+  "resourceType": "QuestionnaireResponse",
+  "status": "in-progress",
+  "item": [
+    {
+      "linkId": "patient",
+      "text": "Patient",
+      "item": [
+        {
+          "linkId": "patient.sex",
+          "text": "Geschlecht",
+          "answer": [
+            {
+              "valueString": "female"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

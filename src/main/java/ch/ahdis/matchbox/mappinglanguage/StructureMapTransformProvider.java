@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hl7.fhir.convertors.VersionConvertor_40_50;
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.StructureMap;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
@@ -40,12 +39,15 @@ import org.hl7.fhir.r5.elementmodel.Manager.FhirFormat;
 import org.hl7.fhir.r5.formats.IParser.OutputStyle;
 import org.hl7.fhir.r5.model.Base;
 import org.hl7.fhir.r5.model.Coding;
+import org.hl7.fhir.r5.model.Narrative.NarrativeStatus;
 import org.hl7.fhir.r5.model.StructureDefinition;
 import org.hl7.fhir.r5.model.StructureMap.StructureMapStructureComponent;
 import org.hl7.fhir.r5.terminologies.ConceptMapEngine;
 import org.hl7.fhir.r5.utils.StructureMapUtilities;
 import org.hl7.fhir.r5.utils.StructureMapUtilities.ITransformerServices;
 import org.hl7.fhir.utilities.Utilities;
+import org.hl7.fhir.utilities.xhtml.NodeType;
+import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 
 import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.Delete;
@@ -140,19 +142,28 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
       }
     }
     theResource.setId(Utilities.makeUuidLC());
-    updateWorkerContext(theResource);
+    theResource = updateWorkerContext(theResource);
     MethodOutcome retVal = new MethodOutcome();
     retVal.setCreated(true);
     retVal.setResource(theResource);
     return retVal;
   }
 
-  public void updateWorkerContext(StructureMap theResource) {
+  public StructureMap updateWorkerContext(StructureMap theResource) {
     org.hl7.fhir.r5.model.StructureMap cached = fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureMap.class, theResource.getUrl());
     if (cached != null) {
       fhirContext.dropResource(cached);
     }    
-    fhirContext.cacheResource(VersionConvertor_40_50.convertResource(theResource));
+    
+    org.hl7.fhir.r5.model.StructureMap mapR5 = (org.hl7.fhir.r5.model.StructureMap) VersionConvertor_40_50.convertResource(theResource);
+    mapR5.getText().setStatus(NarrativeStatus.GENERATED);
+    mapR5.getText().setDiv(new XhtmlNode(NodeType.Element, "div"));
+    String render = StructureMapUtilities.render(mapR5);
+    mapR5.getText().getDiv().addTag("pre").addText(render);
+
+    fhirContext.cacheResource(mapR5);
+    
+    return (StructureMap) VersionConvertor_40_50.convertResource(mapR5);
   }
   
   @Delete()
@@ -202,6 +213,9 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
       
       
       org.hl7.fhir.r5.model.StructureMap map = fhirContext.getTransform(source[0]);
+      if (map == null) {
+          throw new UnprocessableEntityException("Map not availabe with canonical url "+source[0]);
+      }
 
       org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
       if (r == null) {
@@ -209,9 +223,10 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
       }
       
       utils.transform(null, src, map, r);
+      theServletResponse.setContentType(contentType);
+      theServletResponse.setCharacterEncoding("UTF-8");
       ServletOutputStream output = theServletResponse.getOutputStream();
 
-      theServletResponse.setContentType(contentType);
       if (output != null) {
         if (output != null && responseContentType.equals(Constants.CT_FHIR_JSON_NEW))
           new org.hl7.fhir.r5.elementmodel.JsonParser(fhirContext).compose(r, output, OutputStyle.PRETTY, null);

@@ -32,3 +32,4 @@ ca.uhn.fhir.jpa.model.entity.ResourceTable
 mvnw
 mvnw.cmd
 matchbox-0.4.0-SNAPSHOT.jar
+/.apt_generated_tests/

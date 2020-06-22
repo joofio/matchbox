@@ -1,6 +1,13 @@
-### @host = https://test.fhir.ch/r4
+### conversion
+### @host = https://test.ahdis.ch
+@host = http://localhost:8080
 
-@host = http://localhost:8080/r4
+GET https://test.ahdis.ch/r4/metadata HTTP/1.1
+Accept: application/fhir+json
+
+###
+GET {{host}}/r4/metadata HTTP/1.1
+Accept: application/fhir+json
 
 
 ### Convert between XML STU3 to XML R4
@@ -119,9 +126,6 @@ group CompositionClinicalDocument(source bundle : Bundle, source source : Compos
 
 
 ###
-
-@host = https://test.ahdis.ch
-
 ###
 POST {{host}}/r4/StructureDefinition HTTP/1.1
 Accept: application/fhir+json

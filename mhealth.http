@@ -1,0 +1,16 @@
+### @host = http://localhost:8081
+
+@host = http://localhost:9091
+
+GET {{host}}/metadata HTTP/1.1
+Accept: application/fhir+json
+
+###
+GET {{host}} HTTP/1.1
+Accept: application/fhir+json
+
+
+###
+GET {{host}}/fhir/Patient/$ihe-pix?sourceIdentifier=urn:oid:1.2.3.4|0815&targetSystem=urn:oid:1.2.3.4.6 HTTP/1.1
+Accept: application/fhir+json
+Content-Type: application/fhir+json

@@ -1,0 +1,563 @@
+{
+  "resourceType" : "StructureDefinition",
+  "url" : "http://www.csvonfhir.com/codevscovid19/StructureDefinition/CovidDataFinal",
+  "name" : "Healthdata",
+  "status" : "unknown",
+  "kind" : "logical",
+  "abstract" : false,
+  "type" : "CovidDataFinal",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Element",
+  "derivation" : "specialization",
+  "snapshot" : {
+    "element" : [{
+      "id" : "CovidDataFinal",
+      "path" : "CovidDataFinal"
+    },
+    {
+      "id" : "CovidDataFinal.id",
+      "path" : "CovidDataFinal.id",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.user",
+      "path" : "CovidDataFinal.user",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.age",
+      "path" : "CovidDataFinal.age",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.gender",
+      "path" : "CovidDataFinal.gender",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.nationality",
+      "path" : "CovidDataFinal.nationality",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.country",
+      "path" : "CovidDataFinal.country",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.canton",
+      "path" : "CovidDataFinal.canton",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.location_zip",
+      "path" : "CovidDataFinal.location_zip",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.thinks_sick",
+      "path" : "CovidDataFinal.thinks_sick",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.close_infected",
+      "path" : "CovidDataFinal.close_infected",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.usually_home",
+      "path" : "CovidDataFinal.usually_home",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.contacted_hospital",
+      "path" : "CovidDataFinal.contacted_hospital",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.tested",
+      "path" : "CovidDataFinal.tested",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.positive_to_test",
+      "path" : "CovidDataFinal.positive_to_test",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.risk",
+      "path" : "CovidDataFinal.risk",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.works_in_health",
+      "path" : "CovidDataFinal.works_in_health",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.smoker",
+      "path" : "CovidDataFinal.smoker",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.pregnant",
+      "path" : "CovidDataFinal.pregnant",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.family",
+      "path" : "CovidDataFinal.family",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.day",
+      "path" : "CovidDataFinal.day",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.temperature",
+      "path" : "CovidDataFinal.temperature",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.coughing",
+      "path" : "CovidDataFinal.coughing",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.sneezing",
+      "path" : "CovidDataFinal.sneezing",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.throat_pain",
+      "path" : "CovidDataFinal.throat_pain",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.fatigue",
+      "path" : "CovidDataFinal.fatigue",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.breathing_impaired",
+      "path" : "CovidDataFinal.breathing_impaired",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.headache",
+      "path" : "CovidDataFinal.headache",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.diarrhea",
+      "path" : "CovidDataFinal.diarrhea",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.nausea",
+      "path" : "CovidDataFinal.nausea",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.loss_of_smell",
+      "path" : "CovidDataFinal.loss_of_smell",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    }]
+  },
+  "differential" : {
+    "element" : [{
+      "id" : "CovidDataFinal",
+      "path" : "CovidDataFinal"
+    },
+    {
+      "id" : "CovidDataFinal.id",
+      "path" : "CovidDataFinal.id",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.user",
+      "path" : "CovidDataFinal.user",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.age",
+      "path" : "CovidDataFinal.age",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.gender",
+      "path" : "CovidDataFinal.gender",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.nationality",
+      "path" : "CovidDataFinal.nationality",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.country",
+      "path" : "CovidDataFinal.country",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.canton",
+      "path" : "CovidDataFinal.canton",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.location_zip",
+      "path" : "CovidDataFinal.location_zip",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.thinks_sick",
+      "path" : "CovidDataFinal.thinks_sick",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.close_infected",
+      "path" : "CovidDataFinal.close_infected",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.usually_home",
+      "path" : "CovidDataFinal.usually_home",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.contacted_hospital",
+      "path" : "CovidDataFinal.contacted_hospital",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.tested",
+      "path" : "CovidDataFinal.tested",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.positive_to_test",
+      "path" : "CovidDataFinal.positive_to_test",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.risk",
+      "path" : "CovidDataFinal.risk",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.works_in_health",
+      "path" : "CovidDataFinal.works_in_health",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.smoker",
+      "path" : "CovidDataFinal.smoker",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.pregnant",
+      "path" : "CovidDataFinal.pregnant",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.family",
+      "path" : "CovidDataFinal.family",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.day",
+      "path" : "CovidDataFinal.day",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.temperature",
+      "path" : "CovidDataFinal.temperature",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.coughing",
+      "path" : "CovidDataFinal.coughing",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.sneezing",
+      "path" : "CovidDataFinal.sneezing",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.throat_pain",
+      "path" : "CovidDataFinal.throat_pain",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.fatigue",
+      "path" : "CovidDataFinal.fatigue",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.breathing_impaired",
+      "path" : "CovidDataFinal.breathing_impaired",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.headache",
+      "path" : "CovidDataFinal.headache",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.diarrhea",
+      "path" : "CovidDataFinal.diarrhea",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.nausea",
+      "path" : "CovidDataFinal.nausea",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "CovidDataFinal.loss_of_smell",
+      "path" : "CovidDataFinal.loss_of_smell",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "string"
+      }]
+    }]
+  }
+}

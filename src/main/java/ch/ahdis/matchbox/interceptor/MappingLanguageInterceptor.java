@@ -34,16 +34,17 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hl7.fhir.convertors.VersionConvertor_40_50;
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.r4.context.SimpleWorkerContext;
+import org.hl7.fhir.r5.context.SimpleWorkerContext;
 import org.hl7.fhir.r4.elementmodel.Manager.FhirFormat;
 import org.hl7.fhir.r4.formats.IParser;
 import org.hl7.fhir.r4.formats.ParserFactory;
 import org.hl7.fhir.r4.model.Base;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.StructureMap;
-import org.hl7.fhir.r4.utils.StructureMapUtilities;
-import org.hl7.fhir.r4.utils.StructureMapUtilities.ITransformerServices;
+import org.hl7.fhir.r5.utils.StructureMapUtilities;
+import org.hl7.fhir.r5.utils.StructureMapUtilities.ITransformerServices;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
@@ -118,16 +119,17 @@ public class MappingLanguageInterceptor extends InterceptorAdapter implements IT
 	}
 	
   public StructureMap parseMap(String content) throws FHIRException {
-    SimpleWorkerContext contextR4 = null;
+    SimpleWorkerContext contextR5 = null;
     try {
-      contextR4 = new SimpleWorkerContext();
+      contextR5 = new SimpleWorkerContext();
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }
-    StructureMapUtilities smu4 = new StructureMapUtilities(contextR4, this);
-    StructureMap map = smu4.parse(content, "map");
+    StructureMapUtilities smu5 = new StructureMapUtilities(contextR5, this);
+    StructureMap map =  (StructureMap) VersionConvertor_40_50.convertResource(smu5.parse(content, "map"));
+    
     return map;
   }
 
@@ -142,7 +144,7 @@ public class MappingLanguageInterceptor extends InterceptorAdapter implements IT
       ((MutableHttpServletRequest) theRequest).putHeader(Constants.HEADER_CONTENT_TYPE, "application/fhir+json");
       
 
-      StructureMap structureMap = parseMap(new String(theRequestDetails.loadRequestContents()));     
+      StructureMap structureMap = parseMap(new String(theRequestDetails.loadRequestContents()));
       
       IParser parserConverted = ParserFactory.parser(FhirFormat.JSON);    
       try {
@@ -163,29 +165,32 @@ public class MappingLanguageInterceptor extends InterceptorAdapter implements IT
   }
 
   @Override
-  public Base createType(Object appInfo, String name) throws FHIRException {
-    return null;
+  public org.hl7.fhir.r5.model.Base createType(Object appInfo, String name) throws FHIRException {
+	return null;
   }
 
   @Override
-  public Base createResource(Object appInfo, Base res, boolean atRootofTransform) {
-    return null;
+  public org.hl7.fhir.r5.model.Base createResource(Object appInfo, org.hl7.fhir.r5.model.Base res,
+	  boolean atRootofTransform) {
+	return null;
   }
 
   @Override
-  public Coding translate(Object appInfo, Coding source, String conceptMapUrl) throws FHIRException {
-    return null;
+  public org.hl7.fhir.r5.model.Coding translate(Object appInfo, org.hl7.fhir.r5.model.Coding source,
+	  String conceptMapUrl) throws FHIRException {
+	return null;
   }
 
   @Override
-  public Base resolveReference(Object appContext, String url) throws FHIRException {
-    return null;
+  public org.hl7.fhir.r5.model.Base resolveReference(Object appContext, String url) throws FHIRException {
+	return null;
   }
 
   @Override
-  public List<Base> performSearch(Object appContext, String url) throws FHIRException {
-    return null;
+  public List<org.hl7.fhir.r5.model.Base> performSearch(Object appContext, String url) throws FHIRException {
+	return null;
   }
-	
+
+
 
 }

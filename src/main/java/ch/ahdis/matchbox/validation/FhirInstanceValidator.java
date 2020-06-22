@@ -33,8 +33,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.lang3.Validate;
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.r4.hapi.ctx.DefaultProfileValidationSupport;
-import org.hl7.fhir.r4.hapi.ctx.IValidationSupport;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
 import org.hl7.fhir.r5.model.FhirPublication;
 import org.hl7.fhir.r5.model.StructureDefinition;
@@ -57,6 +55,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import ca.uhn.fhir.context.ConfigurationException;
+import ca.uhn.fhir.context.support.DefaultProfileValidationSupport;
+import ca.uhn.fhir.context.support.IValidationSupport;
 import ca.uhn.fhir.rest.api.EncodingEnum;
 import ca.uhn.fhir.rest.server.exceptions.InternalErrorException;
 import ca.uhn.fhir.validation.IInstanceValidatorModule;
@@ -90,7 +90,7 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 			try {
 				ourLog.info("Setting up validation engine");
         ourLog.info("Loading hl7.fhir.r4.core done");
-				validationEngine = new ValidationEngine("hl7.fhir.r4.core", null, null, FhirPublication.R4);
+				validationEngine = new ValidationEngine("hl7.fhir.r4.core#4.0.1", null, null, FhirPublication.R4, "4.0.1");
 				ourLog.info("Loading hl7.fhir.r4.core done");
 			} catch (Exception e1) {
 				e1.printStackTrace();

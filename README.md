@@ -18,8 +18,8 @@ FHIR RI Validation Support for the $validate operation
 * provid a system wide $validate operation with profile as query parameter
 
 Health Checks provided by spring-boot
-* http://localhost:8080/actuator/health (currently not working)
-* http://localhost:8080/r4/metadata (readyness)
+* http://localhost:8080/actuator/health
+* http://localhost:8080/r4/metadata 
 
 
 ## build with maven
@@ -30,16 +30,11 @@ mvn package
 
 ## execute
 ```
-java -jar target/matchbox-0.6.0-SNAPSHOT.jar
+java -jar target/matchbox-0.8.7-SNAPSHOT.jar
 ```
 
 http://localhost:8080/r4/metadata
 
-
-## docker build (for Dockerfile.simple)
-```
-docker build . --build-arg JAR_FILE=./target/matchbox-0.6.0-SNAPSHOT.jar -t matchbox
-```
 
 ## docker run
 
@@ -53,17 +48,19 @@ docker logs matchbox
 
 ## build docker for gcloud/kubernetes
 
+## adjust jar in Dockerfile
+
 export PROJECT_ID="$(gcloud config get-value project -q)"
-docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v060 .
-docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v060
-docker push eu.gcr.io/${PROJECT_ID}/matchbox:v060
+docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v088 .
+docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v088
+docker push eu.gcr.io/${PROJECT_ID}/matchbox:v088
 
 gcloud container clusters get-credentials cluster-europe-west3a-fhir-ch
 
 kubectl create -f matchbox.yaml
 kubectl get pods
 
-kubectl apply -f matchbox.yaml 
+kubectl apply -f matchbox-ahdis.yaml 
 
 [see tutorial](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app?hl=de)
 [container registry](https://console.cloud.google.com/gcr/images/fhir-ch?project=fhir-ch&authuser=1&folder&hl=de&organizationId=22040958741)

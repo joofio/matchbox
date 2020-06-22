@@ -9,14 +9,14 @@
   </parent>
   <groupId>ch.ahdis.matchbox</groupId>
   <artifactId>matchbox</artifactId>
-  <version>0.7.0-SNAPSHOT</version>
+  <version>0.8.7-SNAPSHOT</version>
   <name>matchbox</name>
   <description>Utilites on top of Java HAPI Server </description>
 
   <properties>
     <java.version>11</java.version>
-    <hapi.version>4.3.0-SNAPSHOT</hapi.version>
-    <fhir.core.version>4.2.4-SNAPSHOT</fhir.core.version>
+    <hapi.version>5.1.0-SNAPSHOT</hapi.version>
+    <fhir.core.version>5.0.9-SNAPSHOT</fhir.core.version>
     <docker.image.prefix>matchbox</docker.image.prefix>
   </properties>
 
@@ -29,6 +29,8 @@
       <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
     </repository>
   </repositories>
+  
+
 
   <dependencies>
     <dependency>
@@ -86,6 +88,11 @@
     </dependency>
     <dependency>
       <groupId>ca.uhn.hapi.fhir</groupId>
+      <artifactId>hapi-fhir-structures-r5</artifactId>
+      <version>${hapi.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ca.uhn.hapi.fhir</groupId>
       <artifactId>hapi-fhir-server</artifactId>
       <version>${hapi.version}</version>
     </dependency>
@@ -94,6 +101,8 @@
       <artifactId>commons-compress</artifactId>
       <version>1.19</version>
     </dependency>
+    <!-- IPF -->
+
     <!-- Optional -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -105,6 +114,15 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+
+    <!-- Development tools -->
+    <dependency>
+      <!-- Project Lombok is a boilerplate code remover and space saver that generates code -->
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

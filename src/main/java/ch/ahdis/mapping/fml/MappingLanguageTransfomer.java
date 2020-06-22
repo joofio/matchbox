@@ -23,9 +23,6 @@ import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.NotImplementedException;
-import org.hl7.fhir.convertors.R2016MayToR4Loader;
-import org.hl7.fhir.convertors.R2ToR4Loader;
-import org.hl7.fhir.convertors.R3ToR4Loader;
 import org.hl7.fhir.convertors.VersionConvertorAdvisor40;
 import org.hl7.fhir.convertors.VersionConvertor_10_40;
 import org.hl7.fhir.convertors.VersionConvertor_14_40;
@@ -61,15 +58,15 @@ import org.hl7.fhir.r4.utils.StructureMapUtilities.ITransformerServices;
 import org.hl7.fhir.utilities.IniFile;
 import org.hl7.fhir.utilities.TextFile;
 import org.hl7.fhir.utilities.Utilities;
+import org.hl7.fhir.utilities.cache.FilesystemPackageCacheManager;
 import org.hl7.fhir.utilities.cache.NpmPackage;
-import org.hl7.fhir.utilities.cache.PackageCacheManager;
 import org.hl7.fhir.utilities.cache.ToolsVersion;
 
 public class MappingLanguageTransfomer {
 
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MappingLanguageTransfomer.class);
 
-	protected PackageCacheManager pcm = null;
+	protected FilesystemPackageCacheManager pcm = null;
 
 //  public ValidationEngine(String src, String txsrvr, String txLog, FhirPublication version) throws Exception {
 //    pcm = new PackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
@@ -84,7 +81,7 @@ public class MappingLanguageTransfomer {
 
 	public MappingLanguageTransfomer() {
 		try {
-			pcm = new PackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
+	       pcm = new FilesystemPackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
 		} catch (IOException e) {
 			log.error("loading PackageCacheManager failed", e);
 		}
@@ -227,10 +224,6 @@ public class MappingLanguageTransfomer {
 	  private IContextResourceLoader loaderForVersion() {
 	    if (Utilities.noString(version))
 	      return null;
-	    if (version.equals("1.0.2"))
-	      return new R2ToR4Loader();
-	    if (version.equals("1.4.0"))
-	      return new R2016MayToR4Loader(); // special case
 	    if (version.equals("3.0.1"))
 	      return new R3ToR4Loader();    
 	    return null;
@@ -329,7 +322,7 @@ public class MappingLanguageTransfomer {
 	        res.put(Utilities.changeFileExt(src, "."+fmt.getExtension()), TextFile.fileToBytes(src));
 	        return res;
 	      }
-	    } else if ((src.matches(PackageCacheManager.PACKAGE_REGEX) || src.matches(PackageCacheManager.PACKAGE_VERSION_REGEX)) && !src.endsWith(".zip") && !src.endsWith(".tgz")) {
+	    } else if ((src.matches(FilesystemPackageCacheManager.PACKAGE_REGEX) || src.matches(FilesystemPackageCacheManager.PACKAGE_VERSION_REGEX)) && !src.endsWith(".zip") && !src.endsWith(".tgz")) {
 	      return fetchByPackage(src);
 	    }
 	    throw new Exception("Unable to find/resolve/read -ig "+src);
@@ -441,7 +434,7 @@ public class MappingLanguageTransfomer {
 	    }
 	    if (pcm == null) {
 	      log("Creating Package manager?");
-	      pcm = new PackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
+	      pcm = new FilesystemPackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
 	    }
 	    NpmPackage pi = null;
 	    if (version == null) {

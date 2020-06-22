@@ -21,7 +21,6 @@ import java.util.ArrayList;
  * #L%
  */
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
@@ -32,12 +31,10 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
-import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
 import ch.ahdis.matchbox.interceptor.TransactionProvider;
-import ch.ahdis.matchbox.interceptor.ValidateOperationInterceptor;
-import ch.ahdis.matchbox.interceptor.VersionInterceptor;
 import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
+import ch.ahdis.matchbox.mappinglanguage.StructureDefinitionProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
 import ch.ahdis.matchbox.operation.Convert;
 import ch.ahdis.matchbox.operation.Validate;
@@ -78,7 +75,7 @@ public class MatchboxApplication {
       if (!JPA) {
 
         log.debug("registering VersionInterceptor");
-        server.registerInterceptor(new VersionInterceptor());
+//        server.registerInterceptor(new VersionInterceptor());
         server.registerProvider(new Convert());
 
         server.registerInterceptor(new MappingLanguageInterceptor());
@@ -90,19 +87,19 @@ public class MatchboxApplication {
 
         FhirInstanceValidator validatorModule = new FhirInstanceValidator(null);
         validatorModule.setBestPracticeWarningLevel(BestPracticeWarningLevel.Warning);
-        ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
-        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
-        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
-        server.registerInterceptor(validatorInterceptor);
-
+//        ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
+//        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
+//        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
+//        server.registerInterceptor(validatorInterceptor);
+//
         ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(
             validatorModule.getContext());
-
         implementationGuideProvider.addPropertyChangeListener(validatorModule);
         resourceProviders.add(implementationGuideProvider);
 
         resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
-
+        resourceProviders.add(new StructureDefinitionProvider(validatorModule.getContext()));
+        
         server.setResourceProviders(resourceProviders);
       }
 
