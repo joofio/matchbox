@@ -80,7 +80,7 @@ Accept: application/fhir+json
 
 {
   "resourceType" : "ImplementationGuide",
-  "version" : "dev",
+  "version" : "current",
   "packageId": "ch.fhir.ig.ch-core"
 }
 

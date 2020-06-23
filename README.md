@@ -1,11 +1,10 @@
 # matchbox - playground with the hapi fhir spring boot server
 
-plain spring-boot-server based as provided by [hapi-fhir spring boot examles](https://github.com/jamesagnew/hapi-fhir/tree/master/hapi-fhir-spring-boot)
+plain spring-boot-server based as provided by [hapi-fhir spring boot examples](https://github.com/jamesagnew/hapi-fhir/tree/master/hapi-fhir-spring-boot)
 
 **Feature experimental**
 
 Operation $convert on Resource @link https://www.hl7.org/fhir/resource-operation-convert.html
- * Convertion between fhir versions is handled with VersionInterceptor 
  * Convertion between fhir+xml and fhir+json is automatically handled in the hapi-fhir base request handling
 
 FHIR Mapping Language support based on the FHIR Java reference implementation:
@@ -36,24 +35,19 @@ java -jar target/matchbox-0.8.7-SNAPSHOT.jar
 http://localhost:8080/r4/metadata
 
 
-## docker run
-
-```
-mvn clean install
-docker build . --build-arg JAR_FILE=target/matchbox-0.6.0-SNAPSHOT.jar -t matchbox
-docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
-docker logs matchbox
-```
-
 
 ## build docker for gcloud/kubernetes
 
-## adjust jar in Dockerfile
+IMORTANT: adjust jar in Dockerfile
 
 export PROJECT_ID="$(gcloud config get-value project -q)"
-docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v088 .
-docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v088
-docker push eu.gcr.io/${PROJECT_ID}/matchbox:v088
+docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v089 .
+docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v089
+docker push eu.gcr.io/${PROJECT_ID}/matchbox:v089
+
+docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
+docker logs matchbox
+
 
 gcloud container clusters get-credentials cluster-europe-west3a-fhir-ch
 
