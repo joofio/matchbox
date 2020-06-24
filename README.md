@@ -41,9 +41,11 @@ http://localhost:8080/r4/metadata
 IMORTANT: adjust jar in Dockerfile
 
 export PROJECT_ID="$(gcloud config get-value project -q)"
-docker build -t eu.gcr.io/${PROJECT_ID}/matchbox:v089 .
-docker tag matchbox eu.gcr.io/${PROJECT_ID}/matchbox:v089
-docker push eu.gcr.io/${PROJECT_ID}/matchbox:v089
+
+
+docker build -t matchbox . 
+docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v089
+docker push eu.gcr.io/fhir-ch/matchbox:v089
 
 docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
 docker logs matchbox

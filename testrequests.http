@@ -12,7 +12,7 @@ Accept: application/fhir+xml
 			Franz Muster, 10.2.197
 		</div>
 	</text>
-  <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+  <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
     <valueAddress>
       <city value="Paris"/>
       <country value="Frankreich"/>
@@ -134,7 +134,7 @@ Accept: application/fhir+xml
 			Franz Muster, 10.2.197
 		</div>
 	</text>
-   <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+   <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
     <valueAddress>
       <city value="Paris"/>
       <country value="Frankreich"/>
@@ -165,13 +165,13 @@ Accept: application/fhir+xml
 			Franz Muster, 10.2.197
 		</div>
 	</text>
-   <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+   <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
     <valueAddress>
       <city value="Paris"/>
       <country value="Frankreich"/>
     </valueAddress>
   </extension>
-   <extension url="http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-patient-ech-11-placeofbirth">
+   <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
     <valueAddress>
       <city value="Paris"/>
       <country value="Frankreich"/>
