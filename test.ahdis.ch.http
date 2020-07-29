@@ -1,4 +1,7 @@
-@host = http://test.ahdis.ch/r4
+#@host = http://test.ahdis.ch/r4
+
+@host = http://localhost:8080/r4
+
 
 ### Get capability statement
 GET {{host}}/metadata HTTP/1.1
@@ -51,6 +54,16 @@ Accept: application/fhir+json
         "resourceType" : "ImplementationGuide",
         "version" : "0.1.0",
         "packageId": "ch.fhir.ig.ch-emed"
+      },
+      "request": {
+        "method": "POST"
+      }
+    },
+    {
+      "resource": {
+        "resourceType" : "ImplementationGuide",
+        "version" : "dev",
+        "packageId": "ch.fhir.ig.ch-epr-mhealth"
       },
       "request": {
         "method": "POST"
@@ -159,3 +172,19 @@ Accept: application/fhir+xml
 		<postalCode value="9876" />
 	</address>
 </Patient>
+
+
+### validate a resource with a profile, should give an error  Element 'Patient.extension[birthPlace]': max allowed = 1, but found 2
+POST {{host}}/$validate HTTP/1.1
+Content-Type: application/fhir+json
+Accept: application/fhir+json
+
+< /Users/oliveregger/Documents/github/ch-epr-mhealth/input/examples/bundle/2-7-BundleProvideDocument.json
+
+
+### aaa
+POST {{host}}/$validate HTTP/1.1
+Content-Type: application/fhir+json
+Accept: application/fhir+json
+
+< /Users/oliveregger/Documents/github/ch-epr-mhealth/input/examples/documentmanifest/2-7-DocManMedicationCard.json

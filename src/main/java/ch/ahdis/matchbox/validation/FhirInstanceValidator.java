@@ -89,13 +89,12 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 		if (validationEngine == null) {
 			try {
 				ourLog.info("Setting up validation engine");
-        ourLog.info("Loading hl7.fhir.r4.core done");
-				validationEngine = new ValidationEngine("hl7.fhir.r4.core#4.0.1", null, null, FhirPublication.R4, "4.0.1");
+				ourLog.info("Loading hl7.fhir.r4.core done");
+				validationEngine = new ValidationEngine("hl7.fhir.r4.core#4.0.1", "http://tx.fhir.org", null, FhirPublication.R4, "4.0.1");
 				ourLog.info("Loading hl7.fhir.r4.core done");
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			validationEngine.getContext().setCanRunWithoutTerminology(true);
 			// FIXME is this correct? otherwise there is a NP in conformsTo function
 			if (validationEngine.getContext().getValidatorFactory() == null) {
 			  validationEngine.getContext().setValidatorFactory(new InstanceValidatorFactory());
@@ -297,7 +296,6 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 		v.setBestPracticeWarningLevel(getBestPracticeWarningLevel());
 		v.setAnyExtensionsAllowed(isAnyExtensionsAllowed());
 		v.setResourceIdRule(IdStatus.OPTIONAL);
-		v.setNoTerminologyChecks(isNoTerminologyChecks());
 		v.getExtensionDomains().addAll(extensionDomains);
 
 		List<ValidationMessage> messages = new ArrayList<>();

@@ -37,7 +37,7 @@ public class IhePharmR5Tests {
 	    FilesystemPackageCacheManager pcm = new FilesystemPackageCacheManager(true, ToolsVersion.TOOLS_VERSION);
 	    context = SimpleWorkerContext.fromPackage(pcm.loadPackage("hl7.fhir.r4.core", "4.0.1"));
 	    fp = new FHIRPathEngine(context);
-		context.loadFromPackage(pcm.loadPackage("hl7.fhir.cda", "dev"), null, "StructureDefinition");
+// FIXME		context.loadFromPackage(pcm.loadPackage("hl7.fhir.cda", "dev"), null, "StructureDefinition");
 		fp = new FHIRPathEngine(context);
 	}
 
