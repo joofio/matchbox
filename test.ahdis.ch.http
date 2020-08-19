@@ -1,6 +1,6 @@
-#@host = http://test.ahdis.ch/r4
+@host = http://test.ahdis.ch/r4
 
-@host = http://localhost:8080/r4
+#@host = http://localhost:8080/r4
 
 
 ### Get capability statement

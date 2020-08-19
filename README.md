@@ -44,8 +44,8 @@ export PROJECT_ID="$(gcloud config get-value project -q)"
 
 
 docker build -t matchbox . 
-docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v089
-docker push eu.gcr.io/fhir-ch/matchbox:v089
+docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v0810
+docker push eu.gcr.io/fhir-ch/matchbox:v0810
 
 docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
 docker logs matchbox
