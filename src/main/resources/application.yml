@@ -13,6 +13,27 @@ hapi:
     validation:
       enabled: false
       request-only: true
+    igs:
+      -
+        url: http://fhir.ch/ig/ch-epr-term/2.0.4/package.tgz
+        name: ch.fhir.ig.ch-epr-term
+        version: 2.0.4
+      -
+        url: http://fhir.ch/ig/ch-core/1.0.0/package.tgz
+        name: ch.fhir.ig.ch-core
+        version: 1.0.0
+      -
+        url: http://fhir.ch/ig/ch-emed/0.1.0/package.tgz
+        name: ch.fhir.ig.ch-emed
+        version: 0.1.0
+      -
+        url: http://fhir.ch/ig/ch-atc/3.1.0/package.tgz
+        name: ch.fhir.ig.ch-atc
+        version: 3.1.0
+      -
+        url: http://fhir.ch/ig/ch-epr-mhealth/0.1.0/package.tgz
+        name: ch.fhir.ig.ch-epr-mhealth
+        version: 0.1.0
 logging:
   level:
     ch.ahdis: debug

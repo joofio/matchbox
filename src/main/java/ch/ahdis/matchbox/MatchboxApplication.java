@@ -1,6 +1,5 @@
 package ch.ahdis.matchbox;
 
-import java.util.ArrayList;
 /*
  * #%L
  * Matchbox Server
@@ -21,10 +20,8 @@ import java.util.ArrayList;
  * #L%
  */
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,18 +29,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 
+import ca.uhn.fhir.jpa.packages.IPackageInstallerSvc;
+import ca.uhn.fhir.jpa.packages.PackageInstallationSpec;
 import ca.uhn.fhir.jpa.provider.r4.JpaSystemProviderR4;
-import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
-import ca.uhn.fhir.validation.ResultSeverityEnum;
-import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
-import ch.ahdis.matchbox.interceptor.TransactionProvider;
-import ch.ahdis.matchbox.interceptor.ValidateOperationInterceptor;
-import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
-import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
-import ch.ahdis.matchbox.operation.Validate;
+import ca.uhn.fhir.rest.server.interceptor.ResponseHighlighterInterceptor;
+import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration;
+import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirProperties.Ig;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
-import ch.ahdis.matchbox.validation.FhirInstanceValidator;
 
 @SpringBootApplication
 public class MatchboxApplication {
@@ -51,10 +44,12 @@ public class MatchboxApplication {
   private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
 
   private final boolean JPA = true;
-  
+
   @Autowired
   private ApplicationContext appContext;
 
+  @Autowired
+  private FhirAutoConfiguration autoConfiguration;
 
   @Bean
   public FhirRestfulServerCustomizer fhirServerCustomizer() {
@@ -86,35 +81,59 @@ public class MatchboxApplication {
 //      server.registerInterceptor(new VersionInterceptor());
 //        server.registerProvider(new Convert());
 
-        server.registerInterceptor(new MappingLanguageInterceptor());
-
-        server.registerProvider(new Validate());
-        server.registerProvider(new TransactionProvider(server));
-
-        List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
-
-        FhirInstanceValidator validatorModule = new FhirInstanceValidator(null);
-        validatorModule.setBestPracticeWarningLevel(BestPracticeWarningLevel.Warning);
-        ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
-        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
-        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
-        server.registerInterceptor(validatorInterceptor);
-
-        ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(
-            validatorModule.getContext());
-
-        implementationGuideProvider.addPropertyChangeListener(validatorModule);
-        resourceProviders.add(implementationGuideProvider);
-
-        resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
-
-        server.setResourceProviders(resourceProviders);
+//        server.registerInterceptor(new MappingLanguageInterceptor());
+//
+//        server.registerProvider(new Validate());
+//        server.registerProvider(new TransactionProvider(server));
+//
+//        List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
+//
+//        FhirInstanceValidator validatorModule = new FhirInstanceValidator(null);
+//        validatorModule.setBestPracticeWarningLevel(BestPracticeWarningLevel.Warning);
+//        ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
+//        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
+//        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
+//        server.registerInterceptor(validatorInterceptor);
+//
+//        ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(
+//            validatorModule.getContext());
+//
+//        implementationGuideProvider.addPropertyChangeListener(validatorModule);
+//        resourceProviders.add(implementationGuideProvider);
+//
+//        resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
+//
+//        server.setResourceProviders(resourceProviders);
       } else {
         log.debug("registering JpaSystemProviderR4");
         server.registerProvider(appContext.getBean("mySystemProviderR4", JpaSystemProviderR4.class));
       }
 
+      /*
+       * This interceptor formats the output using nice colourful HTML output when the
+       * request is detected to come from a browser.
+       */
+      ResponseHighlighterInterceptor responseHighlighterInterceptor = new ResponseHighlighterInterceptor();
+      server.registerInterceptor(responseHighlighterInterceptor);
       log.debug("fhirServerCustomizer finished");
+
+      if (autoConfiguration != null && autoConfiguration.getProperties() != null) {
+        List<Ig> igs = autoConfiguration.getProperties().getIgs();
+        if (igs != null) {
+          for (Ig ig : igs) {
+            String url = ig.getUrl();
+            String name = ig.getName();
+            String ver = ig.getVersion();
+
+            log.debug("Installing IG: {}, {}, {}", url, name, ver);
+            appContext.getBean(IPackageInstallerSvc.class)
+                .install(new PackageInstallationSpec().setPackageUrl(url).setName(name).setVersion(ver)
+                    .setInstallMode(PackageInstallationSpec.InstallModeEnum.STORE_AND_INSTALL));
+
+          }
+        }
+      }
+
     };
   }
 
