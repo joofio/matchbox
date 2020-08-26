@@ -21,7 +21,6 @@ import java.util.ArrayList;
  * #L%
  */
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
@@ -32,17 +31,15 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.interceptor.CorsInterceptor;
-import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ch.ahdis.matchbox.interceptor.MappingLanguageInterceptor;
 import ch.ahdis.matchbox.interceptor.TransactionProvider;
-import ch.ahdis.matchbox.interceptor.ValidateOperationInterceptor;
 import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureDefinitionProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
 import ch.ahdis.matchbox.operation.Convert;
-import ch.ahdis.matchbox.operation.Validate;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 import ch.ahdis.matchbox.validation.FhirInstanceValidator;
+import ch.ahdis.matchbox.validation.ValidationProvider;
 
 @SpringBootApplication
 public class MatchboxApplication {
@@ -83,18 +80,16 @@ public class MatchboxApplication {
 
         server.registerInterceptor(new MappingLanguageInterceptor());
 
-        server.registerProvider(new Validate());
         server.registerProvider(new TransactionProvider(server));
 
         List<IResourceProvider> resourceProviders = new ArrayList<IResourceProvider>();
 
         FhirInstanceValidator validatorModule = new FhirInstanceValidator(null);
         validatorModule.setBestPracticeWarningLevel(BestPracticeWarningLevel.Warning);
-        ValidateOperationInterceptor validatorInterceptor = new ValidateOperationInterceptor();
-        validatorInterceptor.setFailOnSeverity(ResultSeverityEnum.ERROR);
-        validatorInterceptor.setValidatorModules(Collections.singletonList(validatorModule));
-        server.registerInterceptor(validatorInterceptor);
 
+        server.registerProvider(new ValidationProvider(validatorModule, server.getFhirContext()));
+
+        
         ImplementationGuideProvider implementationGuideProvider = new ImplementationGuideProvider(
             validatorModule.getContext());
         implementationGuideProvider.addPropertyChangeListener(validatorModule);

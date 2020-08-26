@@ -1,6 +1,6 @@
-@host = http://test.ahdis.ch/r4
+#@host = http://test.ahdis.ch/r4
 
-#@host = http://localhost:8080/r4
+@host = http://localhost:8080/r4
 
 
 ### Get capability statement
@@ -52,7 +52,7 @@ Accept: application/fhir+json
     {
       "resource": {
         "resourceType" : "ImplementationGuide",
-        "version" : "0.1.0",
+        "version" : "0.1.1",
         "packageId": "ch.fhir.ig.ch-emed"
       },
       "request": {
@@ -62,7 +62,7 @@ Accept: application/fhir+json
     {
       "resource": {
         "resourceType" : "ImplementationGuide",
-        "version" : "dev",
+        "version" : "0.1.1",
         "packageId": "ch.fhir.ig.ch-epr-mhealth"
       },
       "request": {
