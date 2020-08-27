@@ -29,6 +29,7 @@ public class ImplementationGuideProvider extends SimpleWorkerContextProvider<Imp
   public ImplementationGuideProvider(SimpleWorkerContext simpleWorkerContext) {
     super(simpleWorkerContext, ImplementationGuide.class);
   }
+  
 
   protected static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImplementationGuideProvider.class);
   

@@ -23,7 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hl7.fhir.r4.model.ImplementationGuide;
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +39,8 @@ import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureDefinitionProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
 import ch.ahdis.matchbox.operation.Convert;
+import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration;
+import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirProperties.Ig;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 import ch.ahdis.matchbox.validation.FhirInstanceValidator;
 import ch.ahdis.matchbox.validation.ValidationProvider;
@@ -47,6 +51,9 @@ public class MatchboxApplication {
   private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatchboxApplication.class);
 
   private final boolean JPA = false;
+  
+  @Autowired
+  private FhirAutoConfiguration autoConfiguration;
 
   @Bean
   public FhirRestfulServerCustomizer fhirServerCustomizer() {
@@ -99,6 +106,25 @@ public class MatchboxApplication {
         resourceProviders.add(new StructureDefinitionProvider(validatorModule.getContext()));
         
         server.setResourceProviders(resourceProviders);
+        
+        if (autoConfiguration != null && autoConfiguration.getProperties() != null) {
+          List<Ig> igs = autoConfiguration.getProperties().getIgs();
+          if (igs != null) {
+            for (Ig ig : igs) {
+              String url = ig.getUrl();
+              String name = ig.getName();
+              String ver = ig.getVersion();
+
+              ImplementationGuide implementationGuide = new ImplementationGuide();
+              implementationGuide.setPackageId(name);
+              implementationGuide.setVersion(ver);
+              log.debug("Installing IG: {}, {}, {}", url, name, ver);
+              
+              implementationGuideProvider.create(implementationGuide);
+              
+            }
+          }
+        }
       }
 
       log.debug("fhirServerCustomizer finished");

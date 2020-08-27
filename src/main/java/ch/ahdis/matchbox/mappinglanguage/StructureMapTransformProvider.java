@@ -31,7 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hl7.fhir.convertors.VersionConvertor_40_50;
 import org.hl7.fhir.exceptions.FHIRException;
+import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.IdType;
+import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StructureMap;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
 import org.hl7.fhir.r5.elementmodel.Manager;
@@ -140,8 +142,17 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
       if (r instanceof org.hl7.fhir.r4.model.ConceptMap && ((org.hl7.fhir.r4.model.ConceptMap) r).getId().startsWith("#")) {
         r.setId(((org.hl7.fhir.r4.model.ConceptMap) r).getId().substring(1));
       }
+      // If a contained element is not referred it will not serialized in hapi
+      if (r instanceof org.hl7.fhir.r4.model.ConceptMap) {
+        Extension e = new Extension();
+        Reference reference = new Reference();
+        reference.setReference("#"+r.getId());
+        e.setValue(reference);
+        e.setUrl("http://fhir.ch/reference");
+        theResource.addExtension(e);
+      }
     }
-    theResource.setId(Utilities.makeUuidLC());
+    theResource.setId(theResource.getName());
     theResource = updateWorkerContext(theResource);
     MethodOutcome retVal = new MethodOutcome();
     retVal.setCreated(true);

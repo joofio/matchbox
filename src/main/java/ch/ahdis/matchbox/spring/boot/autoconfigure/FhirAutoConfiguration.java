@@ -71,6 +71,10 @@ public class FhirAutoConfiguration {
 	public FhirAutoConfiguration(FhirProperties properties) {
 		this.properties = properties;
 	}
+	
+  public FhirProperties getProperties() {
+    return properties;
+  }
 
 	@Bean
 	@ConditionalOnMissingBean
@@ -122,7 +126,7 @@ public class FhirAutoConfiguration {
 			this.pagingProvider = pagingProvider.getIfAvailable();
 			this.customizers = customizers.getIfAvailable();
 		}
-
+		
 		private void customize() {
 			if (this.customizers != null) {
 				AnnotationAwareOrderComparator.sort(this.customizers);

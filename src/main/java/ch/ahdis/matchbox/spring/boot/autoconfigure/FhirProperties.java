@@ -1,5 +1,9 @@
 package ch.ahdis.matchbox.spring.boot.autoconfigure;
 
+import java.util.List;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /*-
  * #%L
  * hapi-fhir-spring-boot-autoconfigure
@@ -20,87 +24,125 @@ package ch.ahdis.matchbox.spring.boot.autoconfigure;
  * #L%
  */
 
-
 import ca.uhn.fhir.context.FhirVersionEnum;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "hapi.fhir")
 public class FhirProperties {
 
-    private FhirVersionEnum version = FhirVersionEnum.R4;
+  private FhirVersionEnum version = FhirVersionEnum.R4;
 
-    private Server server = new Server();
+  private Server server = new Server();
 
-    private Validation validation = new Validation();
+  private Validation validation = new Validation();
 
-    public FhirVersionEnum getVersion() {
-        return version;
+  public FhirVersionEnum getVersion() {
+    return version;
+  }
+
+  public void setVersion(FhirVersionEnum version) {
+    this.version = version;
+  }
+
+  public Server getServer() {
+    return server;
+  }
+
+  public void setServer(Server server) {
+    this.server = server;
+  }
+
+  public Validation getValidation() {
+    return validation;
+  }
+
+  public void setValidation(Validation validation) {
+    this.validation = validation;
+  }
+
+  public static class Server {
+
+    private String url;
+
+    private String path = "/fhir/*";
+
+    public String getUrl() {
+      return url;
     }
 
-    public void setVersion(FhirVersionEnum version) {
-        this.version = version;
+    public void setUrl(String url) {
+      this.url = url;
     }
 
-    public Server getServer() {
-        return server;
+    public String getPath() {
+      return path;
     }
 
-    public void setServer(Server server) {
-        this.server = server;
+    public void setPath(String path) {
+      this.path = path;
+    }
+  }
+
+  public static class Validation {
+
+    private boolean enabled = true;
+
+    private boolean requestOnly = true;
+
+    public boolean isEnabled() {
+      return enabled;
     }
 
-    public Validation getValidation() {
-        return validation;
+    public void setEnabled(boolean enabled) {
+      this.enabled = enabled;
     }
 
-    public void setValidation(Validation validation) {
-        this.validation = validation;
+    public boolean isRequestOnly() {
+      return requestOnly;
     }
 
-    public static class Server {
+    public void setRequestOnly(boolean requestOnly) {
+      this.requestOnly = requestOnly;
+    }
+  }
 
-        private String url;
+  private List<Ig> igs;
 
-        private String path = "/fhir/*";
+  public List<Ig> getIgs() {
+    return igs;
+  }
 
-        public String getUrl() {
-            return url;
-        }
+  public void setIgs(List<Ig> igs) {
+    this.igs = igs;
+  }
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        public void setPath(String path) {
-            this.path = path;
-        }
+  public static class Ig {
+    public String getUrl() {
+      return url;
     }
 
-    public static class Validation {
-
-        private boolean enabled = true;
-
-        private boolean requestOnly = true;
-
-        public boolean isEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public boolean isRequestOnly() {
-            return requestOnly;
-        }
-
-        public void setRequestOnly(boolean requestOnly) {
-            this.requestOnly = requestOnly;
-        }
+    public void setUrl(String url) {
+      this.url = url;
     }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public String getVersion() {
+      return version;
+    }
+
+    public void setVersion(String version) {
+      this.version = version;
+    }
+
+    private String url;
+    private String name;
+    private String version;
+
+  }
 }

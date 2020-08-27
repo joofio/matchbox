@@ -9,7 +9,7 @@
   </parent>
   <groupId>ch.ahdis.matchbox</groupId>
   <artifactId>matchbox</artifactId>
-  <version>0.8.10-SNAPSHOT</version>
+  <version>0.8.12-SNAPSHOT</version>
   <name>matchbox</name>
   <description>Utilites on top of Java HAPI Server </description>
 

@@ -20,61 +20,39 @@ Health Checks provided by spring-boot
 * http://localhost:8080/actuator/health
 * http://localhost:8080/r4/metadata 
 
+## using matchbox
+
+### test version, online instance
+there is a test instance available at [http://test.ahdis.ch/r4](http://test.ahdis.ch/r4/metadata)
+
+### docker version
+
+a preconfigured docker container with the swiss ig's is here
+
+```
+docker pull eu.gcr.io/fhir-ch/matchbox:v0812
+docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
+docker logs matchbox
+```
 
 ## build with maven
 
+Note: The build is depending on hapi snapshot version, it might break.
+
 ```
 mvn package
-```
-
-## execute
-```
-java -jar target/matchbox-0.8.7-SNAPSHOT.jar
+java -jar target/matchbox-0.8.12-SNAPSHOT.jar
 ```
 
 http://localhost:8080/r4/metadata
 
 
 
-## build docker for gcloud/kubernetes
+## internal: build docker for gcloud/kubernetes
 
 IMORTANT: adjust jar in Dockerfile
 
-export PROJECT_ID="$(gcloud config get-value project -q)"
-
-
 docker build -t matchbox . 
-docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v0810
-docker push eu.gcr.io/fhir-ch/matchbox:v0810
+docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v0812
+docker push eu.gcr.io/fhir-ch/matchbox:v0812
 
-docker run -d --name matchbox -p 8080:8080 matchbox --memory="5G" --cpus="1"
-docker logs matchbox
-
-
-gcloud container clusters get-credentials cluster-europe-west3a-fhir-ch
-
-kubectl create -f matchbox.yaml
-kubectl get pods
-
-kubectl apply -f matchbox-ahdis.yaml 
-
-[see tutorial](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app?hl=de)
-[container registry](https://console.cloud.google.com/gcr/images/fhir-ch?project=fhir-ch&authuser=1&folder&hl=de&organizationId=22040958741)
-
-
-
-tbd:
-[routing](https://medium.com/google-cloud/kubernetes-routing-internal-services-through-fqdn-d98db92b79d3)
-
-
-
-Matchbox memory behaviour:
-
-Default configuration goes up to around 2.7 GiB after $convert operation
-changed to FROM adoptopenjdk/openjdk11-openj9:alpine-slim -> reduced around to 2.16 GIB
-
-Startup 810 MiB
-Loading all IG's 2.021GiB 
---> need to investigate how we can make this less memory intensive
-
- : Started MatchboxApplication in 92.94 seconds (JVM running for 94.398)
