@@ -38,7 +38,6 @@ import ca.uhn.fhir.util.StopWatch;
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.SingleValidationMessage;
 import ca.uhn.fhir.validation.ValidationOptions;
-import ca.uhn.fhir.validation.ValidationResult;
 
 /**
  * Operation $validate
@@ -101,8 +100,12 @@ public class ValidationProvider {
     } catch (IOException e) {
     }
     // ValidationResult result = 
-        
-    List<ValidationMessage> messages = instanceValidator.validate(contentString, EncodingEnum.detectEncoding(theRequest.getContentType()),validationOptions);
+    
+    EncodingEnum encoding = EncodingEnum.forContentType(theRequest.getContentType());
+    if (encoding == null) {
+      encoding = EncodingEnum.detectEncoding(contentString);
+    }
+    List<ValidationMessage> messages = instanceValidator.validate(contentString, encoding,validationOptions);
 
     ArrayList<SingleValidationMessage> addedValidationMessages = new ArrayList<>();
     for (ValidationMessage riMessage : messages) {

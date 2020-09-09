@@ -1,26 +1,7 @@
 package ch.ahdis.matchbox.validation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-/*
- * #%L
- * Matchbox Server
- * %%
- * Copyright (C) 2018 - 2019 ahdis
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,12 +9,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.lang3.Validate;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
+import org.hl7.fhir.r5.elementmodel.ParserBase.ValidationPolicy;
+import org.hl7.fhir.r5.elementmodel.XmlParser;
 import org.hl7.fhir.r5.model.FhirPublication;
 import org.hl7.fhir.r5.model.StructureDefinition;
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
@@ -46,7 +28,6 @@ import org.hl7.fhir.validation.instance.InstanceValidatorFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -151,28 +132,14 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 		return this;
 	}
 
-	private String determineResourceName(Document theDocument) {
-		NodeList list = theDocument.getChildNodes();
-		for (int i = 0; i < list.getLength(); i++) {
-			if (list.item(i) instanceof Element) {
-				return list.item(i).getLocalName();
-			}
-		}
-		return theDocument.getDocumentElement().getLocalName();
-	}
-
-	private ArrayList<String> determineIfProfilesSpecified(Document theDocument) {
+	private ArrayList<String> determineIfProfilesSpecified(org.hl7.fhir.r5.elementmodel.Element element) {
 		ArrayList<String> profileNames = new ArrayList<String>();
-		NodeList list = theDocument.getChildNodes().item(0).getChildNodes();
-		for (int i = 0; i < list.getLength(); i++) {
-			if (list.item(i).getNodeName().compareToIgnoreCase("meta") == 0) {
-				NodeList metaList = list.item(i).getChildNodes();
-				for (int j = 0; j < metaList.getLength(); j++) {
-					if (metaList.item(j).getNodeName().compareToIgnoreCase("profile") == 0) {
-						profileNames.add(metaList.item(j).getAttributes().item(0).getNodeValue());
-					}
-				}
-				break;
+		
+		List<org.hl7.fhir.r5.elementmodel.Element> list = element.getChildrenByName("meta");
+		for (int i = 0; i < list.size(); i++) {
+		  List<org.hl7.fhir.r5.elementmodel.Element> metaList = list.get(i).getChildrenByName("profile");
+			for (int j = 0; j < metaList.size(); j++) {
+				profileNames.add(metaList.get(j).getValue());
 			}
 		}
 		return profileNames;
@@ -301,11 +268,14 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 		List<ValidationMessage> messages = new ArrayList<>();
 
 		if (theEncoding == EncodingEnum.XML) {
-			Document document;
+		  org.hl7.fhir.r5.elementmodel.Element element;
 			try {
-				DocumentBuilder builder = myDocBuilderFactory.newDocumentBuilder();
-				InputSource src = new InputSource(new StringReader(theInput));
-				document = builder.parse(src);
+			  XmlParser xmlParser = new XmlParser(getContext());
+			  xmlParser.setupValidation(ValidationPolicy.EVERYTHING, messages);
+//				DocumentBuilder builder = myDocBuilderFactory.newDocumentBuilder();
+//				InputSource src = new InputSource(new StringReader(theInput));
+//				document = builder.parse(src);
+			  element = xmlParser.parse(new ByteArrayInputStream(theInput.getBytes()));
 			} catch (Exception e2) {
 				ourLog.error("Failure to parse XML input", e2);
 				ValidationMessage m = new ValidationMessage();
@@ -315,12 +285,12 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 			}
 
 			// Determine if meta/profiles are present...
-			ArrayList<String> resourceNames = determineIfProfilesSpecified(document);
+			ArrayList<String> resourceNames = determineIfProfilesSpecified(element);
 			if (resourceNames.isEmpty()) {
 			  if (forceProfile!=null) {
 	        resourceNames.add(forceProfile);
 			  } else {
-			    resourceNames.add(determineResourceName(document));
+			    resourceNames.add(element.getName());
 			  }
 			} else {
         if (forceProfile!=null) {
@@ -336,7 +306,7 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 	          m.setLevel(IssueSeverity.INFORMATION);
 	          m.setMessage(theEncoding.getFormatContentType()+": "+profile.getName()+" version: " + profile.getVersion()+ " url: " + profile.getUrl());
 	          messages.add(m);
-						v.validate(null, messages, document, profile.getUrl());
+						v.validate(null, messages, element, profile.getUrl());
 					} catch (Exception e) {
 						ourLog.error("Failure during validation", e);
 						throw new InternalErrorException("Unexpected failure while validating resource", e);
