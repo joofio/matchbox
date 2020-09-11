@@ -1,7 +1,7 @@
-#@host = http://test.ahdis.ch/r4
+@host = http://test.ahdis.ch/r4
 
-@host = http://localhost:8080/r4
-#@host = http://test.ahdis.ch/hapi-fhir-jpavalidator/fhir
+### @host = http://localhost:8080/r4
+### @host = http://test.ahdis.ch/hapi-fhir-jpavalidator/fhir
 
 ### Get capability statement
 GET {{host}}/metadata HTTP/1.1
@@ -164,7 +164,7 @@ Accept: application/fhir+json
 		<family value="Muster" />
 		<given value="Franz" />
 	</name>
-	<gender value="male" />
+	<gender value="demale" />
 	<birthDate value="1967-10-02" />
 	<address>
 		<line value="Leidensweg 10" />
@@ -188,3 +188,14 @@ Accept: application/fhir+json
 Content-Type: application/fhir+json
 
 < /Users/oliveregger/Documents/github/ch-epr-mhealth/input/examples/documentmanifest/2-7-DocManMedicationCard.json
+
+
+
+### aaa
+GET {{host}}/ImplementationGuide/ch.fhir.ig.ch-epr-term HTTP/1.1
+Accept: application/fhir+json
+
+
+### aaa
+GET {{host}}/ImplementationGuide/ch.fhir.ig.ch-epr-term HTTP/1.1
+Accept: application/fhir+xml

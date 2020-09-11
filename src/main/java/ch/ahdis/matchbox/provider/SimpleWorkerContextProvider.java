@@ -128,7 +128,7 @@ public class SimpleWorkerContextProvider<T extends Resource> implements IResourc
   	  case "ImplementationGuide":
   	    resources.addAll(fhirContext.allImplementationGuides());
   	    break;
-      case "StructureDefintion":
+      case "StructureDefinition":
         resources.addAll(fhirContext.allStructures());
         break;
       case "StructureMap":

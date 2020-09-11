@@ -71,7 +71,8 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 			try {
 				ourLog.info("Setting up validation engine");
 				ourLog.info("Loading hl7.fhir.r4.core done");
-				validationEngine = new ValidationEngine("hl7.fhir.r4.core#4.0.1", "http://tx.fhir.org", null, FhirPublication.R4, "4.0.1");
+//				validationEngine = new ValidationEngine("hl7.fhir.r4.core#4.0.1", "http://tx.fhir.org", null, FhirPublication.R4, "4.0.1");
+        validationEngine = new ValidationEngine("hl7.fhir.r4.core#4.0.1", null, null, FhirPublication.R4, "4.0.1");
 				ourLog.info("Loading hl7.fhir.r4.core done");
 			} catch (Exception e1) {
 				e1.printStackTrace();

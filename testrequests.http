@@ -68,10 +68,20 @@ Accept: application/fhir+json
     }
   ]
 }
+### Get all implementation guides
+GET {{host}}/StructureDefinition/ch-core-composition-epr HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
 
 ### Get all implementation guides
 GET {{host}}/ImplementationGuide HTTP/1.1
-Accept: application/fhir+json
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
+
+### Get all implementation guides
+GET {{host}}/ImplementationGuide/ch%2Efhir%2Eig%2Ech%2Dcore HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
 
 ### Implementation Guide ch.fhir.ig.ch-core
 POST {{host}}/ImplementationGuide HTTP/1.1
