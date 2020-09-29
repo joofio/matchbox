@@ -27,29 +27,62 @@ import org.hl7.fhir.utilities.VersionUtilities;
 import org.hl7.fhir.utilities.cache.FilesystemPackageCacheManager;
 import org.hl7.fhir.utilities.cache.NpmPackage;
 import org.hl7.fhir.utilities.cache.ToolsVersion;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.rules.SpringClassRule;
+import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.yaml.snakeyaml.Yaml;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
+import ch.ahdis.matchbox.MatchboxApplication;
+import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirProperties;
 
 
-// https://www.baeldung.com/java-snake-yaml
 
+/**
+ * see https://www.baeldung.com/springjunit4classrunner-parameterized
+ * read the implementation guides defined in ig and execute the validations
+ * @author oliveregger
+ */
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+@ContextConfiguration(classes = {MatchboxApplication.class})
 @RunWith(Parameterized.class)
-public class IgValidateR4 {
+public class IgValidateR4Test {
 
+  @ClassRule
+  public static final SpringClassRule aaa = new SpringClassRule();
+
+  @Autowired
+  static private FhirAutoConfiguration autoConfiguration;
+
+  @Rule
+  public final SpringMethodRule smr = new SpringMethodRule();
+  
   static private FilesystemPackageCacheManager pcm;
   static private Set<String> loadedIgs = new HashSet<String>();
   
+  
+  private String targetServer = "http://localhost:8080/r4";
   private Resource resource;
   private String name;
   
+  /**
+   * not very nice, however i don't know another way since spring is not yet available for injection 
+   * laoding directly application.yml from https://www.baeldung.com/java-snake-yaml
+   * @param map
+   * @return
+   */
   public static List<FhirProperties.Ig> getIgs(Map<String, Object> map) {
     Map<String, Object> hapi =  (Map<String, Object>) map.get("hapi");
     if (hapi!=null) {
@@ -74,16 +107,11 @@ public class IgValidateR4 {
   
   @Parameters(name = "{index}: file {0}")
   public static Iterable<Object[]> data() throws ParserConfigurationException, IOException, FHIRFormatError {
-    
-    
     Yaml yaml = new Yaml();
     InputStream inputStream = yaml.getClass()
       .getClassLoader()
       .getResourceAsStream("application.yml");
     Map<String, Object> obj = yaml.load(inputStream);
-    System.out.println(obj);
-    
-    
     List<FhirProperties.Ig> igs = getIgs(obj);
     
     List<Object[]> objects = new ArrayList<Object[]>();
@@ -99,9 +127,7 @@ public class IgValidateR4 {
     return objects;
   }
 
-  public boolean initPassed = false;
-
-  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IgValidateR4.class);
+  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IgValidateR4Test.class);
 
   static private Map<String, byte[]> fetchByPackage(String src, boolean examples) throws Exception {
     String id = src;
@@ -230,7 +256,7 @@ public class IgValidateR4 {
     return resources;
   }
   
-  public IgValidateR4(String name, Resource resource) {
+  public IgValidateR4Test(String name, Resource resource) {
     super();
     this.resource = resource;
     this.name = name;
@@ -238,7 +264,6 @@ public class IgValidateR4 {
   
   @Test
   public void validate() throws Exception {
-    String targetServer = "http://localhost:8080/hapi-fhir-jpavalidator/fhir";
     OperationOutcome outcome = validate(resource,targetServer); 
     assertEquals(1,outcome.getIssue().size());
     assertEquals(IssueSeverity.INFORMATION, outcome.getIssue().get(0).getSeverity());
@@ -246,6 +271,7 @@ public class IgValidateR4 {
 
   public boolean upload(String implementationGuide, String targetServer) {
     List<Resource> resources = getResources(implementationGuide);
+    this.targetServer = targetServer;
     try {
       for (Resource resource : resources) {
         validate(resource,targetServer); 
@@ -281,7 +307,7 @@ public class IgValidateR4 {
     if (hasParam(args, "-ig") && hasParam(args, "-target")) {
       String ig = getParam(args, "-ig");
       String target = getParam(args, "-target");
-      IgValidateR4 igupload = new IgValidateR4(null,null);
+      IgValidateR4Test igupload = new IgValidateR4Test(null,null);
       igupload.upload(ig, target);
 
     } else {
