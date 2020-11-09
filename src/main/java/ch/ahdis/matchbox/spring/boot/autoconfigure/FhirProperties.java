@@ -105,14 +105,14 @@ public class FhirProperties {
     }
   }
 
-  private List<Ig> igs;
+  private List<Ig> implementationguides;
 
-  public List<Ig> getIgs() {
-    return igs;
+  public List<Ig> getImplementationguides() {
+    return implementationguides;
   }
 
-  public void setIgs(List<Ig> igs) {
-    this.igs = igs;
+  public void setImplementationguides(List<Ig> igs) {
+    this.implementationguides = igs;
   }
 
   public static class Ig {

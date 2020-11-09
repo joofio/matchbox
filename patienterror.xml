@@ -1,0 +1,31 @@
+<Patient xmlns="http://hl7.org/fhir">
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			Franz Muster, 10.2.197
+		</div>
+	</text>
+   <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
+    <valueAddress>
+      <city value="Paris"/>
+      <country value="Frankreich"/>
+    </valueAddress>
+  </extension>
+   <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
+    <valueAddress>
+      <city value="Paris"/>
+      <country value="Frankreich"/>
+    </valueAddress>
+  </extension>
+	<name>
+		<family value="Muster" />
+		<given value="Franz" />
+	</name>
+	<gender value="male" />
+	<birthDate value="1967-10-02" />
+	<address>
+		<line value="Leidensweg 10" />
+		<city value="Specimendorf" />
+		<postalCode value="9876" />
+	</address>
+</Patient>

@@ -108,7 +108,7 @@ public class MatchboxApplication {
         server.setResourceProviders(resourceProviders);
         
         if (autoConfiguration != null && autoConfiguration.getProperties() != null) {
-          List<Ig> igs = autoConfiguration.getProperties().getIgs();
+          List<Ig> igs = autoConfiguration.getProperties().getImplementationguides();
           if (igs != null) {
             for (Ig ig : igs) {
               String url = ig.getUrl();

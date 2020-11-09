@@ -1,0 +1,121 @@
+{
+  "resourceType": "DocumentReference",
+  "id": "1415160860",
+  "meta": {
+    "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+  },
+  "contained": [ {
+    "resourceType": "PractitionerRole",
+    "id": "1",
+    "organization": {
+      "reference": "#2"
+    }
+  }, {
+    "resourceType": "Organization",
+    "id": "2",
+    "identifier": [ {
+      "system": "urn:oid:unknown",
+      "value": "2.16.756.5.28"
+    } ],
+    "name": "Uptime Services AG"
+  }, {
+    "resourceType": "Patient",
+    "id": "3",
+    "identifier": [ {
+      "use": "official",
+      "system": "1.1.1.2.2",
+      "value": "e217c6c38d7f4b9d6f49987246ca6738"
+    } ],
+    "name": [ {
+      "family": "Dell Anna",
+      "given": [ "Dylan Jose" ]
+    } ],
+    "birthDate": "1989-06-22"
+  } ],
+  "masterIdentifier": {
+    "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.75.20200923131501762"
+  },
+  "identifier": [ {
+    "use": "official",
+    "system": "urn:ietf:rfc:3986",
+    "value": "urn:uuid:urn:uuid:07041138-3b03-42d3-b234-2cfd4a3b6413"
+  } ],
+  "status": "current",
+  "type": {
+    "coding": [ {
+      "system": "http://snomed.info/sct",
+      "code": "900000000000471006",
+      "display": "Image reference (foundation metadata concept)"
+    } ]
+  },
+  "category": [ {
+    "coding": [ {
+      "system": "http://snomed.info/sct",
+      "code": "419891008",
+      "display": "Record artifact (record artifact)"
+    } ]
+  } ],
+  "subject": {
+    "reference": "https://mobileaccessgateway.pagekite.me/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+  },
+  "date": "2015-07-09T09:35:44.000+02:00",
+  "author": [ {
+    "reference": "#1"
+  } ],
+  "description": "Röntgenbild",
+  "securityLabel": [ {
+    "coding": [ {
+      "system": "http://snomed.info/sct",
+      "code": "17621005",
+      "display": "Normal (qualifier value)"
+    } ]
+  } ],
+  "content": [ {
+    "attachment": {
+      "contentType": "application/dicom",
+      "language": "de-CH",
+      "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.75.20200923131501762&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+      "size": 1488,
+      "hash": "MzVhNWNiZTM2NDhlOGNkODY4Nzk4YTE5YTRjYmE3OTljOGYwNGE0ZQ==",
+      "creation": "2015-07-09T09:35:44+02:00"
+    },
+    "format": {
+      "system": "urn:oid:1.2.840.10008.2.6.1",
+      "code": "1.2.840.10008.5.1.4.1.1.88.59",
+      "display": "DICOM Manifest (DICOM KOS SOP Class UID)"
+    }
+  } ],
+  "context": {
+    "period": {
+      "start": "2015-07-09T11:39:46+02:00"
+    },
+    "facilityType": {
+      "coding": [ {
+        "system": "http://snomed.info/sct",
+        "code": "22232009",
+        "display": "Hospital (environment)"
+      } ]
+    },
+    "practiceSetting": {
+      "coding": [ {
+        "system": "http://snomed.info/sct",
+        "code": "394658006",
+        "display": "Clinical specialty (qualifier value)"
+      } ]
+    },
+    "sourcePatientInfo": {
+      "reference": "#3"
+    },
+    "related": [ {
+      "identifier": {
+        "system": "urn:oid:1.2.3.4.5.6.7.8.9",
+        "value": "U-ID1235337"
+      }
+    }, {
+      "identifier": {
+        "system": "urn:oid:1.2.3.4.5.6.7.8",
+        "value": "1.2.276.0.37.1.227.201210.1235337"
+      }
+    } ]
+  }
+}

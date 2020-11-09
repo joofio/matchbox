@@ -1,0 +1,58 @@
+### @host = http://localhost:8080/hapi-fhir-jpavalidator/fhir
+### @host = http://test.ahdis.ch/r4
+@host = http://localhost:8080/fhir
+### @host = http://test.ahdis.ch/hapi-fhir-jpavalidator/fhir
+### @host = https://ehealthsuisse.ihe-europe.net/hapi-fhir-jpavalidator/fhir
+
+### Get capability statement
+GET {{host}}/metadata HTTP/1.1
+Accept: application/fhir+xml
+
+
+### Paramerers
+POST {{host}}/$validate HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+xml
+
+< ./parameters.xml
+
+
+### Paramerers
+POST {{host}}/$validate HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
+
+< ./medication-card-bundle-generated.json
+
+
+### Paramerers
+POST {{host}}/$validate?profile=http://hl7.org/fhir/StructureDefinition/Bundle HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
+
+< ./documentreferencebundle.json
+
+
+### Paramerers
+POST {{host}}/$validate HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
+
+< ./MedicationCardExampleFhir.json
+
+
+### Paramerers
+POST {{host}}/$validate HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
+
+< ./docref.json
+
+
+
+### Paramerers
+POST {{host}}/$validate?profile=http://fhir.ch/ig/ch-epr-mhealth/StructureDefinition/ch-mhd-query-comprehensive-documentreference HTTP/1.1
+Accept: application/fhir+xml
+Content-Type: application/fhir+json
+
+< ./docref-1.json

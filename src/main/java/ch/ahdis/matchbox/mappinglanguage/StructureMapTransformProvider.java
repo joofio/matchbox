@@ -36,18 +36,19 @@ import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StructureMap;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
+import org.hl7.fhir.r5.elementmodel.Element;
 import org.hl7.fhir.r5.elementmodel.Manager;
 import org.hl7.fhir.r5.elementmodel.Manager.FhirFormat;
 import org.hl7.fhir.r5.formats.IParser.OutputStyle;
 import org.hl7.fhir.r5.model.Base;
 import org.hl7.fhir.r5.model.Coding;
 import org.hl7.fhir.r5.model.Narrative.NarrativeStatus;
+import org.hl7.fhir.r5.model.Property;
 import org.hl7.fhir.r5.model.StructureDefinition;
 import org.hl7.fhir.r5.model.StructureMap.StructureMapStructureComponent;
 import org.hl7.fhir.r5.terminologies.ConceptMapEngine;
 import org.hl7.fhir.r5.utils.StructureMapUtilities;
 import org.hl7.fhir.r5.utils.StructureMapUtilities.ITransformerServices;
-import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.xhtml.NodeType;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 
@@ -202,6 +203,26 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
 
   protected static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StructureMapTransformProvider.class);
 
+  private void removeBundleEntryIds(org.hl7.fhir.r5.elementmodel.Element bundle) {
+    List<Element> ids = bundle.getChildrenByName("id");
+    for(Element id: ids) {
+      bundle.getChildren().remove(id);
+    }
+    List<Element> entries = bundle.getChildrenByName("entry");
+    for(Element entry : entries) {
+      Property fullUrl = entry.getChildByName("fullUrl");
+      if (fullUrl.getValues()!=null && fullUrl.getValues().get(0).primitiveValue().startsWith("urn:uuid:")) {
+        Property resource = entry.getChildByName("resource");
+        if (resource!=null && resource.getValues()!=null) {
+          Element entryResource = (Element) resource.getValues().get(0);
+          ids = entryResource.getChildrenByName("id");
+          for(Element id: ids) {
+            entryResource.getChildren().remove(id);
+          }
+        }
+      }
+    }
+  }
 
   @Operation(name = "$transform", manualResponse = true, manualRequest = true)
   public void manualInputAndOutput(HttpServletRequest theServletRequest, HttpServletResponse theServletResponse)
@@ -225,7 +246,7 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
       
       org.hl7.fhir.r5.model.StructureMap map = fhirContext.getTransform(source[0]);
       if (map == null) {
-          throw new UnprocessableEntityException("Map not availabe with canonical url "+source[0]);
+          throw new UnprocessableEntityException("Map not available with canonical url "+source[0]);
       }
 
       org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
@@ -234,6 +255,12 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
       }
       
       utils.transform(null, src, map, r);
+      if (r.isResource() && "Bundle".contentEquals(r.getType())) {
+        Property bundleType = r.getChildByName("type");
+        if (bundleType!=null && bundleType.getValues()!=null && "document".equals(bundleType.getValues().get(0).primitiveValue())) {
+          removeBundleEntryIds(r);
+        }
+      }
       theServletResponse.setContentType(contentType);
       theServletResponse.setCharacterEncoding("UTF-8");
       ServletOutputStream output = theServletResponse.getOutputStream();

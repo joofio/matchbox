@@ -33,7 +33,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,7 +44,6 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ch.ahdis.matchbox.MatchboxApplication;
-import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirProperties;
 
 
@@ -62,9 +60,6 @@ public class IgValidateR4Test {
 
   @ClassRule
   public static final SpringClassRule aaa = new SpringClassRule();
-
-  @Autowired
-  static private FhirAutoConfiguration autoConfiguration;
 
   @Rule
   public final SpringMethodRule smr = new SpringMethodRule();
@@ -88,7 +83,7 @@ public class IgValidateR4Test {
     if (hapi!=null) {
       Map<String, Object> fhir =  (Map<String, Object>) hapi.get("fhir");
       if (hapi!=null) {
-        ArrayList<Map<String, String>> igs =  (ArrayList<Map<String, String>>) fhir.get("igs");
+        ArrayList<Map<String, String>> igs =  (ArrayList<Map<String, String>>) fhir.get("implementationguides");
         if (igs!=null) {
           ArrayList<FhirProperties.Ig> igProperties = new ArrayList<FhirProperties.Ig>();
           for (Map<String, String> ig : igs) {

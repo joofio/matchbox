@@ -1,0 +1,5186 @@
+{
+  "resourceType": "Bundle",
+  "id": "036c5b36-d8a2-4c22-8c5a-8e34664c522a",
+  "meta": {
+    "lastUpdated": "2020-09-24T14:20:30.875+02:00"
+  },
+  "type": "searchset",
+  "total": 44,
+  "link": [ {
+    "relation": "self",
+    "url": "http://10.2.101.10:11070/fhir/DocumentReference?patient.identifier=urn%3Aoid%3A1.3.6.1.4.1.21367.2017.2.5.45%7Cb584d5a5-6a27-4c93-8cb5-450b9b9572fb&status=current"
+  } ],
+  "entry": [ {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/07041138-3b03-42d3-b234-2cfd4a3b6413",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "07041138-3b03-42d3-b234-2cfd4a3b6413",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "organization": {
+          "reference": "#2"
+        }
+      }, {
+        "resourceType": "Organization",
+        "id": "2",
+        "identifier": [ {
+          "value": "2.16.756.5.28"
+        } ],
+        "name": "Uptime Services AG"
+      }, {
+        "resourceType": "Patient",
+        "id": "3",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan Jose" ]
+        } ],
+        "birthDate": "1989-06-22"
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.75.20200923131501762"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:07041138-3b03-42d3-b234-2cfd4a3b6413"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "900000000000471006",
+          "display": "Image reference (foundation metadata concept)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2015-07-09T09:35:44.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Röntgenbild",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.75.20200923131501762&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1488,
+          "hash": "MzVhNWNiZTM2NDhlOGNkODY4Nzk4YTE5YTRjYmE3OTljOGYwNGE0ZQ==",
+          "creation": "2015-07-09T09:35:44+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "DICOM Manifest (DICOM KOS SOP Class UID)"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2015-07-09T11:39:46+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394658006",
+            "display": "Clinical specialty (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#3"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6.7.8.9",
+            "value": "U-ID1235337"
+          }
+        }, {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6.7.8",
+            "value": "1.2.276.0.37.1.227.201210.1235337"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/cc0e7fbb-6bc1-4684-83a9-addd41537ac1",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "cc0e7fbb-6bc1-4684-83a9-addd41537ac1",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "organization": {
+          "reference": "#2"
+        }
+      }, {
+        "resourceType": "Organization",
+        "id": "2",
+        "identifier": [ {
+          "value": "2.16.756.5.28"
+        } ],
+        "name": "Uptime Services AG"
+      }, {
+        "resourceType": "Patient",
+        "id": "3",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "THOMA-MENZI",
+          "given": [ "VALERIE MARGOT" ]
+        } ],
+        "birthDate": "1974-01-11"
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.75.20200923130356662"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:cc0e7fbb-6bc1-4684-83a9-addd41537ac1"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "900000000000471006",
+          "display": "Image reference (foundation metadata concept)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2015-07-09T09:35:44.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Röntgenbild",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.75.20200923130356662&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1488,
+          "hash": "Yjg1MGM2ZDcxNTA2NzdjMmVkMTc3MTdjNjQzYzdkNjU4NzQzZWE4YQ==",
+          "creation": "2015-07-09T09:35:44+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "DICOM Manifest (DICOM KOS SOP Class UID)"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2015-07-09T11:39:46+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394658006",
+            "display": "Clinical specialty (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#3"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6.7.8.9",
+            "value": "U-ID1235337"
+          }
+        }, {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6.7.8",
+            "value": "1.2.276.0.37.1.227.201210.1235337"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/f0011c9c-51b2-4ad6-885d-c90e0b52eb04",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "f0011c9c-51b2-4ad6-885d-c90e0b52eb04",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "organization": {
+          "reference": "#2"
+        }
+      }, {
+        "resourceType": "Organization",
+        "id": "2",
+        "identifier": [ {
+          "value": "2.16.756.5.28"
+        } ],
+        "name": "Uptime Services AG"
+      }, {
+        "resourceType": "Patient",
+        "id": "3",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "birthDate": "1989-06-22"
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.75.20200924121355392"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:f0011c9c-51b2-4ad6-885d-c90e0b52eb04"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "900000000000471006",
+          "display": "Image reference (foundation metadata concept)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2015-07-09T09:35:44.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Röntgenbild",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.75.20200924121355392&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1488,
+          "hash": "NWJlZDQwYzZiYTBiNDA0NGQ4MWI1ZWRhZGRiZjQzYjA4NzMyMWFlZA==",
+          "creation": "2015-07-09T09:35:44+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "DICOM Manifest (DICOM KOS SOP Class UID)"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2015-07-09T11:39:46+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394658006",
+            "display": "Clinical specialty (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#3"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6.7.8.9",
+            "value": "U-ID1235337"
+          }
+        }, {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6.7.8",
+            "value": "1.2.276.0.37.1.227.201210.1235337"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/334d2e08-927a-4f3b-acea-d60174b35c65",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "334d2e08-927a-4f3b-acea-d60174b35c65",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "PAT"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "DocumentEntry-Speciality"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.6.1.7.4.4.7"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:334d2e08-927a-4f3b-acea-d60174b35c65"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.6.1.7.4.4.7&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "urn:che:epr:EPR_Unstructured_Document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6",
+            "value": "2013001"
+          }
+        }, {
+          "identifier": {
+            "value": "1.2.3.12.78.23"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/63868de7-8f9a-41e5-8899-4c1a7ad93d05",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "63868de7-8f9a-41e5-8899-4c1a7ad93d05",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "PAT"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "DocumentEntry-Speciality"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.10.7.7.4.4.6"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:63868de7-8f9a-41e5-8899-4c1a7ad93d05"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.10.7.7.4.4.6&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.3.10.10",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstructured EPR document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6",
+            "value": "2013001"
+          }
+        }, {
+          "identifier": {
+            "value": "1.2.3.12.78.23"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/01b42b5f-30b1-46b9-805c-d0b5a0ea4443",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "01b42b5f-30b1-46b9-805c-d0b5a0ea4443",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "PAT"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "DocumentEntry-Speciality"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.8.6.4.7.7.8"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:01b42b5f-30b1-46b9-805c-d0b5a0ea4443"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.8.6.4.7.7.8&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.3.10.10",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstructured EPR document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6",
+            "value": "2013001"
+          }
+        }, {
+          "identifier": {
+            "value": "1.2.3.12.78.23"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/d1099e05-1da5-40c4-aa0c-4e0093af4296",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "d1099e05-1da5-40c4-aa0c-4e0093af4296",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "PAT"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "DocumentEntry-Speciality"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.7.1.6.6.10.6"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:d1099e05-1da5-40c4-aa0c-4e0093af4296"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.7.1.6.6.10.6&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.3.10.10",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstructured EPR document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6",
+            "value": "2013001"
+          }
+        }, {
+          "identifier": {
+            "value": "1.2.3.12.78.23"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/d200a87a-4810-4df6-883f-7022aed020ca",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "d200a87a-4810-4df6-883f-7022aed020ca",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "PAT"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "DocumentEntry-Speciality"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.1.3.8.6.8.7"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:d200a87a-4810-4df6-883f-7022aed020ca"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.1.3.8.6.8.7&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.3.10.10",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstructured EPR document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6",
+            "value": "2013001"
+          }
+        }, {
+          "identifier": {
+            "value": "1.2.3.12.78.23"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/b7e27c7e-54e5-4d11-9efd-dac0997a47fa",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "b7e27c7e-54e5-4d11-9efd-dac0997a47fa",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "Rolle"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "Kardiologie"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.85.3.10.5.4.1.1"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:b7e27c7e-54e5-4d11-9efd-dac0997a47fa"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "419891008"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.85.3.10.5.4.1.1&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "urn:che:epr:EPR_Unstructured_Document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/2672fde3-961e-46ba-95a2-bc7e6e0e7a6f",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "2672fde3-961e-46ba-95a2-bc7e6e0e7a6f",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "PAT"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "DocumentEntry-Speciality"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.6.2.3.6.10.7"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:2672fde3-961e-46ba-95a2-bc7e6e0e7a6f"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.6.2.3.6.10.7&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.3.10.10",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstructured EPR document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "system": "urn:oid:1.2.3.4.5.6",
+            "value": "2013001"
+          }
+        }, {
+          "identifier": {
+            "value": "1.2.3.12.78.23"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/a0928ff8-1198-41c7-bc54-062fbb50f70c",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "a0928ff8-1198-41c7-bc54-062fbb50f70c",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "Rolle"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "Kardiologie"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.65",
+          "value": "CHPAM0999"
+        } ],
+        "name": [ {
+          "family": "URBANKOVA",
+          "given": [ "Dave Mathew Sarita" ]
+        } ],
+        "birthDate": "1991-05-29",
+        "address": [ {
+          "line": [ "Neugasse" ],
+          "city": "Zürich",
+          "postalCode": "8004"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.85.10.4.6.6.8.7"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:a0928ff8-1198-41c7-bc54-062fbb50f70c"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "419891008"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2017-08-31T00:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.85.10.4.6.6.8.7&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7945,
+          "hash": "ZmM4MGQ1OTg3N2I0YWUyMTkxMTU5MWI1MzY2NGIyZGExMzI0Y2YyNQ==",
+          "creation": "2017-08-31T00:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "urn:che:epr:EPR_Unstructured_Document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/3905d15a-a38e-4dad-9192-fcfbd2abb095",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "3905d15a-a38e-4dad-9192-fcfbd2abb095",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "Rolle"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "Kardiologie"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.12559.11.20.1",
+          "value": "CHPAM0998"
+        } ],
+        "name": [ {
+          "family": "Walters",
+          "given": [ "William" ]
+        } ],
+        "birthDate": "1963-01-15",
+        "address": [ {
+          "line": [ "Brewer Avenue" ],
+          "city": "Clemmons",
+          "postalCode": "27012"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.85.9.7.10.4.4.5"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:3905d15a-a38e-4dad-9192-fcfbd2abb095"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "419891008"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2018-09-19T14:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.85.9.7.10.4.4.5&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1240,
+          "hash": "ZWZkYmJiN2VlMDA0YWRkZTZhNTVkMTVlN2Q4YmQzYjhjZmM1NmQzNg==",
+          "creation": "2018-09-19T14:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "IHE KOS document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/ce31016a-822d-4d50-94f1-00ab6470b7a1",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "ce31016a-822d-4d50-94f1-00ab6470b7a1",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "Rolle"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "Kardiologie"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.36",
+          "value": "CHPAM0998"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "birthDate": "1963-01-15",
+        "address": [ {
+          "line": [ "Brewer Avenue" ],
+          "city": "Clemmons",
+          "postalCode": "27012"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.10.1.3.3.5.9"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:ce31016a-822d-4d50-94f1-00ab6470b7a1"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2018-09-19T14:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.10.1.3.3.5.9&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1244,
+          "hash": "ZDYyYmUwMGI5NDQyYjhjYzlkYWNkOTljNWQ0ZmQzNmU0MGEyNzZhYw==",
+          "creation": "2018-09-19T14:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "IHE KOS document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/b95d4ef1-9515-4375-8b4e-8c0df95cf9b5",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "b95d4ef1-9515-4375-8b4e-8c0df95cf9b5",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "Rolle"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "Kardiologie"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.36",
+          "value": "CHPAM0998"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "birthDate": "1963-01-15",
+        "address": [ {
+          "line": [ "Brewer Avenue" ],
+          "city": "Clemmons",
+          "postalCode": "27012"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.5.1.10.8.6.6"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:b95d4ef1-9515-4375-8b4e-8c0df95cf9b5"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2018-09-19T14:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Dicom KOS Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.5.1.10.8.6.6&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1244,
+          "hash": "YzI3MjQ4NGZkYzYxZTcyYzRjZTVjYzJhZDE4NDgxODI4ZDNmYmNmNg==",
+          "creation": "2018-09-19T14:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "IHE KOS document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "value": "2.16.840.1.114151.161818929426842457562481037984844398520180615"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/dc2f51e9-4ff4-4202-8db9-f83ff29a3763",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "dc2f51e9-4ff4-4202-8db9-f83ff29a3763",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "Rolle"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "Kardiologie"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.36",
+          "value": "CHPAM0998"
+        } ],
+        "name": [ {
+          "family": "Walters",
+          "given": [ "William" ]
+        } ],
+        "birthDate": "1963-01-15",
+        "address": [ {
+          "line": [ "Brewer Avenue" ],
+          "city": "Clemmons",
+          "postalCode": "27012"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.2.10.4.5.8.7"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:dc2f51e9-4ff4-4202-8db9-f83ff29a3763"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2018-09-19T14:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.2.10.4.5.8.7&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1242,
+          "hash": "YzZlNTFlMjAxNmM3MDZkMjBhZGUyYzUyZGNlNjYxYzAwM2U4MTc2Yw==",
+          "creation": "2018-09-19T14:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "IHE KOS document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/71e59f5e-72f5-470b-8a62-482cfbd57b39",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "71e59f5e-72f5-470b-8a62-482cfbd57b39",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "Rolle"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "Kardiologie"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Muster",
+          "given": [ "Hans" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Muster Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.36",
+          "value": "CHPAM0998"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "birthDate": "1963-01-15",
+        "address": [ {
+          "line": [ "Brewer Avenue" ],
+          "city": "Clemmons",
+          "postalCode": "27012"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.102.5.6.6.4.6.4"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:71e59f5e-72f5-470b-8a62-482cfbd57b39"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721963009",
+          "display": "Order"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2018-09-19T14:00:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Test KOS Title",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.102.5.6.6.4.6.4&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1242,
+          "hash": "ZGY0ODZjYmM2YzNkNmI3NmE5MGUxZTI5NmJmMjllOTNjMmM2MGJkYw==",
+          "creation": "2018-09-19T14:00:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "IHE KOS document"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2017-08-31T00:00:00+02:00",
+          "end": "2017-08-31T00:00:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/a8d3c15f-5f25-4fab-a8ae-251aa8db0b37",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "a8d3c15f-5f25-4fab-a8ae-251aa8db0b37",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.42"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:a8d3c15f-5f25-4fab-a8ae-251aa8db0b37"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "4241000179101",
+          "display": "Laboratory report (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-04-01T15:25:03.000+02:00",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.42&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 440744,
+          "hash": "ZDg5Yjk1ZmQ2MTUzODZkMGJjNjczOTU3OTcyNzQ2MzA4MmZkMTczNA==",
+          "creation": "2019-04-01T15:25:03+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394747008",
+            "display": "Health Authority (qualifier value)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/0d80f8fe-83db-45bb-98ff-4dfdd34ba498",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "0d80f8fe-83db-45bb-98ff-4dfdd34ba498",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        }
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Sestak",
+          "given": [ "Rosa" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "value": "1.3.6.1.4.1.21367.2017.2.6.19.100.2"
+        } ],
+        "name": "Post CH AG"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.6.19.100.1",
+          "value": "a929a83e-0cad-449c-a25a-95a2c957c59e"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22",
+        "address": [ {
+          "city": "Neuchâtel",
+          "postalCode": "6458",
+          "country": "CH"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.6.19.100.1^af509486-f13f-4d17-a800-d92a53269eb7"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:0d80f8fe-83db-45bb-98ff-4dfdd34ba498"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "373942005",
+          "display": "Austrittsbericht"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "417319006",
+          "display": "medizinischer Bericht"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-23T13:28:46.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Doc A1",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-DE",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.6.19.100.1^af509486-f13f-4d17-a800-d92a53269eb7&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 7638,
+          "hash": "N2QyOWUyNWMwY2NiZGZiYzdkNTQ3MGNkYmViZWU2YTYzM2E5MDBlMQ==",
+          "creation": "2019-09-23T13:28:46+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2019-09-23T13:28:46+02:00",
+          "end": "2019-09-23T13:28:46+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Stationäre Einrichtung/Spital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394610002",
+            "display": "Neurochirurgie"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/18239373-5782-4d85-a9ae-11aa33e14f05",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "18239373-5782-4d85-a9ae-11aa33e14f05",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        }
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "House",
+          "given": [ "Gregory", "Arthur" ],
+          "prefix": [ "Dr." ],
+          "suffix": [ "Msc." ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "value": "1.3.6.1.4.1.21367.2017.2.6.19.100.1"
+        } ],
+        "name": "Tumorboard"
+      }, {
+        "resourceType": "Practitioner",
+        "id": "4",
+        "name": [ {
+          "family": "House",
+          "given": [ "Gregory", "Arthur" ],
+          "prefix": [ "Dr." ],
+          "suffix": [ "Msc." ]
+        } ]
+      }, {
+        "resourceType": "Patient",
+        "id": "5",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.6.19.100.1",
+          "value": "a929a83e-0cad-449c-a25a-95a2c957c59e"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22"
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.90.1.1"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:18239373-5782-4d85-a9ae-11aa33e14f05"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "900000000000471006",
+          "display": "Referenz auf Bilddaten"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "371525003",
+          "display": "Untersuchungsbefund"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-24T10:18:56.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "authenticator": {
+        "reference": "#4"
+      },
+      "description": "DicomStudy",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "en-US",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.90.1.1&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 22732,
+          "hash": "OTViOWI2NWU5NWJiYzA0MmMwOTFiYTBmMTg1OGU5MmUzZTk4ZDRjOQ==",
+          "title": "Study comment",
+          "creation": "2019-09-24T10:18:56+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "KOS Dokument"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2019-09-24T10:18:56+02:00",
+          "end": "2019-09-24T10:58:20+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Stationäre Einrichtung/Spital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394914008",
+            "display": "Radiologie"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#5"
+        },
+        "related": [ {
+          "identifier": {
+            "value": "1.3.6.1.4.1.21367.2017.2.1.90.1"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/32f8c4fe-6177-4986-af11-b4f4085d7b9f",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "32f8c4fe-6177-4986-af11-b4f4085d7b9f",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        }
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "value": "1.3.6.1.4.1.21367.2017.2.6.19.100.1"
+        } ],
+        "name": "Tumorboard"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22",
+        "address": [ {
+          "city": "Neuchâtel",
+          "postalCode": "6458",
+          "country": "CH"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.1.1.2.2^dde68d06-d1e2-494e-884f-852a4dda1daf"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:32f8c4fe-6177-4986-af11-b4f4085d7b9f"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "373942005",
+          "display": "Austrittsbericht"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "417319006",
+          "display": "medizinischer Bericht"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-24T13:06:38.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "TI-38701",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-DE",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.1.1.2.2^dde68d06-d1e2-494e-884f-852a4dda1daf&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 28,
+          "hash": "NjljZWY1NTk3ODE2MWM0OTg4YzZjNTk3N2IyZjNhMTZhMDQyMjcxNA==",
+          "title": "Uploaded for TI-38701",
+          "creation": "2019-09-24T13:06:38+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2019-09-24T13:06:38+02:00",
+          "end": "2019-09-24T13:06:38+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Stationäre Einrichtung/Spital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "722165004",
+            "display": "Pflege"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/796facb0-8ff0-4000-992b-979c4f11d215",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "796facb0-8ff0-4000-992b-979c4f11d215",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "HCP"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "1002"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "identifier": [ {
+          "system": "urn:oid:2.51.1.3",
+          "value": "7601003961638"
+        } ],
+        "name": [ {
+          "family": "Studer",
+          "given": [ "Marco" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Cistec COM Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.64",
+          "value": "15743"
+        } ],
+        "name": [ {
+          "family": "Unknown"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:2.25.161416435004427417929615716273687220757"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:796facb0-8ff0-4000-992b-979c4f11d215"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "TODO"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "371531000",
+          "display": "TODO"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-25T17:12:16.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "EPD TCU Test TI-38807",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=2.25.161416435004427417929615716273687220757&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 79967,
+          "hash": "MDg4ZmM5NTJkZTBkZDlhMzYwNzA1NTgyNjQ0NzUyYzk3NGVhNjE3NA==",
+          "creation": "2019-09-25T17:12:16+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstrukturiertes EPD Dokument"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Stationäre Einrichtung/Spital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394658006",
+            "display": "Andere nicht näher spezifizierte medzinische Fachrichtung"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/7af420c6-f054-4c48-b503-199539e3dc22",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "7af420c6-f054-4c48-b503-199539e3dc22",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "code": "HCP"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "1002"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "identifier": [ {
+          "system": "urn:oid:2.51.1.3",
+          "value": "7601003961638"
+        } ],
+        "name": [ {
+          "family": "Studer",
+          "given": [ "Marco" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "name": "Cistec COM Spital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.64",
+          "value": "15743"
+        } ],
+        "name": [ {
+          "family": "Unknown"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:2.25.163433400717904041480450326111528934434"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:7af420c6-f054-4c48-b503-199539e3dc22"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "TODO"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "371531000",
+          "display": "TODO"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-26T11:08:25.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "EPD Upload Test 20190926 (TI-38443)",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=2.25.163433400717904041480450326111528934434&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 80782,
+          "hash": "ZGU3MTIyOTA4MzcxZDZhYWZkMDM1ZGZhZjFhNzM3NzdmMjEwNmEzMg==",
+          "creation": "2019-09-26T11:08:25+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstrukturiertes EPD Dokument"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Stationäre Einrichtung/Spital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394658006",
+            "display": "Andere nicht näher spezifizierte medzinische Fachrichtung"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/9d97c22b-9d43-45f2-a88b-2693a1b30218",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "9d97c22b-9d43-45f2-a88b-2693a1b30218",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "specialty": [ {
+          "coding": [ {
+            "code": "Value Sets"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "identifier": [ {
+          "value": "1.2.3"
+        } ],
+        "name": [ {
+          "family": "Bauer",
+          "given": [ "Christian" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.7.69",
+          "value": "1.3.6"
+        } ],
+        "name": "cb"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22"
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.7.58.2019092601"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:9d97c22b-9d43-45f2-a88b-2693a1b30218"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "773130005",
+          "display": "Nursing care plan (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "734163000",
+          "display": "Care Plan (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-26T11:40:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Testbefund integic-ehr19",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "DE-AT",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.7.58.2019092601&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 236796,
+          "hash": "ODBhZWE2Y2Y3NWUxYTlkY2FiNDYzMWY1MjAzOWRlOWU2M2VkMTJlMQ==",
+          "title": "TestGroup",
+          "creation": "2019-09-26T11:40:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2019-09-26T10:40:00+02:00",
+          "end": "2019-09-26T11:40:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394579002",
+            "display": "Cardiology (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/9e59295a-e9e3-4328-8901-fa114f20fd60",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "9e59295a-e9e3-4328-8901-fa114f20fd60",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "specialty": [ {
+          "coding": [ {
+            "code": "Value Sets"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "identifier": [ {
+          "value": "1.2.3"
+        } ],
+        "name": [ {
+          "family": "Bauer",
+          "given": [ "Christian" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.7.69",
+          "value": "1.3.6"
+        } ],
+        "name": "cb"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "0a4a32b3e1e3c154a4530961fd20b6ad"
+        } ],
+        "name": [ {
+          "family": "Thoma-Menzi",
+          "given": [ "Valiere Margot" ]
+        } ],
+        "gender": "female",
+        "birthDate": "1974-11-01"
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.7.58.201909260114361"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:9e59295a-e9e3-4328-8901-fa114f20fd60"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "773130005",
+          "display": "Nursing care plan (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "734163000",
+          "display": "Care Plan (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-26T11:40:00.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Testbefund integic-ehr19",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "DE-AT",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.7.58.201909260114361&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 236796,
+          "hash": "ODBhZWE2Y2Y3NWUxYTlkY2FiNDYzMWY1MjAzOWRlOWU2M2VkMTJlMQ==",
+          "title": "TestGroup",
+          "creation": "2019-09-26T11:40:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2019-09-26T10:40:00+02:00",
+          "end": "2019-09-26T11:40:00+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394579002",
+            "display": "Cardiology (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/05d0c59a-166a-47bb-8233-490bf6194cf3",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "05d0c59a-166a-47bb-8233-490bf6194cf3",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.840.1.113883.5.90",
+            "code": "PRF"
+          } ]
+        } ],
+        "specialty": [ {
+          "coding": [ {
+            "code": "authorfachgebiet"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Welby",
+          "given": [ "Marcus" ],
+          "prefix": [ "Dr" ],
+          "suffix": [ "MD" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "value": "2.999.1.2.3.5.8.9.1789.45"
+        } ],
+        "name": "Some Hospital"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2011.2.5.5517",
+          "value": "Aixplorer_261755788"
+        } ],
+        "name": [ {
+          "family": "ANONYMOUS",
+          "given": [ "ANONYMOUS" ]
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.24930.20.1.5790.3"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:05d0c59a-166a-47bb-8233-490bf6194cf3"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "373942005",
+          "display": "Austrittsbericht"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Record artifact (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-26T17:49:01.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "77394.dcm",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de-DE",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.24930.20.1.5790.3&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1396,
+          "hash": "MjBlNzI5NDBjYjAxNTNlNjY1NGNjMDlhNzg2NmZjMjE1NmMwNjU4NA==",
+          "creation": "2019-09-26T17:49:01+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "KOS Dokument"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2018-04-18T15:56:28+02:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Stationäre Einrichtung/Spital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394577000",
+            "display": "Anästhesiologie"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "value": "1.2.250.1.204.5.7.201804181356299990"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/b6c09113-b09f-466f-a6b8-4969af0fad2b",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "b6c09113-b09f-466f-a6b8-4969af0fad2b",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Practitioner",
+        "id": "1",
+        "identifier": [ {
+          "value": "SESRO"
+        } ]
+      }, {
+        "resourceType": "Patient",
+        "id": "2",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.64",
+          "value": "15743"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22",
+        "address": [ {
+          "city": "Neuchâtel",
+          "state": "NE",
+          "postalCode": "6458",
+          "country": "CH"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.83^1028533"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:b6c09113-b09f-466f-a6b8-4969af0fad2b"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "373942005",
+          "display": "Other EPD-document type"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "405624007",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-27T13:39:41.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Testdok Normal",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.83^1028533&repositoryUniqueId=2.16.840.1.113883.3.1.3.2112.3.1.1.2",
+          "size": 21740,
+          "hash": "NzViYTMxNGM0Y2Y5ZTQwZGNhMzEyOGFmODA4NjVhODAzN2YzOGIxOA==",
+          "creation": "2019-09-27T13:39:41+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstructured EPD document"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#2"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/b5af3d30-a4fb-41fa-b2cf-55acfd1d9860",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "b5af3d30-a4fb-41fa-b2cf-55acfd1d9860",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Practitioner",
+        "id": "1",
+        "name": [ {
+          "family": "House",
+          "given": [ "Gregory", "Arthur" ],
+          "prefix": [ "Dr." ],
+          "suffix": [ "Msc." ]
+        } ]
+      }, {
+        "resourceType": "Patient",
+        "id": "2",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.64",
+          "value": "15743"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22",
+        "address": [ {
+          "city": "Neuchâtel",
+          "state": "NE",
+          "postalCode": "6458",
+          "country": "CH"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.83^1028535"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:b5af3d30-a4fb-41fa-b2cf-55acfd1d9860"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "373942005",
+          "display": "Other EPD-document type"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "405624007",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-09-27T13:54:54.000+02:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Testdok Norm",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.83^1028535&repositoryUniqueId=2.16.840.1.113883.3.1.3.2112.3.1.1.2",
+          "size": 21740,
+          "hash": "NzViYTMxNGM0Y2Y5ZTQwZGNhMzEyOGFmODA4NjVhODAzN2YzOGIxOA==",
+          "creation": "2019-09-27T13:54:54+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:che:epr:EPR_Unstructured_Document",
+          "display": "Unstructured EPD document"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "22232009",
+            "display": "Hospital"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#2"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/b62de67e-edd4-4028-93a1-811ee2736b3c",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "b62de67e-edd4-4028-93a1-811ee2736b3c",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.41"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:b62de67e-edd4-4028-93a1-811ee2736b3c"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "4241000179101",
+          "display": "Laboratory report (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-10-04T14:14:51.000+02:00",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.41&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 440744,
+          "hash": "ZDg5Yjk1ZmQ2MTUzODZkMGJjNjczOTU3OTcyNzQ2MzA4MmZkMTczNA==",
+          "creation": "2019-10-04T14:14:51+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394747008",
+            "display": "Health Authority (qualifier value)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/a7a8d01b-2a9b-4c52-a1a3-839efe3f4fc6",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "a7a8d01b-2a9b-4c52-a1a3-839efe3f4fc6",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.41"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:a7a8d01b-2a9b-4c52-a1a3-839efe3f4fc6"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "4241000179101",
+          "display": "Laboratory report (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-10-04T14:15:22.000+02:00",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.41&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 440744,
+          "hash": "ZDg5Yjk1ZmQ2MTUzODZkMGJjNjczOTU3OTcyNzQ2MzA4MmZkMTczNA==",
+          "creation": "2019-10-04T14:15:22+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394747008",
+            "display": "Health Authority (qualifier value)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/19855856-9df9-43cb-acf2-6a2c28662aff",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "19855856-9df9-43cb-acf2-6a2c28662aff",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.1.41"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:19855856-9df9-43cb-acf2-6a2c28662aff"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "4241000179101",
+          "display": "Laboratory report (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-10-04T14:27:01.000+02:00",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.1.41&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 440744,
+          "hash": "ZDg5Yjk1ZmQ2MTUzODZkMGJjNjczOTU3OTcyNzQ2MzA4MmZkMTczNA==",
+          "creation": "2019-10-04T14:27:01+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394747008",
+            "display": "Health Authority (qualifier value)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/d06aed7f-9d53-4818-b321-3faa10fed852",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "d06aed7f-9d53-4818-b321-3faa10fed852",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.2.844"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:d06aed7f-9d53-4818-b321-3faa10fed852"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "4241000179101",
+          "display": "Laboratory report (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-10-04T18:17:21.000+02:00",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/pdf",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.2.844&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 440744,
+          "hash": "ZDg5Yjk1ZmQ2MTUzODZkMGJjNjczOTU3OTcyNzQ2MzA4MmZkMTczNA==",
+          "creation": "2019-10-04T18:17:21+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394747008",
+            "display": "Health Authority (qualifier value)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/70fcc363-5447-4240-a49b-37f299c5f1c5",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "70fcc363-5447-4240-a49b-37f299c5f1c5",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.2017.2.2.456"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:70fcc363-5447-4240-a49b-37f299c5f1c5"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "4241000179101",
+          "display": "Laboratory report (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "419891008",
+          "display": "Other Composition"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-10-04T18:45:15.000+02:00",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normally accessible"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.2017.2.2.456&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 10,
+          "hash": "YmU4NTc4OWRjNzMwMWI0MDYwYjNmZmQ3ZTE2YWE3YjAwY2Q0NjcwZg==",
+          "creation": "2019-10-04T18:45:15+02:00"
+        },
+        "format": {
+          "system": "urn:oid:2.16.756.5.30.1.127.77.10.5.2",
+          "code": "urn:ihe:iti:xds:2017:mimeTypeSufficient",
+          "display": "MimeType sufficient"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394747008",
+            "display": "Health Authority (qualifier value)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/37abe666-6b57-4e07-afc5-b3978c1764aa",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "37abe666-6b57-4e07-afc5-b3978c1764aa",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "HCP"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Sestak",
+          "given": [ "Rosa" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "value": "1.3.6.1.4.1.21367.2017.2.6.19.100.2"
+        } ],
+        "name": "Post CH AG"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22",
+        "address": [ {
+          "city": "Neuchâtel",
+          "postalCode": "6458",
+          "country": "CH"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.201599.1.201606010958044.1574252337183.1574252337183"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:37abe666-6b57-4e07-afc5-b3978c1764aa"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "900000000000471006",
+          "display": "Referenz auf Bilddaten"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "371525003",
+          "display": "Untersuchungsbefund"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-11-20T13:18:57.000+01:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Dicom Image 1",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal zugänglich"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de-DE",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.201599.1.201606010958044.1574252337183.1574252337183&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1676,
+          "hash": "ZWQzNjE1YTY4Yjg3Yzk1NjRjYWMzZDczNTY3N2NlOGFkNmY3MmUyNg==",
+          "creation": "2019-11-20T13:18:57+01:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "KOS Dokument"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2015-02-02T15:41:22+01:00",
+          "end": "2015-02-02T15:41:22+01:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "35971002",
+            "display": "Ambulante Einrichtung/Ambulatorium"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394914008",
+            "display": "Radiologie"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "value": "1.3.6.1.4.1.21367.201599.1.201606010958044"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/5308cba4-a40d-4faa-b845-28c4e97213b9",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "5308cba4-a40d-4faa-b845-28c4e97213b9",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "HCP"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Sestak",
+          "given": [ "Rosa" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "value": "1.3.6.1.4.1.21367.2017.2.6.19.100.2"
+        } ],
+        "name": "Post CH AG"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22",
+        "address": [ {
+          "city": "Neuchâtel",
+          "postalCode": "6458",
+          "country": "CH"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.201599.1.201606021454002.1574258944617.1574258944617"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:5308cba4-a40d-4faa-b845-28c4e97213b9"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "900000000000471006",
+          "display": "Referenz auf Bilddaten"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "371525003",
+          "display": "Untersuchungsbefund"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-11-20T15:09:04.000+01:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Dicom Image 2",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal zugänglich"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de-DE",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.201599.1.201606021454002.1574258944617.1574258944617&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1682,
+          "hash": "NGYzNTg5ZjVmNGUwNzEwZGEzN2JlMDU3ZWUwN2MwYzk0NzY4MTQyOA==",
+          "creation": "2019-11-20T15:09:04+01:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "KOS Dokument"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2015-02-01T00:00:00+01:00",
+          "end": "2015-02-01T00:00:00+01:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "35971002",
+            "display": "Ambulante Einrichtung/Ambulatorium"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394914008",
+            "display": "Radiologie"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "value": "1.3.6.1.4.1.21367.201599.1.201606021454002"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/9ff61ad2-b12c-4ac4-a4e7-de42925bd9d0",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "9ff61ad2-b12c-4ac4-a4e7-de42925bd9d0",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "PractitionerRole",
+        "id": "1",
+        "practitioner": {
+          "reference": "#2"
+        },
+        "organization": {
+          "reference": "#3"
+        },
+        "code": [ {
+          "coding": [ {
+            "system": "urn:oid:2.16.756.5.30.1.127.3.10.6",
+            "code": "HCP"
+          } ]
+        } ]
+      }, {
+        "resourceType": "Practitioner",
+        "id": "2",
+        "name": [ {
+          "family": "Sestak",
+          "given": [ "Rosa" ]
+        } ]
+      }, {
+        "resourceType": "Organization",
+        "id": "3",
+        "identifier": [ {
+          "value": "1.3.6.1.4.1.21367.2017.2.6.19.100.2"
+        } ],
+        "name": "Post CH AG"
+      }, {
+        "resourceType": "Patient",
+        "id": "4",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.1.1.2.2",
+          "value": "e217c6c38d7f4b9d6f49987246ca6738"
+        } ],
+        "name": [ {
+          "family": "Dell Anna",
+          "given": [ "Dylan José" ]
+        } ],
+        "gender": "male",
+        "birthDate": "1989-06-22",
+        "address": [ {
+          "city": "Neuchâtel",
+          "postalCode": "6458",
+          "country": "CH"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.21367.201599.1.201606010958052.1574258944780.1574258944780"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:9ff61ad2-b12c-4ac4-a4e7-de42925bd9d0"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "900000000000471006",
+          "display": "Referenz auf Bilddaten"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "371525003",
+          "display": "Untersuchungsbefund"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2019-11-20T15:09:04.000+01:00",
+      "author": [ {
+        "reference": "#1"
+      } ],
+      "description": "Dicom Image 3",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal zugänglich"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "application/dicom",
+          "language": "de-DE",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.21367.201599.1.201606010958052.1574258944780.1574258944780&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 1686,
+          "hash": "NGJmYTkzNjlmYTNkOGMwNTgzN2E5YmQyMGYyYjVhYjE2YTQ1NDQ4OQ==",
+          "creation": "2019-11-20T15:09:04+01:00"
+        },
+        "format": {
+          "system": "urn:oid:1.2.840.10008.2.6.1",
+          "code": "1.2.840.10008.5.1.4.1.1.88.59",
+          "display": "KOS Dokument"
+        }
+      } ],
+      "context": {
+        "period": {
+          "start": "2015-02-04T15:41:22+01:00",
+          "end": "2015-02-04T15:41:22+01:00"
+        },
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "35971002",
+            "display": "Ambulante Einrichtung/Ambulatorium"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394914008",
+            "display": "Radiologie"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#4"
+        },
+        "related": [ {
+          "identifier": {
+            "value": "1.3.6.1.4.1.21367.201599.1.201606010958052"
+          }
+        } ]
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/cf50ec3a-5a1a-4d79-bd49-0df1bcbf47eb",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "cf50ec3a-5a1a-4d79-bd49-0df1bcbf47eb",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2981"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:cf50ec3a-5a1a-4d79-bd49-0df1bcbf47eb"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-06-29T13:58:00.000+02:00",
+      "description": "Upload Beispiel BFH",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2981&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 309219,
+          "hash": "YzY3ZDg2MTVmNjA2MzlkMTdkMzM2NGIwNDRhYzkxMzk2ZmQ4NDllOQ==",
+          "creation": "2020-06-29T13:58:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/87674334-ace4-4437-881b-7b88bc46adea",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "87674334-ace4-4437-881b-7b88bc46adea",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2983"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:87674334-ace4-4437-881b-7b88bc46adea"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-06-29T13:58:00.000+02:00",
+      "description": "Upload Beispiel BFH 2",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2983&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 309219,
+          "hash": "YzY3ZDg2MTVmNjA2MzlkMTdkMzM2NGIwNDRhYzkxMzk2ZmQ4NDllOQ==",
+          "creation": "2020-06-29T13:58:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/3ac85f7b-6bc7-456b-995c-5daddf09a7c6",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "3ac85f7b-6bc7-456b-995c-5daddf09a7c6",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2977"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:3ac85f7b-6bc7-456b-995c-5daddf09a7c6"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-06-29T13:58:00.000+02:00",
+      "description": "2-7-MedicationCard",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2977&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 309219,
+          "hash": "YzY3ZDg2MTVmNjA2MzlkMTdkMzM2NGIwNDRhYzkxMzk2ZmQ4NDllOQ==",
+          "creation": "2020-06-29T13:58:00+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/4deca389-d492-4d89-b98d-884f64e8eefa",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "4deca389-d492-4d89-b98d-884f64e8eefa",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2986"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:4deca389-d492-4d89-b98d-884f64e8eefa"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-09-24T09:32:22.000+02:00",
+      "description": "2-7-MedicationCard",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2986&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 9754,
+          "hash": "NGIwODQzODIwMTg3ZDA0YjIzN2E5ZDZkYzMyODM3ZTM3NzNkMjZkNg==",
+          "creation": "2020-09-24T09:32:22+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/79ab7de5-fc13-4c3a-89e7-ebb086983271",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "79ab7de5-fc13-4c3a-89e7-ebb086983271",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2995"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:79ab7de5-fc13-4c3a-89e7-ebb086983271"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-09-24T10:13:52.000+02:00",
+      "description": "2-7-MedicationCard",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2995&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 9754,
+          "hash": "NGIwODQzODIwMTg3ZDA0YjIzN2E5ZDZkYzMyODM3ZTM3NzNkMjZkNg==",
+          "creation": "2020-09-24T10:13:52+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/c70b93cf-7c4a-4ae1-9a47-f29ab1006be4",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "c70b93cf-7c4a-4ae1-9a47-f29ab1006be4",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2991"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:c70b93cf-7c4a-4ae1-9a47-f29ab1006be4"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-09-24T10:19:35.000+02:00",
+      "description": "2-7-MedicationCard",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2991&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 9754,
+          "hash": "NGIwODQzODIwMTg3ZDA0YjIzN2E5ZDZkYzMyODM3ZTM3NzNkMjZkNg==",
+          "creation": "2020-09-24T10:19:35+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/7b6f6702-c0de-4273-b4ec-450aef5ff36d",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "7b6f6702-c0de-4273-b4ec-450aef5ff36d",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2993"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:7b6f6702-c0de-4273-b4ec-450aef5ff36d"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-09-24T10:27:27.000+02:00",
+      "description": "2-7-MedicationCard",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2993&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 9754,
+          "hash": "NGIwODQzODIwMTg3ZDA0YjIzN2E5ZDZkYzMyODM3ZTM3NzNkMjZkNg==",
+          "creation": "2020-09-24T10:27:27+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/ab3c2a2a-e1d1-483f-b9ce-bd532234bc99",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "ab3c2a2a-e1d1-483f-b9ce-bd532234bc99",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2997"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:ab3c2a2a-e1d1-483f-b9ce-bd532234bc99"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-09-24T10:33:12.000+02:00",
+      "description": "2-7-MedicationCard",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2997&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 9754,
+          "hash": "NGIwODQzODIwMTg3ZDA0YjIzN2E5ZDZkYzMyODM3ZTM3NzNkMjZkNg==",
+          "creation": "2020-09-24T10:33:12+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  }, {
+    "fullUrl": "http://10.2.101.10:11070/fhir/DocumentReference/0cfaa5a6-1f88-4bbb-809f-5c77fe5fb258",
+    "resource": {
+      "resourceType": "DocumentReference",
+      "id": "0cfaa5a6-1f88-4bbb-809f-5c77fe5fb258",
+      "meta": {
+        "profile": [ "http://ihe.net/fhir/StructureDefinition/IHE_MHD_Comprehensive_DocumentManifest" ]
+      },
+      "contained": [ {
+        "resourceType": "Patient",
+        "id": "1",
+        "identifier": [ {
+          "use": "official",
+          "system": "urn:oid:1.3.6.1.4.1.21367.2017.2.5.45",
+          "value": "b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+        } ]
+      } ],
+      "masterIdentifier": {
+        "value": "urn:oid:1.3.6.1.4.1.12559.11.13.2.1.2999"
+      },
+      "identifier": [ {
+        "use": "official",
+        "system": "urn:ietf:rfc:3986",
+        "value": "urn:uuid:0cfaa5a6-1f88-4bbb-809f-5c77fe5fb258"
+      } ],
+      "status": "current",
+      "type": {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "721912009",
+          "display": "Medication summary document (record artifact)"
+        } ]
+      },
+      "category": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "422735006",
+          "display": "Summary clinical document (record artifact)"
+        } ]
+      } ],
+      "subject": {
+        "reference": "https://10.2.200.18/fhir/Patient/1.3.6.1.4.1.21367.2017.2.5.45-b584d5a5-6a27-4c93-8cb5-450b9b9572fb"
+      },
+      "date": "2020-09-24T11:59:41.000+02:00",
+      "description": "2-7-MedicationCard",
+      "securityLabel": [ {
+        "coding": [ {
+          "system": "http://snomed.info/sct",
+          "code": "17621005",
+          "display": "Normal (qualifier value)"
+        } ]
+      } ],
+      "content": [ {
+        "attachment": {
+          "contentType": "text/plain",
+          "language": "de-CH",
+          "url": "http://10.2.200.18:9090/camel/xdsretrieve?uniqueId=1.3.6.1.4.1.12559.11.13.2.1.2999&repositoryUniqueId=1.3.6.1.4.1.21367.2017.2.3.54",
+          "size": 9754,
+          "hash": "NGIwODQzODIwMTg3ZDA0YjIzN2E5ZDZkYzMyODM3ZTM3NzNkMjZkNg==",
+          "creation": "2020-09-24T11:59:41+02:00"
+        },
+        "format": {
+          "system": "urn:oid:1.3.6.1.4.1.19376.1.2.3",
+          "code": "urn:ihe:pharm:pml:2013",
+          "display": "Community Medication List"
+        }
+      } ],
+      "context": {
+        "facilityType": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "264358009",
+            "display": "General practice premises (environment)"
+          } ]
+        },
+        "practiceSetting": {
+          "coding": [ {
+            "system": "http://snomed.info/sct",
+            "code": "394802001",
+            "display": "General medicine (qualifier value)"
+          } ]
+        },
+        "sourcePatientInfo": {
+          "reference": "#1"
+        }
+      }
+    }
+  } ]
+}

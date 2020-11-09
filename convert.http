@@ -1,6 +1,6 @@
 ### conversion
-### @host = https://test.ahdis.ch
-@host = http://localhost:8080
+@host = https://test.ahdis.ch/r4
+### @host = http://localhost:8080
 
 GET https://test.ahdis.ch/r4/metadata HTTP/1.1
 Accept: application/fhir+json

@@ -16,7 +16,7 @@ hapi:
     validation:
       enabled: true
       request-only: true
-    igs:
+    implementationguides:
       -
         name: ch.fhir.ig.ch-epr-term
         version: 2.0.4
@@ -38,9 +38,5 @@ hapi:
       -
         name: ch.fhir.ig.cda-fhir-maps
         version: dev
-logging:
-  level:
-    ca.uhn.fhir.jaxrs: debug
-    ch.ahdis: debug
 server:
   port: 8080
