@@ -261,7 +261,7 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
           removeBundleEntryIds(r);
         }
       }
-      theServletResponse.setContentType(contentType);
+      theServletResponse.setContentType(responseContentType);
       theServletResponse.setCharacterEncoding("UTF-8");
       ServletOutputStream output = theServletResponse.getOutputStream();
 
