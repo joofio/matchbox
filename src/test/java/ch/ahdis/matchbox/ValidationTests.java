@@ -430,11 +430,6 @@ public class ValidationTests implements IEvaluationContext, IValidatorResourceFe
   }
 
   @Override
-  public List<Base> executeFunction(Object appContext, String functionName, List<List<Base>> parameters) {
-    return null;
-  }
-
-  @Override
   public Base resolveReference(Object appContext, String url, Base refContext) {
     if (url.equals("Patient/test"))
       return new Patient();
@@ -511,5 +506,11 @@ public class ValidationTests implements IEvaluationContext, IValidatorResourceFe
     URL url = new URL(source);
     URLConnection c = url.openConnection();
     return TextFile.streamToBytes(c.getInputStream());
+  }
+
+  @Override
+  public List<Base> executeFunction(Object appContext, List<Base> focus, String functionName,
+      List<List<Base>> parameters) {
+    return null;
   }
 }

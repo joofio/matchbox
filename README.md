@@ -41,7 +41,7 @@ Note: The build is depending on hapi snapshot version, it might break.
 
 ```
 mvn package
-java -jar target/matchbox-0.8.15-SNAPSHOT.jar
+java -jar target/matchbox-0.8.16-SNAPSHOT.jar
 ```
 
 http://localhost:8080/r4/metadata
@@ -53,9 +53,8 @@ http://localhost:8080/r4/metadata
 IMORTANT: adjust jar in Dockerfile
 
 docker build -t matchbox . 
-docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v0815
-docker push eu.gcr.io/fhir-ch/matchbox:v0815
+docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v0816
+docker push eu.gcr.io/fhir-ch/matchbox:v0816
 
 
-
-docker run -d matchbox -p 8080:8080
+docker run -d --name matchbox -p 8080:8080 --memory="5G" --cpus="1" matchbox

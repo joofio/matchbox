@@ -1,11 +1,6 @@
 # @host = http://test.ahdis.ch/r4
 
-### @host = http://localhost:8080/r4
-@host = http://test.ahdis.ch/hapi-fhir-jpavalidator/fhir
-
-### Get capability statement
-GET {{host}}/metadata HTTP/1.1
-Accept: application/fhir+json
+@host = http://localhost:8080/r4
 
 ### Get DocumentReference
 GET {{host}}/DocumentReference?patient.identifier=1234|6789 HTTP/1.1
