@@ -3,7 +3,7 @@ MAINTAINER oliver egger <oliver.egger@ahdis.ch>
 EXPOSE 8080
 VOLUME /tmp
 
-ARG JAR_FILE=target/matchbox-0.8.16-SNAPSHOT.jar
+ARG JAR_FILE=target/matchbox-0.8.17-SNAPSHOT.jar
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -19,6 +19,6 @@ RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.Package
 RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id ch.chmed20af.emediplan -v 1.0.0 
 RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.cda -v dev -tgz http://build.fhir.org/ig/ahdis/cda-core-2.0/branches/pullrequests/package.tgz -desc hl7.fhir.cda
 RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id ch.fhir.ig.cda-fhir-maps -v dev -tgz http://build.fhir.org/ig/hl7ch/cda-fhir-maps/package.tgz
-RUN rm -rf /packages
+RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id ch.fhir.ig.ch-alis -v dev -tgz https://fhir.ch/ig/ch-alis/package.tgz
 
 ENTRYPOINT java -Xmx1G -Xshareclasses -Xquickstart -jar /app.jar

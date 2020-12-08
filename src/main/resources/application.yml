@@ -18,6 +18,15 @@ hapi:
       request-only: true
     implementationguides:
       -
+       name: hl7.fhir.pubpack
+       version: 0.0.7
+      -
+       name: hl7.fhir.xver-extensions
+       version: 0.0.5
+      -
+       name: hl7.terminology.r4
+       version: 2.0.0
+      -
         name: ch.fhir.ig.ch-epr-term
         version: 2.0.4
       -
@@ -37,6 +46,9 @@ hapi:
         version: dev
       -
         name: ch.fhir.ig.cda-fhir-maps
+        version: dev
+      -
+        name: ch.fhir.ig.ch-alis
         version: dev
 server:
   port: 8080
