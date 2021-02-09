@@ -36,15 +36,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hl7.fhir.convertors.VersionConvertor_40_50;
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.r5.context.SimpleWorkerContext;
 import org.hl7.fhir.r4.elementmodel.Manager.FhirFormat;
 import org.hl7.fhir.r4.formats.IParser;
 import org.hl7.fhir.r4.formats.ParserFactory;
-import org.hl7.fhir.r4.model.Base;
-import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.StructureMap;
-import org.hl7.fhir.r5.utils.StructureMapUtilities;
-import org.hl7.fhir.r5.utils.StructureMapUtilities.ITransformerServices;
+import org.hl7.fhir.r5.context.SimpleWorkerContext;
+import org.hl7.fhir.r5.utils.structuremap.ITransformerServices;
+import org.hl7.fhir.r5.utils.structuremap.StructureMapUtilities;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;

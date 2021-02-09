@@ -34,8 +34,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.model.StructureMap;
-import org.hl7.fhir.r5.utils.StructureMapUtilities;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;

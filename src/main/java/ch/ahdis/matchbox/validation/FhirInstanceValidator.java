@@ -256,7 +256,7 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
 
 		InstanceValidator v;
 		try {
-			v = new InstanceValidator(validationEngine.getContext(), null);
+			v = new InstanceValidator(validationEngine.getContext(), null, null);
 		} catch (Exception e) {
 			throw new ConfigurationException(e);
 		}

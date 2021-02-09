@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -466,7 +467,7 @@ public class ValidationTests implements IEvaluationContext, IValidatorResourceFe
   }
 
   @Override
-  public boolean resolveURL(Object appContext, String path, String url) throws IOException, FHIRException {
+  public boolean resolveURL(Object appContext, String path, String url, String type) throws IOException, FHIRException {
     return !url.contains("example.org") && !url.startsWith("http://hl7.org/fhir/invalid");
   }
 
@@ -512,5 +513,17 @@ public class ValidationTests implements IEvaluationContext, IValidatorResourceFe
   public List<Base> executeFunction(Object appContext, List<Base> focus, String functionName,
       List<List<Base>> parameters) {
     return null;
+  }
+
+  @Override
+  public CanonicalResource fetchCanonicalResource(String url) throws URISyntaxException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public boolean fetchesCanonicalResource(String url) {
+    // TODO Auto-generated method stub
+    return false;
   }
 }
