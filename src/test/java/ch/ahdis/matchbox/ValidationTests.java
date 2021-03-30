@@ -173,7 +173,7 @@ public class ValidationTests implements IEvaluationContext, IValidatorResourceFe
     val.setFetcher(this);
     if (content.has("packages")) {
       for (JsonElement e : content.getAsJsonArray("packages")) {
-        vCurr.loadIg(e.getAsString(), true);
+        vCurr.loadPackage(e.getAsString(), null);
       }
     }
     if (content.has("crumb-trail")) {
@@ -472,11 +472,6 @@ public class ValidationTests implements IEvaluationContext, IValidatorResourceFe
   }
 
   @Override
-  public void setLocale(Locale locale) {
-    //do nothing
-  }
-
-  @Override
   public boolean conformsToProfile(Object appContext, Base item, String url) throws FHIRException {
     IResourceValidator val = TestingUtilities.context(version).newValidator();
     List<ValidationMessage> valerrors = new ArrayList<ValidationMessage>();
@@ -525,5 +520,11 @@ public class ValidationTests implements IEvaluationContext, IValidatorResourceFe
   public boolean fetchesCanonicalResource(String url) {
     // TODO Auto-generated method stub
     return false;
+  }
+
+  @Override
+  public IValidatorResourceFetcher setLocale(Locale locale) {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

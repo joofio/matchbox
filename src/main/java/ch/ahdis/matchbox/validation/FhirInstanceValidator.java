@@ -386,7 +386,7 @@ public class FhirInstanceValidator extends BaseValidatorBridge implements IInsta
       String ig = (String) evt.getNewValue();
       try {
         ourLog.info("Loading "+ ig);
-        validationEngine.loadIg(ig, true);
+        validationEngine.loadPackage(ig, null);
         ourLog.info("Loading "+ ig+" done");
         
       } catch (Exception e1) {
