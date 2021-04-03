@@ -224,11 +224,42 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
     }
   }
 
+  
+  @Operation(name = "$transform", manualResponse = true, manualRequest = true)
+  public void manualInputAndOutput(@IdParam IdType theStructureMap, HttpServletRequest theServletRequest, HttpServletResponse theServletResponse) throws IOException {
+    org.hl7.fhir.r5.model.StructureMap map = (org.hl7.fhir.r5.model.StructureMap) fhirContext.fetchResourceById(theStructureMap.getResourceType(), theStructureMap.getIdPart());
+    if (map == null) {
+      throw new UnprocessableEntityException("Map not available with id "+theStructureMap.getIdPart());
+    }
+    transfrom(map, theServletRequest, theServletResponse);
+  }
+  
+      
   @Operation(name = "$transform", manualResponse = true, manualRequest = true)
   public void manualInputAndOutput(HttpServletRequest theServletRequest, HttpServletResponse theServletResponse)
       throws IOException {
-    String contentType = theServletRequest.getContentType();
 
+    Map<String, String[]> requestParams = theServletRequest.getParameterMap();
+    String[] source = requestParams.get("source");
+    if (source != null && source.length > 0) {
+      
+      org.hl7.fhir.r5.model.StructureMap map  = fhirContext.getTransform(source[0]);
+      if (map == null) {
+          throw new UnprocessableEntityException("Map not available with canonical url "+source[0]);
+      }
+      transfrom(map, theServletRequest, theServletResponse);
+    } else {
+      throw new UnprocessableEntityException("No source parameter provided");
+    }
+  }
+
+  
+  
+  public void transfrom(org.hl7.fhir.r5.model.StructureMap map, HttpServletRequest theServletRequest, HttpServletResponse theServletResponse) throws IOException {
+
+    String contentType = theServletRequest.getContentType();
+    org.hl7.fhir.r5.elementmodel.Element src = Manager.parse(fhirContext, theServletRequest.getInputStream(),
+        contentType.contains("xml") ? FhirFormat.XML : FhirFormat.JSON);
     Set<String> highestRankedAcceptValues = RestfulServerUtils
         .parseAcceptHeaderAndReturnHighestRankedOptions(theServletRequest);
 
@@ -236,43 +267,34 @@ import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
     if (highestRankedAcceptValues.contains(Constants.CT_FHIR_JSON_NEW)) {
       responseContentType = Constants.CT_FHIR_JSON_NEW;
     }
-
-    Map<String, String[]> requestParams = theServletRequest.getParameterMap();
-    String[] source = requestParams.get("source");
-    if (source != null && source.length > 0) {
-      org.hl7.fhir.r5.elementmodel.Element src = Manager.parse(fhirContext, theServletRequest.getInputStream(),
-          contentType.contains("xml") ? FhirFormat.XML : FhirFormat.JSON);
-      
-      
-      org.hl7.fhir.r5.model.StructureMap map = fhirContext.getTransform(source[0]);
-      if (map == null) {
-          throw new UnprocessableEntityException("Map not available with canonical url "+source[0]);
-      }
-
-      org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
-      if (r == null) {
-        throw new UnprocessableEntityException("Target Structure can not be resolved from map, is the corresponding implmentation guide provided?");
-      }
-      
-      utils.transform(null, src, map, r);
-      if (r.isResource() && "Bundle".contentEquals(r.getType())) {
-        Property bundleType = r.getChildByName("type");
-        if (bundleType!=null && bundleType.getValues()!=null && "document".equals(bundleType.getValues().get(0).primitiveValue())) {
-          removeBundleEntryIds(r);
-        }
-      }
-      theServletResponse.setContentType(responseContentType);
-      theServletResponse.setCharacterEncoding("UTF-8");
-      ServletOutputStream output = theServletResponse.getOutputStream();
-
-      if (output != null) {
-        if (output != null && responseContentType.equals(Constants.CT_FHIR_JSON_NEW))
-          new org.hl7.fhir.r5.elementmodel.JsonParser(fhirContext).compose(r, output, OutputStyle.PRETTY, null);
-        else
-          new org.hl7.fhir.r5.elementmodel.XmlParser(fhirContext).compose(r, output, OutputStyle.PRETTY, null);
-      }
-      theServletResponse.getOutputStream().close();
+    // patch for fhir-kit-client https://github.com/Vermonster/fhir-kit-client/pull/143
+    if (highestRankedAcceptValues.contains(Constants.CT_FHIR_JSON)) {
+      responseContentType = Constants.CT_FHIR_JSON_NEW;
     }
+
+    org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
+    if (r == null) {
+      throw new UnprocessableEntityException("Target Structure can not be resolved from map, is the corresponding implmentation guide provided?");
+    }
+    
+    utils.transform(null, src, map, r);
+    if (r.isResource() && "Bundle".contentEquals(r.getType())) {
+      Property bundleType = r.getChildByName("type");
+      if (bundleType!=null && bundleType.getValues()!=null && "document".equals(bundleType.getValues().get(0).primitiveValue())) {
+        removeBundleEntryIds(r);
+      }
+    }
+    theServletResponse.setContentType(responseContentType);
+    theServletResponse.setCharacterEncoding("UTF-8");
+    ServletOutputStream output = theServletResponse.getOutputStream();
+
+    if (output != null) {
+      if (output != null && responseContentType.equals(Constants.CT_FHIR_JSON_NEW))
+        new org.hl7.fhir.r5.elementmodel.JsonParser(fhirContext).compose(r, output, OutputStyle.PRETTY, null);
+      else
+        new org.hl7.fhir.r5.elementmodel.XmlParser(fhirContext).compose(r, output, OutputStyle.PRETTY, null);
+    }
+    theServletResponse.getOutputStream().close();
 
   }
 

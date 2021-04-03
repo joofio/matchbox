@@ -42,6 +42,9 @@ hapi:
         name: ch.fhir.ig.ch-atc
         version: 3.1.0
       -
+        name: ch.fhir.ig.ch-orf
+        version: current
+      -
         name: ch.fhir.ig.ch-epr-mhealth
         version: 0.1.1
       -
