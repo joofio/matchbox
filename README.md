@@ -30,8 +30,8 @@ there is a test instance available at [http://test.ahdis.ch/r4](http://test.ahdi
 a preconfigured docker container with the swiss ig's is here
 
 ```
-docker pull eu.gcr.io/fhir-ch/matchbox:v0819
-docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v0819
+docker pull eu.gcr.io/fhir-ch/matchbox:v091
+docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v0891
 docker logs matchbox
 ```
 
@@ -41,7 +41,7 @@ Note: The build is depending on hapi snapshot version, it might break.
 
 ```
 mvn package
-java -jar target/matchbox-0.8.19-SNAPSHOT.jar
+java -jar target/matchbox-0.9.1-SNAPSHOT.jar
 ```
 
 http://localhost:8080/r4/metadata
@@ -53,8 +53,8 @@ http://localhost:8080/r4/metadata
 IMORTANT: adjust jar in Dockerfile
 
 docker build -t matchbox . 
-docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v0819
-docker push eu.gcr.io/fhir-ch/matchbox:v0819
+docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v091
+docker push eu.gcr.io/fhir-ch/matchbox:v091
 
 
 docker run -d --name matchbox -p 8080:8080 --memory="5G" --cpus="1" matchbox
