@@ -31,7 +31,7 @@ a preconfigured docker container with the swiss ig's is here
 
 ```
 docker pull eu.gcr.io/fhir-ch/matchbox:v091
-docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v0891
+docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v091
 docker logs matchbox
 ```
 
