@@ -20,6 +20,7 @@
 		<hapi.version>5.4.0-PRE2-SNAPSHOT</hapi.version>
 		<fhir.core.version>5.3.7-SNAPSHOT</fhir.core.version>
 		<docker.image.prefix>matchbox</docker.image.prefix>
+		<start-class>ch.ahdis.matchbox.MatchboxApplication</start-class>   
 	</properties>
 
 	<repositories>
