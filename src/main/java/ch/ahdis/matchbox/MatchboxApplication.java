@@ -27,6 +27,7 @@ import org.hl7.fhir.r4.context.SimpleWorkerContext;
 import org.hl7.fhir.r4.model.ImplementationGuide;
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -57,6 +58,9 @@ public class MatchboxApplication {
   
   @Autowired
   private FhirAutoConfiguration autoConfiguration;
+  
+  @Value("${matchbox.resolve.baseurl}")
+  private String baseUrl;
 
   @Bean
   public FhirRestfulServerCustomizer fhirServerCustomizer() {
@@ -108,7 +112,7 @@ public class MatchboxApplication {
         resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
         resourceProviders.add(new StructureDefinitionProvider(validatorModule.getContext()));
         resourceProviders.add(new QuestionnaireResponseProvider(validatorModule.getContext()));
-        resourceProviders.add(new QuestionnaireProvider(validatorModule.getContext()));
+        resourceProviders.add(new QuestionnaireProvider(baseUrl, validatorModule.getContext()));
         
         server.setResourceProviders(resourceProviders);
         
