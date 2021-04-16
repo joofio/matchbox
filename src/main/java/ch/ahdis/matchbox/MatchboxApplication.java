@@ -23,9 +23,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hl7.fhir.r4.context.SimpleWorkerContext;
 import org.hl7.fhir.r4.model.ImplementationGuide;
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +41,8 @@ import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureDefinitionProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
 import ch.ahdis.matchbox.operation.Convert;
+import ch.ahdis.matchbox.questionnaire.QuestionnaireProvider;
+import ch.ahdis.matchbox.questionnaire.QuestionnaireResponseProvider;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirProperties.Ig;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
@@ -54,6 +58,9 @@ public class MatchboxApplication {
   
   @Autowired
   private FhirAutoConfiguration autoConfiguration;
+  
+  @Value("${matchbox.resolve.baseurl}")
+  private String baseUrl;
 
   @Bean
   public FhirRestfulServerCustomizer fhirServerCustomizer() {
@@ -104,6 +111,8 @@ public class MatchboxApplication {
 
         resourceProviders.add(new StructureMapTransformProvider(validatorModule.getContext()));
         resourceProviders.add(new StructureDefinitionProvider(validatorModule.getContext()));
+        resourceProviders.add(new QuestionnaireResponseProvider(validatorModule.getContext()));
+        resourceProviders.add(new QuestionnaireProvider(baseUrl, validatorModule.getContext()));
         
         server.setResourceProviders(resourceProviders);
         

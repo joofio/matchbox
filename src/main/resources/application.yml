@@ -1,3 +1,7 @@
+matchbox:
+  resolve:
+    baseurl: http://hapi.fhir.org/baseR4
+
 spring:
   application:
     name: matchbox
