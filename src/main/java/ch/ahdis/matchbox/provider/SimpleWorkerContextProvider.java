@@ -10,9 +10,12 @@ import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.hl7.fhir.convertors.VersionConvertor_40_50;
+import org.hl7.fhir.dstu2.model.ResourceType;
 import org.hl7.fhir.instance.model.api.IIdType;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
+import org.hl7.fhir.r5.model.CanonicalResource;
+import org.hl7.fhir.r5.model.Questionnaire;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,7 +127,8 @@ public class SimpleWorkerContextProvider<T extends Resource> implements IResourc
 	
 	public List<T> search() {
 	  List<org.hl7.fhir.r5.model.Resource> resources = new ArrayList<org.hl7.fhir.r5.model.Resource>();
-	  switch(this.myResourceName) {
+	  
+    switch(this.myResourceName) {
   	  case "ImplementationGuide":
   	    resources.addAll(fhirContext.allImplementationGuides());
   	    break;
@@ -136,6 +140,11 @@ public class SimpleWorkerContextProvider<T extends Resource> implements IResourc
         break;
       case "ConceptMap":
         resources.addAll(fhirContext.listMaps());
+        break;
+      case "Questionnaire":
+        List<CanonicalResource> confResources = fhirContext.allConformanceResources();
+        confResources.removeIf(filter -> !filter.getClass().equals(Questionnaire.class));
+        resources.addAll(confResources);
         break;
       default:
         log.error(this.myResourceName + " not supported");

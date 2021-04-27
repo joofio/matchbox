@@ -6,13 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hl7.fhir.convertors.VersionConvertor_40_50;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
+import org.hl7.fhir.r4.model.StructureDefinition.StructureDefinitionKind;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Questionnaire;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
@@ -32,14 +35,22 @@ import org.hl7.fhir.r5.utils.structuremap.StructureMapUtilities;
 import org.springframework.beans.factory.annotation.Value;
 
 import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.rest.annotation.Create;
+import ca.uhn.fhir.rest.annotation.Delete;
+import ca.uhn.fhir.rest.annotation.IdParam;
 import ca.uhn.fhir.rest.annotation.Operation;
 import ca.uhn.fhir.rest.annotation.OperationParam;
+import ca.uhn.fhir.rest.annotation.Read;
+import ca.uhn.fhir.rest.annotation.ResourceParam;
+import ca.uhn.fhir.rest.annotation.Update;
+import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.server.IResourceProvider;
+import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import ca.uhn.fhir.rest.server.exceptions.UnprocessableEntityException;
 import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
 
-public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionnaire> implements IResourceProvider {
+public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionnaire>  {
 
 	public final static String LAUNCH_CONTEXT = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext";
 	public final static String SOURCE_QUERIES = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-sourceQueries";
@@ -51,6 +62,50 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 		super(fhirContext, Questionnaire.class);
 		this.baseUrl = baseUrl;
 	}
+	
+	@Create
+  public MethodOutcome createQuestionnaire(@ResourceParam Questionnaire theResource) {
+    theResource.setId(theResource.getName());
+    updateWorkerContext(theResource);
+    MethodOutcome retVal = new MethodOutcome();
+    retVal.setCreated(true);
+    retVal.setResource(getByUrl(theResource.getUrl()));
+    return retVal;
+  }
+
+  public void updateWorkerContext(Questionnaire theResource) {
+    org.hl7.fhir.r5.model.Questionnaire cached = fhirContext.fetchResource(org.hl7.fhir.r5.model.Questionnaire.class, theResource.getUrl());
+    if (cached != null) {
+      fhirContext.dropResource(cached);
+    }    
+    org.hl7.fhir.r5.model.Questionnaire r5Structure = (org.hl7.fhir.r5.model.Questionnaire) VersionConvertor_40_50.convertResource(theResource);
+    fhirContext.cacheResource(r5Structure);
+  }
+  
+  @Delete()
+  public void deleteQuestionnaire(@IdParam IdType theId) {
+      org.hl7.fhir.r5.model.Questionnaire cached = fhirContext.fetchResource(org.hl7.fhir.r5.model.Questionnaire.class, theId.getId());
+      if (cached == null) {
+          throw new ResourceNotFoundException("Unknown version");
+      }
+      fhirContext.dropResource(cached);
+      return; //
+  }
+  
+  @Update
+  public MethodOutcome update(@IdParam IdType theId, @ResourceParam Questionnaire theResource) {
+     updateWorkerContext(theResource);
+     return new MethodOutcome();
+  }
+  
+  @Read()
+  public org.hl7.fhir.r4.model.Resource getResourceById(@IdParam IdType theId) {
+    return VersionConvertor_40_50.convertResource(getByUrl(theId.getId()));
+  }
+  
+  public org.hl7.fhir.r5.model.StructureDefinition getByUrl(String url) {
+  return fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureDefinition.class, url);
+  }
 	
 	@Operation(name = "$populate", idempotent = true)
 	public QuestionnaireResponse extract( 
