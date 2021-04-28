@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.hl7.fhir.convertors.VersionConvertor_40_50;
 import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.instance.model.api.IBaseResource;
-import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r5.model.Extension;
 import org.hl7.fhir.r4.model.IdType;
+import org.hl7.fhir.r5.model.Questionnaire;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.StructureMap;
@@ -78,31 +79,39 @@ public class QuestionnaireResponseProvider  extends SimpleWorkerContextProvider<
 		      responseContentType = Constants.CT_FHIR_JSON_NEW;
 		    }
 		   		    	
+		      // parse QuestionnaireResponse from request body
 		      org.hl7.fhir.r5.elementmodel.Element src = Manager.parse(fhirContext, theServletRequest.getInputStream(),
 		          contentType.contains("xml") ? FhirFormat.XML : FhirFormat.JSON);
 		      
-		      Base mapUrlValue = src.getExtensionValue(TARGET_STRUCTURE_MAP);
-		      if (mapUrlValue == null) throw new UnprocessableEntityException("No sdc-questionnaire-targetStructureMap extension found in resource");
-		      String mapUrl = mapUrlValue.primitiveValue();
+		      // get canonical URL of questionnaire
+		      String questionnaireUri = src.getChildValue("questionnaire");
+		      if (questionnaireUri == null) throw new UnprocessableEntityException("No questionnaire canonical URL given.");
 		      
+		      // fetch corresponding questionnaire
+		      Questionnaire questionnaire = fhirContext.fetchResource(Questionnaire.class, questionnaireUri);
+		      if (questionnaire == null) throw new UnprocessableEntityException("Could not fetch questionnaire with canonical URL '"+questionnaireUri+"'");
 		      
+		      // get targetStructureMap extension from questionnaire
+		      Extension targetStructureMapExtension = questionnaire.getExtensionByUrl(TARGET_STRUCTURE_MAP);
+		      if (targetStructureMapExtension == null) throw new UnprocessableEntityException("No sdc-questionnaire-targetStructureMap extension found in resource");		      		      
+		      String mapUrl = targetStructureMapExtension.getValue().primitiveValue();
+		      
+		      // fetch structure map to use
 		      org.hl7.fhir.r5.model.StructureMap map = fhirContext.getTransform(mapUrl);
 		      if (map == null) {
 		          throw new UnprocessableEntityException("Map not available with canonical url "+mapUrl);
 		      }
 
+		      // create target resource of structure map
 		      org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
 		      if (r == null) {
 		        throw new UnprocessableEntityException("Target Structure can not be resolved from map, is the corresponding implmentation guide provided?");
 		      }
 		      
+		      // transform
 		      utils.transform(null, src, map, r);
-		      /*if (r.isResource() && "Bundle".contentEquals(r.getType())) {
-		        Property bundleType = r.getChildByName("type");
-		        if (bundleType!=null && bundleType.getValues()!=null && "document".equals(bundleType.getValues().get(0).primitiveValue())) {
-		          removeBundleEntryIds(r);
-		        }
-		      }*/
+		      
+		      // return result
 		      theServletResponse.setContentType(responseContentType);
 		      theServletResponse.setCharacterEncoding("UTF-8");
 		      ServletOutputStream output = theServletResponse.getOutputStream();
