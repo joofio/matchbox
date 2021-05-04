@@ -53,8 +53,8 @@ http://localhost:8080/r4/metadata
 IMORTANT: adjust jar in Dockerfile
 
 docker build -t matchbox . 
-docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v091
-docker push eu.gcr.io/fhir-ch/matchbox:v091
+docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v093
+docker push eu.gcr.io/fhir-ch/matchbox:v093
 
 
 docker run -d --name matchbox -p 8080:8080 --memory="5G" --cpus="1" matchbox

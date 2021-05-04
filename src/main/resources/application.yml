@@ -47,13 +47,13 @@ hapi:
         version: 3.1.0
       -
         name: ch.fhir.ig.ch-orf
-        version: dev
+        version: current
       -
         name: ch.fhir.ig.ch-rad-order
-        version: dev
+        version: current
       -
         name: ch.fhir.ig.ch-epr-mhealth
-        version: dev
+        version: current
       -
         name: hl7.fhir.cda
         version: dev
