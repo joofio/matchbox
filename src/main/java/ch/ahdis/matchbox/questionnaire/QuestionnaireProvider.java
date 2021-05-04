@@ -48,6 +48,7 @@ import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import ca.uhn.fhir.rest.server.exceptions.UnprocessableEntityException;
+import ch.ahdis.matchbox.mappinglanguage.TransformSupportServices;
 import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
 
 public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionnaire>  {
@@ -65,7 +66,7 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 	
 	@Create
   public MethodOutcome createQuestionnaire(@ResourceParam Questionnaire theResource) {
-    theResource.setId(theResource.getName());
+	  theResource.setId(theResource.getUrl().substring(theResource.getUrl().lastIndexOf(("/"))));
     updateWorkerContext(theResource);
     MethodOutcome retVal = new MethodOutcome();
     retVal.setCreated(true);

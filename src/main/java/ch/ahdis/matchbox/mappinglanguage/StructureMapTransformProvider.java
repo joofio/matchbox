@@ -1,6 +1,5 @@
 package ch.ahdis.matchbox.mappinglanguage;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,19 +41,14 @@ import org.hl7.fhir.r5.elementmodel.Manager;
 import org.hl7.fhir.r5.elementmodel.Manager.FhirFormat;
 import org.hl7.fhir.r5.formats.IParser.OutputStyle;
 import org.hl7.fhir.r5.model.Base;
-import org.hl7.fhir.r5.model.Coding;
 import org.hl7.fhir.r5.model.Narrative.NarrativeStatus;
 import org.hl7.fhir.r5.model.Property;
-import org.hl7.fhir.r5.model.Resource;
 import org.hl7.fhir.r5.model.StructureDefinition;
 import org.hl7.fhir.r5.model.StructureMap.StructureMapStructureComponent;
-import org.hl7.fhir.r5.terminologies.ConceptMapEngine;
-import org.hl7.fhir.r5.utils.structuremap.ITransformerServices;
 import org.hl7.fhir.r5.utils.structuremap.StructureMapUtilities;
 import org.hl7.fhir.utilities.xhtml.NodeType;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 
-import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.Delete;
 import ca.uhn.fhir.rest.annotation.IdParam;
@@ -70,82 +64,16 @@ import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import ca.uhn.fhir.rest.server.exceptions.UnprocessableEntityException;
 import ch.ahdis.matchbox.provider.SimpleWorkerContextProvider;
 
-//public class StructureMapTransformProvider extends ca.uhn.fhir.jpa.rp.r4.StructureMapResourceProvider {
-
-
-// public class StructureMapTransformProvider implements IResourceProvider {
-
-  public class StructureMapTransformProvider extends SimpleWorkerContextProvider<StructureMap> implements IResourceProvider {
-// public class StructureMapTransformProvider extends SimpleWorkerContextProvider<StructureMap> {
-//  private SimpleWorkerContext fhirContext;
+public class StructureMapTransformProvider extends SimpleWorkerContextProvider<StructureMap> implements IResourceProvider {
   
   private StructureMapUtilities utils = null;
   
-//  @Override
-//  public Class<? extends IBaseResource> getResourceType() {
-//    return StructureMap.class;
-//  }
 
   public StructureMapTransformProvider(SimpleWorkerContext fhirContext) {
     super(fhirContext, StructureMap.class);
-//    this.fhirContext = fhirContext;
-    utils = new StructureMapUtilities(fhirContext, new TransformSupportServices(new ArrayList<Base>()));
+    utils = new StructureMapUtilities(fhirContext, new TransformSupportServices(fhirContext, new ArrayList<Base>()));
   }
-
-  public class TransformSupportServices implements ITransformerServices {
-
-    private List<Base> outputs;
-
-    public TransformSupportServices(List<Base> outputs) {
-      this.outputs = outputs;
-    }
-
-    @Override
-    public Base createType(Object appInfo, String name) throws FHIRException {
-      StructureDefinition sd = fhirContext.fetchResource(StructureDefinition.class, name);
-      return Manager.build(fhirContext, sd); 
-    }
-
-    @Override
-    public Base createResource(Object appInfo, Base res, boolean atRootofTransform) {
-      if (atRootofTransform)
-        outputs.add(res);
-      return res;
-    }
-
-    @Override
-    public Coding translate(Object appInfo, Coding source, String conceptMapUrl) throws FHIRException {
-      ConceptMapEngine cme = new ConceptMapEngine(fhirContext);
-      return cme.translate(source, conceptMapUrl);
-    }
-
-    @Override
-    public Base resolveReference(Object appContext, String url) throws FHIRException {
-      Resource resource = fhirContext.fetchResource(Resource.class, url);
-      if (resource!=null) {
-        String inStr = FhirContext.forR5().newJsonParser().encodeResourceToString(resource);
-        try {
-          return Manager.parse(fhirContext, new ByteArrayInputStream(inStr.getBytes()), FhirFormat.JSON);
-         } catch (IOException e) {
-            throw new FHIRException("Cannot convert resource to element model");
-         }
-      }
-      throw new FHIRException("resolveReference, url not found: "+url);
-    }
-
-    @Override
-    public List<Base> performSearch(Object appContext, String url) throws FHIRException {
-      throw new FHIRException("performSearch is not supported yet");
-    }
-
-
-    @Override
-    public void log(String message) {
-      StructureMapTransformProvider.log.debug(message);
-    }
-
-  }
-  
+ 
   @Create
   public MethodOutcome createStructureMap(@ResourceParam StructureMap theResource) {
     log.debug("created structuredmap, caching");

@@ -32,25 +32,28 @@ hapi:
        version: 2.0.0
       -
         name: ch.fhir.ig.ch-epr-term
-        version: 2.0.4
+        version: 2.0.5
       -
         name: ch.fhir.ig.ch-core
-        version: 1.2.0
+        version: 2.0.0
       -
         name: ch.fhir.ig.ch-vacd
         version: 0.1.0
       -
         name: ch.fhir.ig.ch-emed
-        version: 0.2.0
+        version: current
       -
         name: ch.fhir.ig.ch-atc
         version: 3.1.0
       -
         name: ch.fhir.ig.ch-orf
-        version: current
+        version: dev
+      -
+        name: ch.fhir.ig.ch-rad-order
+        version: dev
       -
         name: ch.fhir.ig.ch-epr-mhealth
-        version: 0.1.1
+        version: dev
       -
         name: hl7.fhir.cda
         version: dev
