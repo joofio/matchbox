@@ -53,7 +53,7 @@ public class CdaTransformTests {
 
   private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CdaTransformTests.class);
 
-  private String targetServer = "http://test.ahdis.ch/r4";
+  private String targetServer = "http://localhost:8080/r4";
   
   @Before 
   public void setup() {
@@ -99,7 +99,7 @@ public class CdaTransformTests {
 
     Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCda", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaToBundle");
     
-    compare(bundle, bundleReceived);
+    compare(bundle, bundleReceived, false);
   }
 
   private Bundle convertBundleToCdaAndBack(Bundle bundle, String mapToCda, String mapToBundle) {
@@ -110,18 +110,30 @@ public class CdaTransformTests {
     return bundleReceived;
   }  
 
-  
+
   @Test
-  public void convertChEMedMedicationCard() throws IOException {
-    InputStream inputStream =   getClass().getResourceAsStream("/transform/ch-emed/2-7-MedicationCard.json");
+  public void convertChSetId() throws IOException {
+    InputStream inputStream =   getClass().getResourceAsStream("/transform/ch-emed/ch-setId.xml");
     
-    Bundle bundle = (Bundle) contextR4.newJsonParser().parseResource(inputStream);
+    Bundle bundle = (Bundle) contextR4.newXmlParser().parseResource(inputStream);
     assertNotNull(bundle);
-
-    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationCardDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationCardDocumentToBundle");
-
-    compare(bundle, bundleReceived);
+  
+    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaCh", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChToBundle");
+  
+    compare(bundle, bundleReceived, true);
   }
+
+//  @Test
+//  public void convertChEMedMedicationCard() throws IOException {
+//    InputStream inputStream =   getClass().getResourceAsStream("/transform/ch-emed/2-7-MedicationCard.json");
+//    
+//    Bundle bundle = (Bundle) contextR4.newJsonParser().parseResource(inputStream);
+//    assertNotNull(bundle);
+//
+//    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationCardDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationCardDocumentToBundle");
+//
+//    compare(bundle, bundleReceived);
+//  }
 
   
   
@@ -164,7 +176,7 @@ public class CdaTransformTests {
   }
 
   
-  public void compare(IBaseResource left, IBaseResource right) {
+  public void compare(IBaseResource left, IBaseResource right, boolean onlyDiffering) {
     
     
     Map<String, String> bundleLeftIds = null;
@@ -198,7 +210,7 @@ public class CdaTransformTests {
       log.error(fshyDifferrence("entries differing",difference.entriesDiffering()));
     }
 
-    assertTrue(difference.areEqual());
+    assertTrue(onlyDiffering ? difference.entriesDiffering().isEmpty() : difference.areEqual());
 
   }
 

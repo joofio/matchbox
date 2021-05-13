@@ -66,11 +66,12 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 	
 	@Create
   public MethodOutcome createQuestionnaire(@ResourceParam Questionnaire theResource) {
-	  theResource.setId(theResource.getUrl().substring(theResource.getUrl().lastIndexOf(("/"))));
+	  int index = theResource.getUrl().lastIndexOf("/");
+	  theResource.setId(theResource.getUrl().substring(index+1));
     updateWorkerContext(theResource);
     MethodOutcome retVal = new MethodOutcome();
     retVal.setCreated(true);
-    retVal.setResource(getByUrl(theResource.getUrl()));
+    retVal.setResource(theResource);
     return retVal;
   }
 
@@ -104,8 +105,8 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
     return VersionConvertor_40_50.convertResource(getByUrl(theId.getId()));
   }
   
-  public org.hl7.fhir.r5.model.StructureDefinition getByUrl(String url) {
-  return fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureDefinition.class, url);
+  public org.hl7.fhir.r5.model.Questionnaire getByUrl(String url) {
+  return fhirContext.fetchResource(org.hl7.fhir.r5.model.Questionnaire.class, url);
   }
 	
 	@Operation(name = "$populate", idempotent = true)

@@ -1,6 +1,8 @@
 @host = https://test.ahdis.ch
 
 GET {{host}}/r4/metadata HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Origin: http://localhost"
 
 
 

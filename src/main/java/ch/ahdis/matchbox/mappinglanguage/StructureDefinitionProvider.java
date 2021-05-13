@@ -82,7 +82,7 @@ public class StructureDefinitionProvider extends SimpleWorkerContextProvider<Str
   }
   
   public org.hl7.fhir.r5.model.StructureDefinition getByUrl(String url) {
-	return fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureDefinition.class, url);
+    return fhirContext.fetchResource(org.hl7.fhir.r5.model.StructureDefinition.class, url);
   }
   
 }
