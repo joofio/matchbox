@@ -1,6 +1,13 @@
-# @host = http://test.ahdis.ch/r4
+### @host = http://test.ahdis.ch/r4
 
 @host = http://localhost:8080/r4
+
+
+### Get DocumentReference
+GET {{host}}/Questionnaire?url=http://who-int.github.io/svc/refs/heads/rc2/SVC-Questionnaire HTTP/1.1
+Accept: application/fhir+json
+
+
 
 ### Get DocumentReference
 GET {{host}}/DocumentReference?patient.identifier=1234|6789 HTTP/1.1
@@ -19,46 +26,13 @@ Accept: application/fhir+json
 {
   "resourceType": "Bundle",
   "id": "bundle-transaction",
-  "meta": {
-    "lastUpdated": "2014-08-18T01:43:30Z"
-  },
   "type": "transaction",
   "entry": [
     {
       "resource": {
         "resourceType" : "ImplementationGuide",
-        "version" : "dev",
-        "packageId": "hl7.fhir.cda"
-      },
-      "request": {
-        "method": "POST"
-      }
-    },
-    {
-      "resource": {
-        "resourceType" : "ImplementationGuide",
-        "version" : "1.0.0",
-        "packageId": "ch.fhir.ig.ch-core"
-      },
-      "request": {
-        "method": "POST"
-      }
-    },
-    {
-      "resource": {
-        "resourceType" : "ImplementationGuide",
-        "version" : "0.1.1",
-        "packageId": "ch.fhir.ig.ch-emed"
-      },
-      "request": {
-        "method": "POST"
-      }
-    },
-    {
-      "resource": {
-        "resourceType" : "ImplementationGuide",
-        "version" : "0.1.1",
-        "packageId": "ch.fhir.ig.ch-epr-mhealth"
+        "version" : "current",
+        "packageId": "hl7.fhir.us.breast-radiology"
       },
       "request": {
         "method": "POST"
