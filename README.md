@@ -4,6 +4,8 @@ plain spring-boot-server based as provided by [hapi-fhir spring boot examples](h
 
 **Feature experimental**
 
+SDC Support for [$extract](http://build.fhir.org/ig/HL7/sdc/extraction.html) (and $populate) for Questionnaire
+
 Operation $convert on Resource @link https://www.hl7.org/fhir/resource-operation-convert.html
  * Convertion between fhir+xml and fhir+json is automatically handled in the hapi-fhir base request handling
 
@@ -30,8 +32,8 @@ there is a test instance available at [http://test.ahdis.ch/r4](http://test.ahdi
 a preconfigured docker container with the swiss ig's is here
 
 ```
-docker pull eu.gcr.io/fhir-ch/matchbox:v091
-docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v091
+docker pull eu.gcr.io/fhir-ch/matchbox:v094
+docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v094
 docker logs matchbox
 ```
 
@@ -41,7 +43,7 @@ Note: The build is depending on hapi snapshot version, it might break.
 
 ```
 mvn package
-java -jar target/matchbox-0.9.1-SNAPSHOT.jar
+java -jar target/matchbox-0.9.4-SNAPSHOT.jar
 ```
 
 http://localhost:8080/r4/metadata
@@ -53,8 +55,8 @@ http://localhost:8080/r4/metadata
 IMORTANT: adjust jar in Dockerfile
 
 docker build -t matchbox . 
-docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v093
-docker push eu.gcr.io/fhir-ch/matchbox:v093
+docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v094
+docker push eu.gcr.io/fhir-ch/matchbox:v094
 
 
 docker run -d --name matchbox -p 8080:8080 --memory="5G" --cpus="1" matchbox

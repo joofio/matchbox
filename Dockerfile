@@ -3,7 +3,7 @@ MAINTAINER oliver egger <oliver.egger@ahdis.ch>
 EXPOSE 8080
 VOLUME /tmp
 
-ARG JAR_FILE=target/matchbox-0.9.3-SNAPSHOT.jar
+ARG JAR_FILE=target/matchbox-0.9.4-SNAPSHOT.jar
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
