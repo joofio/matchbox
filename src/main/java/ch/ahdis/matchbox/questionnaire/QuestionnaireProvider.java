@@ -52,7 +52,7 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 
 	public final static String LAUNCH_CONTEXT = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext";
 	public final static String SOURCE_QUERIES = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-sourceQueries";
-	public final static String SOURCE_STRUCTURE_MAP = "http://hl7.org/fhir/StructureDefinition/questionnaire-sourceStructureMap";
+	public final static String SOURCE_STRUCTURE_MAP = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-sourceStructureMap";
 	
 	private String baseUrl;
 		
@@ -154,8 +154,10 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 	      
 	      // experimental branch with launch context and no source queries bundle
 	      if (launchContext != null && sourceQueriesExt == null) {
-	    	  // convert launch context to element model and use as input for structure map		      	      
-		      bundle = convertToElementModel(launchContext);	
+	    	  // convert launch context to element model and use as input for structure map		    
+	        Bundle prepopBundle = new Bundle();
+	        prepopBundle.addEntry().setResource(launchContext);
+	        bundle = convertToElementModel(prepopBundle);	
 	      } else {
 	    	  // normal branch with source queries
 		      if (sourceQueriesExt == null) throw new UnprocessableEntityException("No sdc-questionnaire-sourceQueries extension found in resource");
