@@ -12,18 +12,17 @@ import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
-import org.hl7.fhir.r4.model.StructureDefinition.StructureDefinitionKind;
 import org.hl7.fhir.r4.model.DomainResource;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.IdType;
 import org.hl7.fhir.r4.model.Identifier;
+import org.hl7.fhir.r4.model.Parameters;
 import org.hl7.fhir.r4.model.Questionnaire;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Resource;
 import org.hl7.fhir.r4.model.Type;
 import org.hl7.fhir.r5.context.SimpleWorkerContext;
-import org.hl7.fhir.r5.elementmodel.Element;
 import org.hl7.fhir.r5.elementmodel.Manager;
 import org.hl7.fhir.r5.elementmodel.Manager.FhirFormat;
 import org.hl7.fhir.r5.formats.IParser.OutputStyle;
@@ -32,7 +31,6 @@ import org.hl7.fhir.r5.model.StructureDefinition;
 import org.hl7.fhir.r5.model.StructureMap.StructureMapStructureComponent;
 import org.hl7.fhir.r5.utils.FHIRPathEngine;
 import org.hl7.fhir.r5.utils.structuremap.StructureMapUtilities;
-import org.springframework.beans.factory.annotation.Value;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.annotation.Create;
@@ -45,7 +43,6 @@ import ca.uhn.fhir.rest.annotation.ResourceParam;
 import ca.uhn.fhir.rest.annotation.Update;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
-import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import ca.uhn.fhir.rest.server.exceptions.UnprocessableEntityException;
 import ch.ahdis.matchbox.mappinglanguage.TransformSupportServices;
@@ -111,10 +108,12 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 	
 	@Operation(name = "$populate", idempotent = true)
 	public QuestionnaireResponse extract( 
-			@OperationParam(name = "questionnaire", min = 1, max = 1) Questionnaire questionnaire,
+			@OperationParam(name = "questionnaire", min = 0, max = 1) Questionnaire questionnaire,
+			@OperationParam(name = "questionnaireRef", min = 0, max = 1) Reference questionnaireRef,
 			@OperationParam(name = "subject", min = 1, max = 1, type=Reference.class) Reference ref,
 			
 			@OperationParam(name = "identifier", min=0, max=1) Identifier identifier,
+			@OperationParam(name = "launchContext", min=0, max=1) Parameters launchContext,
 			@OperationParam(name = "canonical", min=0, max=1) String canonical,
 			@OperationParam(name = "subject", min=0, max=1) Reference subject,
 			@OperationParam(name = "content", min=0 ) List<Reference> content,
@@ -122,25 +121,24 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 	      throws IOException {		
 			
 		  StructureMapUtilities utils = new StructureMapUtilities(fhirContext, new TransformSupportServices(fhirContext, new ArrayList<Base>()));
-			   	
+			
+		  if (questionnaire==null && questionnaireRef==null) throw new UnprocessableEntityException("No questionnaire given in Parameters");
+		  
+		  // resolve questionnaire reference if given
+		  if (questionnaire==null && questionnaireRef!=null) {
+			  org.hl7.fhir.r5.model.Questionnaire questionnaireR5 = fhirContext.fetchResource(org.hl7.fhir.r5.model.Questionnaire.class, questionnaireRef.getReference());
+			  if (questionnaireR5==null) throw new UnprocessableEntityException("Questionnaire referenced by questionnaireRef could not be resolved.");
+			  questionnaire = (Questionnaire) VersionConvertor_40_50.convertResource(questionnaireR5);
+		  }
+		  
 		  // convert questionaire to element model		      		    
 	      org.hl7.fhir.r5.elementmodel.Element src = convertToElementModel(questionnaire);
 	      
 	      // get launch context from questionnaire
-	      org.hl7.fhir.r5.elementmodel.Element launchContext = src.getExtension(LAUNCH_CONTEXT);
-	      if (launchContext == null) throw new UnprocessableEntityException("No sdc-questionnaire-launchContext extension found in resource");
-	       		      	         
-	      // get source queries from questionnaire
-	      Extension sourceQueriesExt = questionnaire.getExtensionByUrl(SOURCE_QUERIES);
-	      if (sourceQueriesExt == null) throw new UnprocessableEntityException("No sdc-questionnaire-sourceQueries extension found in resource");
-		  Type t = sourceQueriesExt.getValue();
-		  if (! (t instanceof Reference)) throw new UnprocessableEntityException("sdc-questionnaire-sourceQueries must have reference");
-		  Resource sourceQueriesBundleResource = resolveResource(questionnaire, (Reference) t);
-		  if (sourceQueriesBundleResource == null) throw new UnprocessableEntityException("sdc-questionnaire-sourceQueries not resolved");
-		  if (! (sourceQueriesBundleResource instanceof Bundle)) throw new UnprocessableEntityException("sdc-questionnaire-sourceQueries is not a bundle");
-		  Bundle sourceQueriesBundle = (Bundle) sourceQueriesBundleResource;
+	      org.hl7.fhir.r5.elementmodel.Element launchContextDefinition = src.getExtension(LAUNCH_CONTEXT);
+	      if (launchContextDefinition == null) throw new UnprocessableEntityException("No sdc-questionnaire-launchContext extension found in resource");
 	      
-		  // get structure map from questionnaire
+   	      // get structure map from questionnaire
 	      Base mapUrlValue = src.getExtensionValue(SOURCE_STRUCTURE_MAP);
 	      if (mapUrlValue == null) throw new UnprocessableEntityException("No sdc-questionnaire-sourceStructureMap extension found in resource");
 	      String mapUrl = mapUrlValue.primitiveValue();
@@ -148,30 +146,47 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 	      if (map == null) {
 	          throw new UnprocessableEntityException("Map not available with canonical url "+mapUrl);
 	      }
-	      	      	   
 	      
-	      // build input bundle for structure map
-	      Bundle processBundle = new Bundle();
-	      for (Bundle.BundleEntryComponent entry : sourceQueriesBundle.getEntry()) {
-	    	  if (entry.hasResource()) {
-	    		  if (entry.getResource() instanceof Bundle) {
-	    			processBundle.addEntry().setResource(entry.getResource()).setFullUrl(entry.getFullUrl());  
-	    		  } else {
-	    		    processBundle.addEntry().setResource(wrapIntoBundle(entry.getResource())).setFullUrl(entry.getFullUrl());
-	    		  }
-	    	  } else if (entry.hasRequest()) {
-	    		  if (entry.getRequest().getMethod()!=Bundle.HTTPVerb.GET) throw new UnprocessableEntityException("Bundle request method must be GET");
-	    		  String url = entry.getRequest().getUrl();
-	    		  url = evaluateFhirPath(subject, url);
-	    		  Bundle result = resolveBundleFromUri(url);
-	    		  processBundle.addEntry().setResource(result).setFullUrl(entry.getFullUrl());
-	    	  }
+	      org.hl7.fhir.r5.elementmodel.Element bundle = null; 	      // input for structure map; initialized later
+	      
+	      // get source queries from questionnaire
+	      Extension sourceQueriesExt = questionnaire.getExtensionByUrl(SOURCE_QUERIES);
+	      
+	      // experimental branch with launch context and no source queries bundle
+	      if (launchContext != null && sourceQueriesExt == null) {
+	    	  // convert launch context to element model and use as input for structure map		      	      
+		      bundle = convertToElementModel(launchContext);	
+	      } else {
+	    	  // normal branch with source queries
+		      if (sourceQueriesExt == null) throw new UnprocessableEntityException("No sdc-questionnaire-sourceQueries extension found in resource");
+			  Type t = sourceQueriesExt.getValue();
+			  if (! (t instanceof Reference)) throw new UnprocessableEntityException("sdc-questionnaire-sourceQueries must have reference");
+			  Resource sourceQueriesBundleResource = resolveResource(questionnaire, (Reference) t);
+			  if (sourceQueriesBundleResource == null) throw new UnprocessableEntityException("sdc-questionnaire-sourceQueries not resolved");
+			  if (! (sourceQueriesBundleResource instanceof Bundle)) throw new UnprocessableEntityException("sdc-questionnaire-sourceQueries is not a bundle");
+			  Bundle sourceQueriesBundle = (Bundle) sourceQueriesBundleResource;
+		      		  	      	   	     
+		      // build input bundle for structure map
+		      Bundle processBundle = new Bundle();
+		      for (Bundle.BundleEntryComponent entry : sourceQueriesBundle.getEntry()) {
+		    	  if (entry.hasResource()) {
+		    		  if (entry.getResource() instanceof Bundle) {
+		    			processBundle.addEntry().setResource(entry.getResource()).setFullUrl(entry.getFullUrl());  
+		    		  } else {
+		    		    processBundle.addEntry().setResource(wrapIntoBundle(entry.getResource())).setFullUrl(entry.getFullUrl());
+		    		  }
+		    	  } else if (entry.hasRequest()) {
+		    		  if (entry.getRequest().getMethod()!=Bundle.HTTPVerb.GET) throw new UnprocessableEntityException("Bundle request method must be GET");
+		    		  String url = entry.getRequest().getUrl();
+		    		  url = evaluateFhirPath(subject, url);
+		    		  Bundle result = resolveBundleFromUri(url);
+		    		  processBundle.addEntry().setResource(result).setFullUrl(entry.getFullUrl());
+		    	  }
+		      }
+		      
+		      // convert input bundle to element model		           
+		      bundle = convertToElementModel(processBundle);	
 	      }
-	      
-	      // convert input bundle to element model
-	      StructureDefinition bundleStructure = fhirContext.getStructure("Bundle");		      		      		      
-	      org.hl7.fhir.r5.elementmodel.Element bundle = Manager.build(fhirContext, bundleStructure);	      
-	      bundle = convertToElementModel(processBundle);	      
 	      
 	      // build output QuestionnaireResponse using element model
 	      org.hl7.fhir.r5.elementmodel.Element r = getTargetResourceFromStructureMap(map);
@@ -230,6 +245,7 @@ public class QuestionnaireProvider extends SimpleWorkerContextProvider<Questionn
 	 */
 	private org.hl7.fhir.r5.elementmodel.Element convertToElementModel(Resource inputResource) {
 		 String inStr = FhirContext.forR4().newJsonParser().encodeResourceToString(inputResource);
+		 
 		 try {
 	       return Manager.parse(fhirContext, new ByteArrayInputStream(inStr.getBytes()), FhirFormat.JSON);
 		 } catch (IOException e) {
