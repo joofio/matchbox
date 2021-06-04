@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -14,12 +15,7 @@ import java.util.UUID;
 import org.hl7.fhir.instance.model.api.IBaseResource;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Bundle.BundleEntryComponent;
-import org.hl7.fhir.r4.model.Bundle.BundleType;
-import org.hl7.fhir.r4.model.Composition;
-import org.hl7.fhir.r4.model.Composition.CompositionStatus;
 import org.hl7.fhir.r4.model.Identifier;
-import org.hl7.fhir.r4.model.Patient;
-import org.hl7.fhir.r4.model.Reference;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -80,28 +76,6 @@ public class CdaTransformTests {
     assertTrue(cda.indexOf("ClinicalDocument")>0);
   }
   
-  @Test
-  public void convertBundleToCdaToBundle() {
-    String uuid = "urn:uuid:"+UUID.randomUUID().toString();
-    String entryUuid = "urn:uuid:"+UUID.randomUUID().toString();
-    String entry2Uuid = "urn:uuid:"+UUID.randomUUID().toString();
-    Bundle bundle = new Bundle();
-    bundle.setIdentifier(new Identifier().setSystem("urn:ietf:rfc:3986").setValue(uuid));
-    bundle.setType(BundleType.DOCUMENT);
-    Composition composition = new Composition();
-    composition.setIdentifier(new Identifier().setSystem("urn:ietf:rfc:3986").setValue(uuid));
-    composition.setStatus(CompositionStatus.FINAL);
-    composition.setSubject(new Reference().setReference(entry2Uuid).setType("Patient"));
-    bundle.addEntry().setFullUrl(entryUuid).setResource(composition);
-    Patient patient = new Patient();
-    patient.addName().addGiven("Given").setFamily("Family");
-    bundle.addEntry().setFullUrl(entry2Uuid).setResource(patient);
-
-    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCda", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaToBundle");
-    
-    compare(bundle, bundleReceived, false);
-  }
-
   private Bundle convertBundleToCdaAndBack(Bundle bundle, String mapToCda, String mapToBundle) {
     String cda = genericClient.convert(bundle, EncodingEnum.JSON,mapToCda, "text/xml");
     assertNotNull(cda);
@@ -123,19 +97,110 @@ public class CdaTransformTests {
     compare(bundle, bundleReceived, true);
   }
 
-//  @Test
-//  public void convertChEMedMedicationCard() throws IOException {
-//    InputStream inputStream =   getClass().getResourceAsStream("/transform/ch-emed/2-7-MedicationCard.json");
-//    
-//    Bundle bundle = (Bundle) contextR4.newJsonParser().parseResource(inputStream);
-//    assertNotNull(bundle);
-//
-//    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationCardDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationCardDocumentToBundle");
-//
-//    compare(bundle, bundleReceived);
-//  }
+  public void convertBundleMedicationTreatmentPlanToCdaAndBack(String url) throws IOException {
+    InputStream inputStream = new URL(url).openStream();
+    Bundle bundle = (Bundle) contextR4.newXmlParser().parseResource(inputStream);
+    assertNotNull(bundle);
+    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationTreatmentPlanDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationTreatmentPlanDocumentToBundle");
+    compare(bundle, bundleReceived, false);
+ }
 
+  public void convertBundleMedicationDispenseToCdaAndBack(String url) throws IOException {
+    InputStream inputStream = new URL(url).openStream();
+    Bundle bundle = (Bundle) contextR4.newXmlParser().parseResource(inputStream);
+    assertNotNull(bundle);
+    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationDispenseDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationDispenseDocumentToBundle");
+    compare(bundle, bundleReceived, false);
+ }
   
+  public void convertBundleMedicationPrescriptionToCdaAndBack(String url) throws IOException {
+     InputStream inputStream  = new URL(url).openStream();
+     Bundle bundle = (Bundle) contextR4.newXmlParser().parseResource(inputStream);
+     assertNotNull(bundle);
+     Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationPrescriptionDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationPrescriptionDocumentToBundle");
+     compare(bundle, bundleReceived, false);
+  }
+  
+  public void convertBundlePharmaceuticalAdviceDocumentToCdaAndBack(String url) throws IOException {
+    InputStream inputStream = new URL(url).openStream();
+    Bundle bundle = (Bundle) contextR4.newXmlParser().parseResource(inputStream);
+    assertNotNull(bundle);
+    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedPharmaceuticalAdviceDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedPharmaceuticalAdviceDocumentToBundle");
+    compare(bundle, bundleReceived, false);
+ }
+  
+  public void convertBundleMedicationCardToCdaAndBack(String url) throws IOException {
+    InputStream inputStream = new URL(url).openStream();
+    Bundle bundle = (Bundle) contextR4.newXmlParser().parseResource(inputStream);
+    assertNotNull(bundle);
+    Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationCardDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationCardDocumentToBundle");
+    compare(bundle, bundleReceived, false);
+  }
+
+  @Test
+  public void convert11MedicationTreatmentPlanToCdaAndBack() throws IOException {
+    convertBundleMedicationTreatmentPlanToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-1-1-MedicationTreatmentPlan.xml");
+  }
+  
+  @Test
+  public void convert12MedicationDispenseToCdaAndBack() throws IOException {
+    convertBundleMedicationDispenseToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-1-2-MedicationDispense.xml");
+  }
+
+// TODO, have ony a map from CDA to FHIR http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-1-MedicationList.xml
+  
+  @Test
+  public void convert22PharmaceuticalAdviceDocumentoCdaAndBack() throws IOException {
+    convertBundlePharmaceuticalAdviceDocumentToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-2-PharmaceuticalAdvice.xml");
+  }
+
+  @Test
+  public void convert23MedicationTreatmentPlanToCdaAndBack() throws IOException {
+    convertBundleMedicationTreatmentPlanToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-3-MedicationTreatmentPlan.xml");
+  }
+  
+  @Test
+  public void convert24MedicationDispensetoCdaAndBack() throws IOException {
+    convertBundleMedicationDispenseToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-4-MedicationDispense.xml");
+  }
+  
+  @Test
+  public void convert25MedicationTreatmentPlanToCdaAndBack() throws IOException {
+    convertBundleMedicationTreatmentPlanToCdaAndBack(" http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-5-MedicationTreatmentPlan.xml");
+  }
+  
+  @Test
+  public void convert26MedicationPrescriptiontoCdaAndBack() throws IOException {
+    convertBundleMedicationPrescriptionToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-6-MedicationPrescription.xml");
+  }
+  
+  @Test
+  public void convertChEMedMedicationCardUdditoCdaAndBack() throws IOException {
+    convertBundleMedicationCardToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-7-MedicationCard-UUIDfullUrl.xml");
+  }
+
+  @Test
+  public void convertChEMedMedicationCardtoCdaAndBack() throws IOException {
+     convertBundleMedicationCardToCdaAndBack("http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-2-7-MedicationCard.xml");
+  }
+  
+  @Test
+  public void convertChPharmaceuticalAdviceDocumentoCdaAndBack() throws IOException {
+    convertBundlePharmaceuticalAdviceDocumentToCdaAndBack(" http://build.fhir.org/ig/ehealthsuisse/ch-emed/Bundle-PharmaceuticalAdvice-ChangeDosage.xml");
+  }
+
+//@Test
+//public void convertChEMedMedicationCard() throws IOException {
+//  InputStream inputStream =   getClass().getResourceAsStream("/transform/ch-emed/2-7-MedicationCard.json");
+//  
+//  Bundle bundle = (Bundle) contextR4.newJsonParser().parseResource(inputStream);
+//  assertNotNull(bundle);
+//
+//  Bundle bundleReceived = convertBundleToCdaAndBack(bundle, "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCdaChEmedMedicationCardDocument", "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaChEmedMedicationCardDocumentToBundle");
+//
+//  compare(bundle, bundleReceived);
+//}
+
   
   public Map<String, String> harmonizeBunldeIds(Bundle bundle) {
     Map<String, String>  ids = new  HashMap<String, String>();
@@ -198,6 +263,8 @@ public class CdaTransformTests {
     
     Map<String, Object> leftFlatMap = FlatMapUtil.flatten(leftMap, bundleLeftIds);
     Map<String, Object> rightFlatMap = FlatMapUtil.flatten(rightMap, bundleRightIds);
+    
+    
     
     
     log.debug(fshy("resulting transform",rightFlatMap));
