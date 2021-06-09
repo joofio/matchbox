@@ -15,7 +15,7 @@ public class PackageCacheInitializer {
 
 	private FilesystemPackageCacheManager pcm = null;
 	
-	PackageCacheInitializer() {
+	public PackageCacheInitializer() {
 		
 	}
 	

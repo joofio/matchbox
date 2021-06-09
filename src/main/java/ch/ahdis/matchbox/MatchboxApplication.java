@@ -1,5 +1,6 @@
 package ch.ahdis.matchbox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 /*
  * #%L
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.hl7.fhir.exceptions.FHIRException;
 import org.hl7.fhir.r4.context.SimpleWorkerContext;
 import org.hl7.fhir.r4.model.ImplementationGuide;
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
@@ -45,6 +47,7 @@ import ch.ahdis.matchbox.questionnaire.QuestionnaireProvider;
 import ch.ahdis.matchbox.questionnaire.QuestionnaireResponseProvider;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirProperties.Ig;
+import ch.ahdis.matchbox.util.PackageCacheInitializer;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirRestfulServerCustomizer;
 import ch.ahdis.matchbox.validation.FhirInstanceValidator;
 import ch.ahdis.matchbox.validation.ValidationProvider;
@@ -119,6 +122,7 @@ public class MatchboxApplication {
         if (autoConfiguration != null && autoConfiguration.getProperties() != null) {
           List<Ig> igs = autoConfiguration.getProperties().getImplementationguides();
           if (igs != null) {
+        	PackageCacheInitializer pci = new PackageCacheInitializer();
             for (Ig ig : igs) {
               String url = ig.getUrl();
               String name = ig.getName();
@@ -127,8 +131,21 @@ public class MatchboxApplication {
               ImplementationGuide implementationGuide = new ImplementationGuide();
               implementationGuide.setPackageId(name);
               implementationGuide.setVersion(ver);
-              log.debug("Installing IG: {}, {}, {}", url, name, ver);
+              log.info("Installing IG: {}, {}, {}", url, name, ver);              
               
+              if (url != null) {
+            	  
+      			try {
+      				pci.pkg(name, ver, url, null);
+      			} catch (IOException e) {
+      				e.printStackTrace();
+      				//System.exit(-1);
+      			} catch (FHIRException e) {
+      				e.printStackTrace();
+      				//System.exit(-1);
+      			}
+              }
+                           
               implementationGuideProvider.create(implementationGuide);
               
             }
