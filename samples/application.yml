@@ -1,0 +1,53 @@
+matchbox:
+  resolve:
+    baseurl: http://hapi.fhir.org/baseR4
+
+hapi:
+  fhir:
+    server:
+      path: /r4/*
+    rest:
+      server-name: matchbox ahdis         
+    implementationguides:
+      -
+       name: hl7.fhir.pubpack
+       version: 0.0.7
+      -
+       name: hl7.fhir.xver-extensions
+       version: 0.0.5
+      -
+       name: hl7.terminology.r4
+       version: 2.0.0
+      -
+        name: ch.fhir.ig.ch-epr-term
+        version: 2.0.5
+      -
+        name: ch.fhir.ig.ch-core
+        version: 2.0.0
+      -
+        name: ch.fhir.ig.ch-vacd
+        version: 0.1.0
+      -
+        name: ch.fhir.ig.ch-emed
+        version: current
+      -
+        name: ch.fhir.ig.ch-atc
+        version: 3.1.0
+      -
+        name: ch.fhir.ig.ch-orf
+        version: current
+      -
+        name: ch.fhir.ig.ch-rad-order
+        version: current
+      -
+        name: ch.fhir.ig.ch-epr-mhealth
+        version: current
+      -
+        name: hl7.fhir.cda
+        version: dev
+      -
+        name: ch.fhir.ig.cda-fhir-maps
+        version: dev    
+
+server:
+  port: 8080
