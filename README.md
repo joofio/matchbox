@@ -43,8 +43,9 @@ Note: The build is depending on hapi snapshot version, it might break.
 
 ```
 mvn package
-java -jar target/matchbox-0.9.4-SNAPSHOT.jar
+java -jar target/matchbox-0.9.4-SNAPSHOT.jar -Dspring.config.additional-location=optional:file:./samples/application.yml
 ```
+You may provide another configuration file than ./samples/application.yml 
 
 http://localhost:8080/r4/metadata
 
