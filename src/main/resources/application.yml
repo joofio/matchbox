@@ -12,13 +12,13 @@ hapi:
       path: /r4/*
     rest:
       server-name: matchbox ahdis
-      server-version: 1.0.0
+      server-version: 0.9.5
       implementation-description: FHIR Core Server
       default-response-encoding: json
       e-tag-support: enabled
       default-pretty-print: true
     validation:
       enabled: true
-      request-only: true   
+      request-only: true
 server:
   port: 8080

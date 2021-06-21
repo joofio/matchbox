@@ -3,6 +3,8 @@ package ch.ahdis.validation;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -58,11 +60,11 @@ import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirProperties;
 @RunWith(Parameterized.class)
 public class IgValidateR4Test {
 
-  @ClassRule
-  public static final SpringClassRule aaa = new SpringClassRule();
-
-  @Rule
-  public final SpringMethodRule smr = new SpringMethodRule();
+//  @ClassRule
+//  public static final SpringClassRule aaa = new SpringClassRule();
+//
+//  @Rule
+//  public final SpringMethodRule smr = new SpringMethodRule();
   
   static private FilesystemPackageCacheManager pcm;
   static private Set<String> loadedIgs = new HashSet<String>();
@@ -103,12 +105,13 @@ public class IgValidateR4Test {
   @Parameters(name = "{index}: file {0}")
   public static Iterable<Object[]> data() throws ParserConfigurationException, IOException, FHIRFormatError {
     Yaml yaml = new Yaml();
-    InputStream inputStream = yaml.getClass()
-      .getClassLoader()
-      .getResourceAsStream("application.yml");
+//    InputStream inputStream = yaml.getClass()
+//      .getClassLoader()
+//      .getResourceAsStream("application.yml");
+    File initialFile = new File("./config/application.yml");
+    InputStream inputStream = new FileInputStream(initialFile);
     Map<String, Object> obj = yaml.load(inputStream);
     List<FhirProperties.Ig> igs = getIgs(obj);
-    
     List<Object[]> objects = new ArrayList<Object[]>();
     
     for (FhirProperties.Ig ig : igs) {
@@ -260,8 +263,15 @@ public class IgValidateR4Test {
   @Test
   public void validate() throws Exception {
     OperationOutcome outcome = validate(resource,targetServer); 
-    assertEquals(1,outcome.getIssue().size());
-    assertEquals(IssueSeverity.INFORMATION, outcome.getIssue().get(0).getSeverity());
+    
+    int errors = 0;
+    for (int i=0; i<outcome.getIssue().size(); ++i) {
+      IssueSeverity severity = outcome.getIssue().get(i).getSeverity();
+      if (IssueSeverity.FATAL.equals(severity) || IssueSeverity.ERROR.equals(severity)) {
+        ++errors;
+      }
+    }
+    assertEquals(0,errors);
   }
 
   public boolean upload(String implementationGuide, String targetServer) {

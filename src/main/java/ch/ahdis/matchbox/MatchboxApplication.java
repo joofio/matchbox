@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hl7.fhir.exceptions.FHIRException;
-import org.hl7.fhir.r4.context.SimpleWorkerContext;
 import org.hl7.fhir.r4.model.ImplementationGuide;
 import org.hl7.fhir.r5.utils.IResourceValidator.BestPracticeWarningLevel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,6 @@ import ch.ahdis.matchbox.interceptor.TransactionProvider;
 import ch.ahdis.matchbox.mappinglanguage.ImplementationGuideProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureDefinitionProvider;
 import ch.ahdis.matchbox.mappinglanguage.StructureMapTransformProvider;
-import ch.ahdis.matchbox.operation.Convert;
 import ch.ahdis.matchbox.questionnaire.QuestionnaireProvider;
 import ch.ahdis.matchbox.questionnaire.QuestionnaireResponseProvider;
 import ch.ahdis.matchbox.spring.boot.autoconfigure.FhirAutoConfiguration;
@@ -92,8 +90,6 @@ public class MatchboxApplication {
       if (!JPA) {
 
         log.debug("registering VersionInterceptor");
-//        server.registerInterceptor(new VersionInterceptor());
-        server.registerProvider(new Convert());
 
         server.registerInterceptor(new MappingLanguageInterceptor());
 
@@ -134,16 +130,16 @@ public class MatchboxApplication {
               log.info("Installing IG: {}, {}, {}", url, name, ver);              
               
               if (url != null) {
-            	  
-      			try {
-      				pci.pkg(name, ver, url, null);
-      			} catch (IOException e) {
-      				e.printStackTrace();
-      				//System.exit(-1);
-      			} catch (FHIRException e) {
-      				e.printStackTrace();
-      				//System.exit(-1);
-      			}
+
+                try {
+                  pci.pkg(name, ver, url, null);
+                } catch (IOException e) {
+                  e.printStackTrace();
+                  // System.exit(-1);
+                } catch (FHIRException e) {
+                  e.printStackTrace();
+                  // System.exit(-1);
+                }
               }
                            
               implementationGuideProvider.create(implementationGuide);

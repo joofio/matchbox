@@ -39,7 +39,7 @@ public class TransactionProvider {
     log.debug("transaction");
     List<IBaseResource> entries = new ArrayList<IBaseResource>();
 
-    ServletRequestDetails requestDetails = new ServletRequestDetails(null);
+    ServletRequestDetails requestDetails = new ServletRequestDetails();
 
     for (BundleEntryComponent nextEntry : theBundle.getEntry()) {
       if (nextEntry.getRequest() != null && (nextEntry.getRequest().getMethod() == HTTPVerb.POST)) {
@@ -68,7 +68,7 @@ public class TransactionProvider {
         }
       } else {
         OperationOutcome oo = new OperationOutcome();
-        String msg = "Method not spefified or implemented yet in transaction";
+        String msg = "Method not specified or implemented yet in transaction";
         oo.addIssue().setSeverity(IssueSeverity.FATAL).setDetails((new CodeableConcept()).setText(msg));
         throw new InternalErrorException(msg, oo);
       }
