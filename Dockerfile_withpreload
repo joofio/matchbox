@@ -1,15 +1,9 @@
-FROM adoptopenjdk/openjdk11-openj9:alpine-slim
+FROM eu.gcr.io/fhir-ch/matchbox-nopreload:latest
 MAINTAINER oliver egger <oliver.egger@ahdis.ch>
 EXPOSE 8080
 VOLUME /tmp
 
-ARG JAR_FILE=target/matchbox-0.9.5-SNAPSHOT.jar
-
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
-
-COPY ${JAR_FILE} /app.jar
 COPY packages /packages
-COPY config /config
 
 RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id hl7.fhir.r4.core -v 4.0.1
 RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id hl7.terminology.r4 -v 2.0.0
@@ -28,4 +22,4 @@ RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.Package
 RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id ch.fhir.ig.cda-fhir-maps -v 0.2.0
 # RUN java -Xmx1G -Xms1G -cp /app.jar -Dloader.main=ch.ahdis.matchbox.util.PackageCacheInitializer org.springframework.boot.loader.PropertiesLauncher -id ch.fhir.ig.ch-alis -v dev -tgz https://fhir.ch/ig/ch-alis/package.tgz
 
-ENTRYPOINT java -Xmx1G -Xshareclasses -Xquickstart -jar /app.jar -Dspring.config.additional-location=optional:file:/config/application.yml
+#ENTRYPOINT java -Xmx1G -Xshareclasses -Xquickstart -jar /app.jar -Dspring.config.additional-location=optional:file:/config/application.yml

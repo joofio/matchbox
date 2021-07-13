@@ -105,11 +105,12 @@ public class IgValidateR4Test {
   @Parameters(name = "{index}: file {0}")
   public static Iterable<Object[]> data() throws ParserConfigurationException, IOException, FHIRFormatError {
     Yaml yaml = new Yaml();
-//    InputStream inputStream = yaml.getClass()
-//      .getClassLoader()
-//      .getResourceAsStream("application.yml");
-    File initialFile = new File("./config/application.yml");
-    InputStream inputStream = new FileInputStream(initialFile);
+    InputStream inputStream = yaml.getClass()
+      .getClassLoader()
+      .getResourceAsStream("application.yml");
+    //System.out.println("EXECUTED---------------------------");
+    //File initialFile = new File("./config/application.yml");
+    //InputStream inputStream = new FileInputStream(initialFile);
     Map<String, Object> obj = yaml.load(inputStream);
     List<FhirProperties.Ig> igs = getIgs(obj);
     List<Object[]> objects = new ArrayList<Object[]>();

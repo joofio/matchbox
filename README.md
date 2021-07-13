@@ -32,10 +32,25 @@ there is a test instance available at [http://test.ahdis.ch/r4](http://test.ahdi
 a preconfigured docker container with the swiss ig's is here
 
 ```
-docker pull eu.gcr.io/fhir-ch/matchbox:v094
-docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v094
+docker pull eu.gcr.io/fhir-ch/matchbox:v098
+docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v098
 docker logs matchbox
 ```
+
+An alternative docker container without preloaded IGs can be downloaded like this:
+
+```
+docker pull eu.gcr.io/fhir-ch/matchbox-nopreload:v098
+```
+
+If you want to provide your own configuration file, create a application.yml with your configuration
+and mount that directory into the docker like this:
+
+```
+docker run -d --name matchbox -p 8080:8080 -v /path/to/your/config/directory:/config eu.gcr.io/fhir-ch/matchbox:v098 
+```
+
+This may be done with both the preloaded and the not preloaded version.
 
 ## build with maven
 
@@ -43,7 +58,7 @@ Note: The build is depending on hapi snapshot version, it might break.
 
 ```
 mvn package
-java -jar target/matchbox-0.9.4-SNAPSHOT.jar -Dspring.config.additional-location=optional:file:./samples/application.yml
+java -jar target/matchbox-0.9.7-SNAPSHOT.jar -Dspring.config.additional-location=optional:file:./samples/application.yml
 ```
 You may provide another configuration file than ./samples/application.yml 
 
@@ -53,14 +68,20 @@ http://localhost:8080/r4/metadata
 
 ## internal: build docker for gcloud/kubernetes
 
-IMORTANT: adjust jar in Dockerfile
+There is one docker image without preloaded IGs (matchbox-nopreload) and one docker image with preloaded IGs.
+Run the contents of the **build_upload_docker.sh** script:
 
-docker build -t matchbox . 
-docker tag matchbox eu.gcr.io/fhir-ch/matchbox:v097
-docker push eu.gcr.io/fhir-ch/matchbox:v097
-
+```
+mvn clean compile package
+export PROJECT_ID="$(gcloud config get-value project -q)"
+export VERSION="v098"
+docker build -t eu.gcr.io/${PROJECT_ID}/matchbox-nopreload:${VERSION} -t eu.gcr.io/${PROJECT_ID}/matchbox-nopreload:latest -f Dockerfile_nopreload .
+docker push -a eu.gcr.io/${PROJECT_ID}/matchbox-nopreload
+docker build -t matchbox -t eu.gcr.io/${PROJECT_ID}/matchbox:${VERSION} -t eu.gcr.io/${PROJECT_ID}/matchbox:latest -f Dockerfile_withpreload .
+docker push -a eu.gcr.io/${PROJECT_ID}/matchbox
 
 docker run -d --name matchbox -p 8080:8080 --memory="5G" --cpus="1" matchbox
+```
 
 
 ## developing matchbox
