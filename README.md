@@ -32,22 +32,22 @@ there is a test instance available at [http://test.ahdis.ch/r4](http://test.ahdi
 a preconfigured docker container with the swiss ig's is here
 
 ```
-docker pull eu.gcr.io/fhir-ch/matchbox:v098
-docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v098
+docker pull eu.gcr.io/fhir-ch/matchbox:v099
+docker run -d --name matchbox -p 8080:8080 eu.gcr.io/fhir-ch/matchbox:v099
 docker logs matchbox
 ```
 
 An alternative docker container without preloaded IGs can be downloaded like this:
 
 ```
-docker pull eu.gcr.io/fhir-ch/matchbox-nopreload:v098
+docker pull eu.gcr.io/fhir-ch/matchbox-nopreload:v099
 ```
 
 If you want to provide your own configuration file, create a application.yml with your configuration
 and mount that directory into the docker like this:
 
 ```
-docker run -d --name matchbox -p 8080:8080 -v /path/to/your/config/directory:/config eu.gcr.io/fhir-ch/matchbox:v098 
+docker run -d --name matchbox -p 8080:8080 -v /path/to/your/config/directory:/config eu.gcr.io/fhir-ch/matchbox:v099 
 ```
 
 This may be done with both the preloaded and the not preloaded version.
@@ -58,7 +58,7 @@ Note: The build is depending on hapi snapshot version, it might break.
 
 ```
 mvn package
-java -jar target/matchbox-0.9.7-SNAPSHOT.jar -Dspring.config.additional-location=optional:file:./samples/application.yml
+java -Dspring.config.additional-location=file:samples/application.yml -jar ./target/matchbox-0.9.9-SNAPSHOT.jar
 ```
 You may provide another configuration file than ./samples/application.yml 
 
