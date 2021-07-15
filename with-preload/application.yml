@@ -2,9 +2,6 @@ hapi:
   fhir:
     implementationguides:
       -
-       name: hl7.fhir.pubpack
-       version: 0.0.7
-      -
        name: hl7.fhir.xver-extensions
        version: 0.0.5
       -
@@ -26,6 +23,9 @@ hapi:
         name: ch.fhir.ig.ch-atc
         version: 3.1.0
       -
+        name: hl7.fhir.uv.sdc
+        version: 2.7.0
+      -
         name: ch.fhir.ig.ch-orf
         version: 0.10.0
       -
@@ -34,6 +34,9 @@ hapi:
       -
         name: ch.fhir.ig.ch-etoc
         version: 0.1.0
+      -
+        name: ihe.mhd.fhir
+        version: 4.0.1
       -
         name: ch.fhir.ig.ch-epr-mhealth
         version: 0.2.0
