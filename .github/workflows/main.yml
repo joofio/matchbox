@@ -16,4 +16,4 @@ jobs:
           heroku_app_name: "test-heroku-fhir-github" #Must be unique in Heroku
           heroku_email:  ${{secrets.HEROKU_EMAIL}}
           usedocker: true
-
+          stack: "container"
