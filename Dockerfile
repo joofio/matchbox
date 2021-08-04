@@ -1,7 +1,12 @@
 FROM eu.gcr.io/fhir-ch/matchbox-nopreload:latest
-EXPOSE 8080
-VOLUME /tmp
 
-COPY my-conf /config
+#FROM adoptopenjdk/openjdk11-openj9:alpine-slim
 
-#ENTRYPOINT java -Xmx1G -Xshareclasses -Xquickstart -jar /app.jar -Dspring.config.additional-location=optional:file:/config/application.yml
+#ARG JAR_FILE=target/matchbox-0.9.9-SNAPSHOT.jar
+
+#ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+#COPY ${JAR_FILE} /app.jar
+
+#CMD ["sh", "-c", ""] 
+CMD java -Dserver.port=$PORT -Xmx1G -Xshareclasses -Xquickstart -jar /app.jar
