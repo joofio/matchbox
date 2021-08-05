@@ -10,3 +10,4 @@ FROM eu.gcr.io/fhir-ch/matchbox-nopreload:latest
 
 #CMD ["sh", "-c", ""] 
 CMD java -Dserver.port=$PORT -Xmx1G -Xshareclasses -Xquickstart -jar /app.jar
+ #${{secrets.HEROKU_API_KEY}}
