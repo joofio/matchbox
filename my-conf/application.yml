@@ -1,0 +1,24 @@
+matchbox:
+  resolve:
+    baseurl: http://hapi.fhir.org/baseR4
+
+spring:
+  application:
+    name: matchbox
+hapi:
+  fhir:
+    version: R4
+    server:
+      path: /r4/*
+    rest:
+      server-name: matchbox ahdis
+      server-version: 0.9.5
+      implementation-description: FHIR Core Server
+      default-response-encoding: json
+      e-tag-support: enabled
+      default-pretty-print: true
+    validation:
+      enabled: true
+      request-only: true
+server:
+  port: $PORT

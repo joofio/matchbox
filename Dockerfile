@@ -7,6 +7,7 @@ FROM eu.gcr.io/fhir-ch/matchbox-nopreload:latest
 #ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 #COPY ${JAR_FILE} /app.jar
-  
-CMD ["java", "-Dserver.port=", "${PORT}" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
-#CMD ["java" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
+COPY my-conf /config
+
+#CMD ["java", "-Dserver.port=", "${PORT}" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
+CMD ["java" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
