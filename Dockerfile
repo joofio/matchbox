@@ -8,5 +8,5 @@ FROM eu.gcr.io/fhir-ch/matchbox-nopreload:latest
 
 #COPY ${JAR_FILE} /app.jar
   
-#CMD ["java", "-Dserver.port", "=", "$PORT" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
-CMD ["java" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
+CMD ["java", "-Dserver.port=", "${PORT}" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
+#CMD ["java" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
