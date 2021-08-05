@@ -21,4 +21,4 @@ hapi:
       enabled: true
       request-only: true
 server:
-  port: ${PORT}
+  port: {$PORT:8080}
