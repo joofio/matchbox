@@ -17,8 +17,8 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<hapi.version>5.5.0-PRE5-SNAPSHOT</hapi.version>
-		<fhir.core.version>5.4.9</fhir.core.version>
+		<hapi.version>5.4.1</hapi.version>
+		<fhir.core.version>5.4.1</fhir.core.version>
 		<docker.image.prefix>matchbox</docker.image.prefix>
 		<start-class>ch.ahdis.matchbox.MatchboxApplication</start-class>   
 	</properties>
