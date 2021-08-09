@@ -23,9 +23,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: package
-        path: /target/matchbox-0.9.9-SNAPSHOT.jar
+        path: ./target/matchbox-0.9.9-SNAPSHOT.jar
         retention-days: 1
   build_docker:
+    needs: build_package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
