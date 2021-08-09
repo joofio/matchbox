@@ -34,7 +34,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: package
-          path: /package.tar
+          path: /
       - name: 'UnTar files'
         run: tar -xvf /package.tar /target/matchbox-0.9.9-SNAPSHOT.jar 
       - name: Display structure of downloaded files
