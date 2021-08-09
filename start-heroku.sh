@@ -1,1 +1,0 @@
-java ${JAVA_OPTS} -Xshareclasses -Xquickstart -jar  /app.jar -Dserver.port=${PORT}
