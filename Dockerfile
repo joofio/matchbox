@@ -7,5 +7,6 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 COPY ${JAR_FILE} /app.jar
 COPY my-conf /config
 #ENTRYPOINT ["java", "${JAVA_OPTS}","-Xmx256m", "-Xshareclasses", "-Xquickstart -jar","-Dserver.port=${PORT}",  "/app.jar" ]
+RUN ls
 ENTRYPOINT ["java", "$JAVA_OPTS", "-Xshareclasses", "-Xquickstart",  "-jar", "-Dserver.port=$PORT",  "/app.jar" ]
 #https://stackoverflow.com/questions/43975939/heroku-run-docker-image-with-port-parameter

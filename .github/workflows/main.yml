@@ -34,12 +34,12 @@ jobs:
         with:
           name: package
           path: target/matchbox-0.9.9-SNAPSHOT.jar
-          
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: target/
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
+          name: build and deploy to heroku
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
