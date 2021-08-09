@@ -36,7 +36,7 @@ jobs:
           name: package
           path: package.tar
       - name: 'UnTar files'
-        run: tar -xvf package.tar matchbox-0.9.9-SNAPSHOT.jar 
+        run: tar -xvf package.tar target/matchbox-0.9.9-SNAPSHOT.jar 
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: /
@@ -69,5 +69,5 @@ jobs:
           docker_build_args: |
             JAR_FILE
         env:
-          JAR_FILE: /matchbox-0.9.9-SNAPSHOT.jar
+          JAR_FILE: target/matchbox-0.9.9-SNAPSHOT.jar
 
