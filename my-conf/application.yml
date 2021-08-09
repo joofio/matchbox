@@ -24,8 +24,8 @@ hapi:
       default-response-encoding: json
       e-tag-support: enabled
       default-pretty-print: true
-    validation:
-      enabled: false
-      request-only: true
+#    validation:
+#      enabled: true
+#      request-only: true
 server:
   port: {$PORT:8080}
