@@ -44,5 +44,8 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
           stack: container
-          docker_build_args:
-            JAR_FILE: ./target/matchbox-0.9.9-SNAPSHOT.jar
+          docker_build_args: |
+            JAR_FILE
+        env:
+          JAR_FILE: ./target/matchbox-0.9.9-SNAPSHOT.jar
+
