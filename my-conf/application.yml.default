@@ -1,10 +1,4 @@
-matchbox:
-  resolve:
-    baseurl: http://hapi.fhir.org/baseR4
-
 spring:
-  application:
-    name: matchbox-server
   datasource:
     url: '${SPRING_DATASOURCE_URL}'
     username: '${SPRING_DATASOURCE_USERNAME}'
@@ -12,13 +6,20 @@ spring:
     driverClassName: org.postgresql.Driver
     max-active: 15
     
+matchbox:
+  resolve:
+    baseurl: http://hapi.fhir.org/baseR4
+
+spring:
+  application:
+    name: matchbox
 hapi:
   fhir:
-    version: R5
+    version: R4
     server:
-      path: /r5/*
+      path: /r4/*
     rest:
-      server-name: matchbox Server
+      server-name: matchbox ahdis
       server-version: 0.9.5
       implementation-description: FHIR Core Server
       default-response-encoding: json
