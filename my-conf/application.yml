@@ -25,7 +25,7 @@ hapi:
       e-tag-support: enabled
       default-pretty-print: true
     validation:
-      enabled: true
+      enabled: false
       request-only: true
 server:
   port: {$PORT:8080}
