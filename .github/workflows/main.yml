@@ -18,11 +18,13 @@ jobs:
         java-version: 11
     - name: Build with Maven
       run: mvn -B compile package --file pom.xml
+    - name: 'Tar files'
+      run: tar -cvf package.tar target/matchbox-0.9.9-SNAPSHOT.jar
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
       with:
         name: package
-        path: target/matchbox-0.9.9-SNAPSHOT.jar
+        path: package.tar
         retention-days: 1
   build_docker:
     needs: build_package
