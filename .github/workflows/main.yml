@@ -36,7 +36,7 @@ jobs:
           name: package
           path: package.tar
       - name: 'check UnTar files'
-        run: ls package.tar/target/ 
+        run: ls package.tar/ 
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: /
