@@ -30,6 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: package
+          path: target/matchbox-0.9.9-SNAPSHOT.jar
+          
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: target/
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
