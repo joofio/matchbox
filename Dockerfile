@@ -10,5 +10,5 @@ FROM eu.gcr.io/fhir-ch/matchbox-nopreload:latest
 COPY my-conf /config
 COPY start-heroku.sh .
 #CMD ["java", "-Dserver.port=", "${PORT}" , "-Xmx1G", "-Xshareclasses", "-Xquickstart", "-jar", "/app.jar"]
-CMD ["/bin/sh","start-heroku.sh"]
+CMD ["/bin/sh","-c","java", "${JAVA_OPTS}", "-Xshareclasses", "-Xquickstart -jar",  "/app.jar", "-Dserver.port=${PORT}"]
 #https://stackoverflow.com/questions/43975939/heroku-run-docker-image-with-port-parameter
