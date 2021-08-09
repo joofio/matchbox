@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<hapi.version>5.5.0-PRE5-SNAPSHOT</hapi.version>
-		<fhir.core.version>5.4.6</fhir.core.version>
+		<fhir.core.version>5.4.9</fhir.core.version>
 		<docker.image.prefix>matchbox</docker.image.prefix>
 		<start-class>ch.ahdis.matchbox.MatchboxApplication</start-class>   
 	</properties>
@@ -107,7 +107,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
-			<version>1.19</version>
+			<version>1.21</version>
 		</dependency>
 		<!-- IPF -->
 
