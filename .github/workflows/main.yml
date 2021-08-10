@@ -37,8 +37,8 @@ jobs:
           path: download
       - name: 'UnTar files'
         run: |
-        tar -tf download/package.tar
-        tar -xvf download/package.tar target/matchbox-0.9.9-SNAPSHOT.jar 
+          tar -tf download/package.tar
+          tar -xvf download/package.tar target/matchbox-0.9.9-SNAPSHOT.jar 
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: /
