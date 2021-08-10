@@ -89,3 +89,10 @@ docker run -d --name matchbox -p 8080:8080 --memory="5G" --cpus="1" matchbox
 1. to develop with matchbox you need to check out the **dev** branches of the forked [org.hl7.fhir.core](https://github.com/ahdis/org.hl7.fhir.core/tree/dev) and [hapi-fhir](https://github.com/ahdis/hapi-fhir/tree/dev) project
 2. run mvn clean install -DskipTests in org.hl7.fhir.core and hapi-fhir (this will install local maven snapshots in your system)
 3. checkout matchbox master and commpile it with mvn or your favorite development setup
+
+## matching fhir.core and hapi fhir version
+
+| HAPI                | org.fhir.core   |
+|---------------------|-----------------|
+|5.4.1                |5.4.1            |
+|5.5.0-PRE5-SNAPSHOT  |5.4.6-SNAPSHOT   |

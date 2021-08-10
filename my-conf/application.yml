@@ -1,6 +1,6 @@
 matchbox:
   resolve:
-    baseurl: http://hapi.fhir.org/baseR5
+    baseurl: http://hapi.fhir.org/baseR4
 
 spring:
   application:
@@ -14,9 +14,9 @@ spring:
     
 hapi:
   fhir:
-    version: R5
+    version: R4
     server:
-      path: /r5/*
+      path: /r4/*
     rest:
       server-name: matchbox Server
       server-version: 0.9.5
@@ -24,8 +24,8 @@ hapi:
       default-response-encoding: json
       e-tag-support: enabled
       default-pretty-print: true
-#    validation:
-#      enabled: true
-#      request-only: true
+    validation:
+      enabled: true
+      request-only: true
 server:
   port: {$PORT:8080}
